@@ -1,0 +1,2 @@
+?- dips(cctvIntent,Output).
+Output = [].

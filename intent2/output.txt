@@ -1,0 +1,2 @@
+?- dips(busFleetIntent,Output).
+Output = [].

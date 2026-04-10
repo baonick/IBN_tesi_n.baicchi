@@ -1,0 +1,2 @@
+?- dips(elderlyCareIntent,Output).
+Output = [].
