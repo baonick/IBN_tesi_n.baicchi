@@ -1,2 +1,2 @@
-?- dips(rescueSwarmIntent,Output).
+Inter-intent conflicts: [av_swarm,tooMuchHW] --> Upgrade to gold
 Output = [].

@@ -1,0 +1,2 @@
+Inter-intent conflicts: [tooMuchHW] --> Upgrade to silver
+Output = [].

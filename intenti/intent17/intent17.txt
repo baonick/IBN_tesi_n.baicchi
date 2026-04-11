@@ -1,1 +1,5 @@
-The logistics hub equips 2000 warehouse workers with smart glasses. The architecture is composed in sequence of a visual ingress node at the edge, an augmented reality renderer at the edge, a task manager in the cloud, and an employee database in the cloud. To protect the workers, privacy rules are applied to the data entering the task manager. It is mandatory to ensure a latency from the network gateway to the renderer below 12 milliseconds. Furthermore, it is preferred that the visual ingress node and the renderer co-exist on the same edge node.
+The logistics hub logisticsOp equips 2000 warehouse workers with smart glasses. The architecture is composed in sequence 
+of a visual ingress node at the edge, an augmented reality renderer at the edge, a task manager in the cloud, 
+and an employee database in the cloud. To protect the workers, privacy rules are applied to the data entering 
+the task manager. It is mandatory to ensure a latency from the network gateway to the renderer below 12 milliseconds. 
+Furthermore, it is preferred that the visual ingress node and the renderer co-exist on the same edge node.

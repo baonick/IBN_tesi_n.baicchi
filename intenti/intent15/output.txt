@@ -1,3 +1,2 @@
-?- dips(pipelineLeakIntent,Output).
 Intra-intent conflicts: [(hw_leak,tooMuchHW)]
 Output = [].

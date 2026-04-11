@@ -1,3 +1,2 @@
-?- dips(soilIntent,Output).
 Intra-intent conflicts: [(hw_soil,tooMuchHW)]
 Output = [].

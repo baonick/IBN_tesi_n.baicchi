@@ -1,2 +1,2 @@
-?- dips(smartGridIntent,Output).
+Inter-intent conflicts: [tooMuchHW] --> Upgrade to silver
 Output = [].

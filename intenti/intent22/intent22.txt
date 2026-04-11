@@ -1,1 +1,6 @@
-The hospital consortium activates a network for 100 robotic surgery stations. The service chain includes, in order, a command collector at the edge, a signal processor at the edge, a surgical server at the edge, and a clinical archive in the cloud. Regarding the requirements, the input streams to the signal processor require prior decoding. It is mandatory that the overall availability of the chain is higher than 80%. Furthermore, it is mandatory that the network bandwidth from the command collector to the signal processor exceeds 1500 megabits per second.
+The hospital consortium hospitalConsortiumOp activates a network for 100 robotic surgery stations. The service chain includes, 
+in order, a command collector at the edge, a signal processor at the edge, a surgical server at the edge, 
+and a clinical archive in the cloud. Regarding the requirements, the input streams to the signal processor 
+require prior decoding. It is mandatory that the overall availability of the chain is higher than 80%. 
+Furthermore, it is mandatory that the network bandwidth from the command collector to the signal processor 
+exceeds 1500 megabits per second.

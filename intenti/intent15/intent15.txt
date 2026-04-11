@@ -1,1 +1,5 @@
-The oil company monitors 5000 acoustic sensors. The necessary network functions in order are only an acoustic aggregator allocated at the edge and a leak analyzer located in the cloud. For the transformation expectations, the raw data requires prior compression before entering the leak analyzer. It is Preferred to maintain a latency from the network gateway to the leak analyzer below 40 milliseconds. On the contrary, it is mandatory that the total hardware consumption does not exceed 32 gigabytes.
+The oil company oilCompanyOp monitors 5000 acoustic sensors. The necessary network functions in order are only an acoustic 
+aggregator allocated at the edge and a leak analyzer located in the cloud. For the transformation expectations, 
+the raw data requires prior compression before entering the leak analyzer. It is Preferred to maintain a latency 
+from the network gateway to the leak analyzer below 40 milliseconds. On the contrary, it is mandatory that the 
+total hardware consumption does not exceed 32 gigabytes.

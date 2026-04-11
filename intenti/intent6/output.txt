@@ -1,2 +1,2 @@
-?- dips(arMaintenanceIntent,Output).
+Inter-intent conflicts: [tooMuchHW] --> Upgrade to silver
 Output = [].

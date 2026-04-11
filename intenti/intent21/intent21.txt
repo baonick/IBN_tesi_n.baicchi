@@ -1,1 +1,5 @@
-The city council needs to optimize collection for 15000 smart bins. The network functions to be instantiated in sequence are a volumetric receiver at the edge, a collection optimizer at the edge, and an operational registry in the cloud. Among the expectations, the raw data undergoes caching before entering the collection optimizer. It is mandatory to maintain the latency from the network gateway to the collection optimizer below 20 milliseconds. It is preferred to host the volumetric receiver and the optimizer on the same node.
+The city council municipalityOp needs to optimize collection for 15000 smart bins. The network functions to be instantiated in 
+sequence are a volumetric receiver at the edge, a collection optimizer at the edge, and an operational registry 
+in the cloud. Among the expectations, the raw data undergoes caching before entering the collection optimizer. 
+It is mandatory to maintain the latency from the network gateway to the collection optimizer below 20 milliseconds. 
+It is preferred to host the volumetric receiver and the optimizer on the same node.

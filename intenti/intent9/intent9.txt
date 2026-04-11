@@ -1,1 +1,6 @@
-The healthcare facility tracks the parameters of 15000 elderly patients. The sequence of network functions includes a vital signs aggregator at the edge, an anomaly detector at the edge, and a historical patient database in the cloud. Moving to the specifications, the system requires the application of caching before the data reaches the anomaly detector. It is mandatory that the latency from the network gateway to the detector is less than 10 milliseconds. Furthermore, it is Mandatory that the aggregator and the detector physically reside on the same node
+The healthcare facility healthOp tracks the parameters of 15000 elderly patients. The sequence of network functions 
+includes a vital signs aggregator at the edge, an anomaly detector at the edge, and a historical patient 
+database in the cloud. Moving to the specifications, the system requires the application of caching before 
+the data reaches the anomaly detector. It is mandatory that the latency from the network gateway to the detector 
+is less than 10 milliseconds. Furthermore, it is Mandatory that the aggregator and the detector physically reside 
+on the same node

@@ -1,0 +1,3 @@
+Inter-intent conflicts: [tooMuchHW] --> Upgrade to silver
+Intra-intent conflicts: [(hw_wea,tooMuchHW)]
+Output = [].

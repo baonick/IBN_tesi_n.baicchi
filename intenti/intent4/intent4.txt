@@ -1,1 +1,5 @@
-The farm requires data management for 10000 soil sensors. The architectural sequence includes an agricultural aggregator at the edge, a moisture analyzer at the edge, and a crop database in the cloud. For operational rules, the metrics processed by the analyzer must be recorded via logging in the cloud. It is mandatory that the total hardware memory of the chain does not exceed 32 gigabytes. It is preferred to maintain a latency from the network gateway to the analyzer of less than 50 milliseconds.
+The farm farmOp requires data management for 10000 soil sensors. The architectural sequence includes an agricultural 
+aggregator at the edge, a moisture analyzer at the edge, and a crop database in the cloud. For operational rules, 
+the metrics processed by the analyzer must be recorded via logging in the cloud. It is mandatory that the total 
+hardware memory of the chain does not exceed 32 gigabytes. It is preferred to maintain a latency from the network 
+gateway to the analyzer of less than 50 milliseconds.

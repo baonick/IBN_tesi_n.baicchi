@@ -1,2 +1,1 @@
-?- dips(smartCampusIntent,Output).
-Output = [].
+Output = []

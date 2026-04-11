@@ -1,2 +1,2 @@
-?- dips(smartHeatingIntent,Output).
+Inter-intent conflicts: [tooMuchHW] --> Upgrade to gold
 Output = [].

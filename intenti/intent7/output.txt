@@ -1,2 +1,2 @@
-?- dips(cctvIntent,Output).
+Inter-intent conflicts: [tooMuchHW] --> Upgrade to gold
 Output = [].
