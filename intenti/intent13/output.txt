@@ -1,0 +1,2 @@
+?- dips(smartHeatingIntent,Output).
+Output = [].

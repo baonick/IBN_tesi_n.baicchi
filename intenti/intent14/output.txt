@@ -1,0 +1,2 @@
+?- dips(rescueSwarmIntent,Output).
+Output = [].
