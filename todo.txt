@@ -1,1 +1,14 @@
-aspettare feedback
+
+
+
+
+###aspettare feedback
+
+###miglirare il prompt passato per l'addestramento --> campo instruction di train.py
+
+###fare un po di testing su intenti nuovi
+
+###aumentare il dataset
+
+
+
