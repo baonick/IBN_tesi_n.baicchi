@@ -1,8 +1,27 @@
 import os
 import json
 
+#programma che crea il dataset in formato jsonl tramite l'ordinamento a cartelle definito 
+
+
 # 1. La nostra istruzione fissa per il modello
-INSTRUCTION = "Traduci la richiesta dell'operatore di rete nel codice Prolog corrispondente."
+# 1. La nostra istruzione fissa per il modello
+INSTRUCTION = """You are an expert Intent-Based Networking (IBN) engineer and a Prolog programmer.
+Your task is to translate the operator's natural language requirements into formal Prolog facts.
+
+Follow these strict rules:
+1. Extract parameters from the input. Generate identifiers for both the Intent ID and VNF names by combining key descriptive words from the text (e.g., 'smart grid' -> 'smartGridIntent'; 'mountain controller' -> 'mountainControllerVF'). Do not invent operator names or service IDs, extract them directly from text.
+2. Structure the output strictly with these facts in order:
+   - intent(IntentId, Operator, Users, Service).
+   - propertyExpectation(PropId, IntentId, PropertyType, Requirement, Type, Param1, Param2). 
+     You must support all property types described: latency, affinity (e.g., same, dedicated), caching, security, privacy, logging, encoding, decoding, bandwidth, and any others mentioned.
+     - For Requirement: use the specific value (e.g., 'caching', '30', 'same').
+     - For Type: specify if it is 'hard' (mandatory) or 'soft' (preferred).
+   - target(Service, [VNF_List]).
+   - vnf(VnfName, Location, Resources).
+   - vnfXUser(VnfName, Size, UserRange, Capacity). You MUST generate exactly one vnfXUser fact for EVERY single VNF defined in the target list.
+3. Ensure perfectly valid Prolog syntax. Use lowercase for atoms where appropriate and end every fact with a period (.).
+4. Output ONLY the Prolog code. No explanations."""
 
 # 2. Il nome del file che vogliamo creare
 nome_file_jsonl = "dataset.jsonl"

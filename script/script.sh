@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#script per creare le cartelle
+
 # Controlla se è stato inserito un numero
 if [ -z "$1" ]; then
   echo "Errore: Devi specificare il numero di cartelle da creare."

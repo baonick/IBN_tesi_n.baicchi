@@ -4,8 +4,10 @@ from datasets import load_dataset
 from trl import SFTTrainer
 from transformers import TrainingArguments
 
+#programma per addestrre un modello si inserisce il modello e li si passa il dataset
+
 # --- FASE 1: CARICAMENTO DEL MODELLO ---
-max_seq_length = 2048
+max_seq_length = 1024
 
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name = "unsloth/llama-3-8b-bnb-4bit",
@@ -22,7 +24,7 @@ model = FastLanguageModel.get_peft_model(
 )
 
 # --- FASE 2: PREPARAZIONE DEI DATI ---
-prompt_template = """Di seguito è riportata un'istruzione che descrive un task, seguita da un input. Scrivi la risposta adeguata.
+prompt_template = """Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
 
 ### Instruction:
 {}
@@ -56,8 +58,8 @@ trainer = SFTTrainer(
     dataset_text_field = "text",
     max_seq_length = max_seq_length,
     args = TrainingArguments(
-        per_device_train_batch_size = 2,
-        gradient_accumulation_steps = 4,
+        per_device_train_batch_size = 1,
+        gradient_accumulation_steps = 8,
         max_steps = 60,
         learning_rate = 2e-4,
         fp16 = not torch.cuda.is_bf16_supported(),
