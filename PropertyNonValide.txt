@@ -1,0 +1,11 @@
+
+
+
+
+
+- propertyExpectetion non funzionanti su dips
+        -latency
+        -security
+        -bandwidth
+        -chainAvaibility --> lancia eccezioni e fallisce
+        -totChainHW -->porta ad un conflitto: Intra-intent conflicts: [(X,tooMuchHW)]
