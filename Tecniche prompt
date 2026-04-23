@@ -1,0 +1,8 @@
+-Few shot
+Il prompt few-shot può essere utilizzato come tecnica per consentire l'apprendimento in contesto, in cui forniamo dimostrazioni nel prompt per guidare il modello verso prestazioni migliori.
+Il prompt standard few-shot funziona bene per molti compiti, ma non è ancora una tecnica perfetta, soprattutto quando si tratta di compiti di ragionamento più complessi. 
+
+
+-Prompt Chain-of-Thought
+ il prompt a catena di pensieri (CoT) consente di ottenere capacità di ragionamento complesse attraverso fasi di ragionamento intermedie. 
+ Si può combinare con il prompt few-shot per ottenere risultati migliori su compiti più complessi che richiedono un ragionamento prima di rispondere
