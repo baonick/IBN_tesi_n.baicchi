@@ -1,12 +1,26 @@
 import re
 
+def crea_mappatura_vnf(prima_riga):
+    """
+    Crea un dizionario per mappare i nomi originali delle VNF ai nomi normalizzati (es. vnf_0)
+    basandosi sulla riga TARGET.
+    """
+    mappatura_vnf = {}
+    if prima_riga.startswith("TARGET:"):
+        target_str = prima_riga.replace("TARGET:", "")
+        if target_str != "NESSUN_TARGET" and target_str != "":
+            lista_vnf = target_str.split(",")
+            # Creiamo il dizionario: es. {"meterGatewayVF": "vnf_0"}
+            for i, vnf in enumerate(lista_vnf):
+                mappatura_vnf[vnf.strip()] = f"vnf_{i}"
+    return mappatura_vnf
+
 def estrai_set_da_txt(percorso_file):
     """
     Legge un file txt generato da Prolog, normalizza i nomi delle VNF 
     basandosi sull'intestazione TARGET, ed estrae le configurazioni.
     """
     set_soluzioni = set()
-    mappatura_vnf = {}
     
     try:
         with open(percorso_file, 'r', encoding='utf-8') as f:
@@ -17,13 +31,7 @@ def estrai_set_da_txt(percorso_file):
             
         # 1. PARSING DELLA PRIMA RIGA (La Stele di Rosetta)
         prima_riga = linee[0].strip()
-        if prima_riga.startswith("TARGET:"):
-            target_str = prima_riga.replace("TARGET:", "")
-            if target_str != "NESSUN_TARGET" and target_str != "":
-                lista_vnf = target_str.split(",")
-                # Creiamo il dizionario: es. {"meterGatewayVF": "vnf_0"}
-                for i, vnf in enumerate(lista_vnf):
-                    mappatura_vnf[vnf.strip()] = f"vnf_{i}"
+        mappatura_vnf = crea_mappatura_vnf(prima_riga)
                     
         # 2. UNIAMO IL RESTO DEL FILE (Dalla seconda riga in poi)
         contenuto = "".join(linee[1:]).strip()
