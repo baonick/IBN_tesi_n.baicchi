@@ -1,153 +1,150 @@
 import re
 
+# ==============================================================================
+#  PARSING PROLOG
+# ==============================================================================
+
 def trova_target_list(testo_pl):
-    """Estrae la lista delle VNF dal predicato target/2 leggendo il testo Prolog."""
-    pattern = re.compile(r"target\([^,]+,\s*\[(.*?)\]\)")
-    match = pattern.search(testo_pl)
-    if match:
-        vnfs = [v.strip() for v in match.group(1).split(',')]
-        return [v for v in vnfs if v]
-    return []
+    """Estrae la lista VNF dal predicato target/2 (es. target(_, [fw, ids]) → ['fw','ids'])."""
+    match = re.search(r"target\([^,]+,\s*\[(.*?)\]\)", testo_pl)
+    return [v.strip() for v in match.group(1).split(',') if v.strip()] if match else []
+
 
 def crea_mappatura_vnf(lista_vnf):
-    """Crea il dizionario di mappatura dai nomi originali ai nomi normalizzati (es. vnf_0)."""
+    """Mappa ogni VNF al nome normalizzato: {fw: vnf_0, ids: vnf_1, ...}."""
     return {vnf: f"vnf_{i}" for i, vnf in enumerate(lista_vnf)}
 
+
+# ==============================================================================
+#  NORMALIZZAZIONE PREDICATI
+# ==============================================================================
+
+def _norm_property_expectation(args):
+    """Rimuove ID Regola e ID Intento (primi 2 parametri)."""
+    parts = args.split(',')
+    return ",".join(parts[2:]) if len(parts) > 2 else args
+
+
+def _norm_intent(args):
+    """Rimuove ID Intento (primo) e ID Target (ultimo)."""
+    parts = args.split(',')
+    return ",".join(parts[1:-1]) if len(parts) > 2 else args
+
+
+def _norm_target(args):
+    """Mantiene solo la lista tra parentesi quadre."""
+    match = re.search(r'\[(.*?)\]', args)
+    return f"[{match.group(1)}]" if match else args
+
+
+# Dispatch: predicato → funzione di normalizzazione degli argomenti
+_NORMALIZZATORI = {
+    'propertyExpectation': _norm_property_expectation,
+    'intent':              _norm_intent,
+    'target':              _norm_target,
+}
+
+
+def normalizza_argomenti(predicato, argomenti_raw):
+    """Applica la normalizzazione specifica al predicato, se definita."""
+    args = re.sub(r'\s+', ' ', argomenti_raw).replace(', ', ',').strip()
+    normalizzatore = _NORMALIZZATORI.get(predicato)
+    return normalizzatore(args) if normalizzatore else args
+
+
+# ==============================================================================
+#  ESTRAZIONE SET DI FATTI
+# ==============================================================================
+
 def estrai_set_da_pl(percorso_file):
-    """
-    Legge un file .pl, estrae i fatti Prolog, normalizza le VNF 
-    e rimuove tutti gli identificatori arbitrari (ID intento, ID target, ID regole).
-    """
-    set_fatti = set()
+    """Legge un .pl, estrae i fatti Prolog e li normalizza (VNF + ID arbitrari)."""
     try:
         with open(percorso_file, 'r', encoding='utf-8') as f:
             testo = f.read()
     except FileNotFoundError:
         print(f"❌ Errore: Il file {percorso_file} non esiste!")
-        return set_fatti
+        return set()
 
-    testo_pulito = re.sub(r'%.*', '', testo)
-    lista_vnf = trova_target_list(testo_pulito)
-    mappatura_vnf = crea_mappatura_vnf(lista_vnf)
-    
-    pattern_fatti = re.compile(r"([a-zA-Z0-9_]+)\((.*?)\)\.")
-    
-    for match in pattern_fatti.finditer(testo_pulito):
-        predicato = match.group(1).strip()
-        argomenti_str = match.group(2)
-        
-        args_normalizzati = argomenti_str
-        for vnf_originale, vnf_norm in mappatura_vnf.items():
-            args_normalizzati = re.sub(rf'\b{re.escape(vnf_originale)}\b', vnf_norm, args_normalizzati)
-        
-        args_normalizzati = re.sub(r'\s+', ' ', args_normalizzati).replace(', ', ',').strip()
-        
-        # === NUOVA NORMALIZZAZIONE MIGLIORATA ===
-        
-        if predicato == 'propertyExpectation':
-            # Rimuove ID Regola e ID Intento (i primi due parametri)
-            parts = args_normalizzati.split(',')
-            if len(parts) > 2:
-                args_normalizzati = ",".join(parts[2:])
-                
-        elif predicato == 'intent':
-            # L'intent ha es: intent(ID_Intento, User, Value, ID_Target)
-            # Dobbiamo rimuovere il PRIMO (ID_Intento) e l'ULTIMO (ID_Target)
-            parts = args_normalizzati.split(',')
-            if len(parts) > 2:
-                args_normalizzati = ",".join(parts[1:-1]) # Prende tutto tranne il primo e l'ultimo
-                
-        elif predicato == 'target':
-            # Il target ha es: target(ID_Target, [vnf_0, vnf_1])
-            # Vogliamo tenere SOLO la lista. Usiamo una regex per estrarre le parentesi quadre
-            match_list = re.search(r'\[(.*?)\]', args_normalizzati)
-            if match_list:
-                args_normalizzati = f"[{match_list.group(1)}]"
+    testo = re.sub(r'%.*', '', testo)                    # rimuovi commenti
+    mappatura = crea_mappatura_vnf(trova_target_list(testo))
 
-        # Aggiungiamo al set solo se non è vuoto
-        if args_normalizzati:
-            fatto_normalizzato = f"{predicato}({args_normalizzati})"
-            set_fatti.add(fatto_normalizzato)
+    set_fatti = set()
+    for m in re.finditer(r"([a-zA-Z0-9_]+)\((.*?)\)\.", testo):
+        predicato, argomenti = m.group(1).strip(), m.group(2)
+
+        # Sostituisci nomi VNF originali con vnf_N
+        for orig, norm in mappatura.items():
+            argomenti = re.sub(rf'\b{re.escape(orig)}\b', norm, argomenti)
+
+        args_norm = normalizza_argomenti(predicato, argomenti)
+        if args_norm:
+            set_fatti.add(f"{predicato}({args_norm})")
 
     return set_fatti
 
-def set_to_string(set_soluzioni):
-    """Restituisce una stringa formattata del set."""
-    if not set_soluzioni:
-        return "Nessun fatto trovato (Set vuoto)"
-    return "\n".join(sorted(list(set_soluzioni)))
 
-# ==========================================
-# METRICHE DI VALUTAZIONE
-# ==========================================
+def set_to_string(s):
+    """Formatta un set di fatti come stringa ordinata, una riga per fatto."""
+    return "\n".join(sorted(s)) if s else "Nessun fatto trovato (Set vuoto)"
+
+
+# ==============================================================================
+#  METRICHE DI VALUTAZIONE
+# ==============================================================================
 
 def calcola_jaccard(set_ideale, set_llm):
-    """
-    Calcola la severità assoluta: |Ideale ∩ LLM| / |Ideale ∪ LLM|
-    Penalizza sia le omissioni che le allucinazioni contemporaneamente.
-    """
-    if not set_ideale and not set_llm: return 1.0 
-    if not set_ideale or not set_llm: return 0.0
-    
-    intersezione = set_ideale.intersection(set_llm)
-    unione = set_ideale.union(set_llm)
-    return round(len(intersezione) / len(unione), 4)
+    """Jaccard: |I ∩ L| / |I ∪ L|  — penalizza omissioni e allucinazioni."""
+    if not set_ideale and not set_llm: return 1.0
+    if not set_ideale or  not set_llm: return 0.0
+    return round(len(set_ideale & set_llm) / len(set_ideale | set_llm), 4)
 
-def calcola_sensibilita_omissioni(set_ideale, set_llm):
-    """
-    Calcola la Recall: |Ideale ∩ LLM| / |Ideale|
-    Misura se l'LLM ha dimenticato dei fatti fondamentali.
-    """
-    if not set_ideale: return 1.0 # Non c'era nulla da prevedere
-    if not set_llm: return 0.0    # Ha omesso tutto
-    
-    intersezione = set_ideale.intersection(set_llm)
-    return round(len(intersezione) / len(set_ideale), 4)
 
-def calcola_sensibilita_allucinazioni(set_ideale, set_llm):
-    """
-    Calcola la Precision: |Ideale ∩ LLM| / |LLM|
-    Misura se l'LLM ha inventato regole non richieste (spazzatura in più).
-    """
+def calcola_recall(set_ideale, set_llm):
+    """Recall: |I ∩ L| / |I|  — misura le omissioni dell'LLM."""
+    if not set_ideale: return 1.0
+    if not set_llm:    return 0.0
+    return round(len(set_ideale & set_llm) / len(set_ideale), 4)
+
+
+def calcola_precision(set_ideale, set_llm):
+    """Precision: |I ∩ L| / |L|  — misura le allucinazioni dell'LLM."""
     if not set_llm and not set_ideale: return 1.0
-    if not set_llm: return 0.0    # Non ha generato nulla, precisione 0
-    
-    intersezione = set_ideale.intersection(set_llm)
-    return round(len(intersezione) / len(set_llm), 4)
+    if not set_llm:                    return 0.0
+    return round(len(set_ideale & set_llm) / len(set_llm), 4)
 
-def calcola_f1_score(precision, recall):
-    """Calcola l'F1-Score (Media Armonica tra Precision e Recall)."""
-    if precision + recall == 0:
-        return 0.0
-    return round(2 * (precision * recall) / (precision + recall), 4)
 
-# ==========================================
-# MAIN DI TEST
-# ==========================================
+def calcola_f1(precision, recall):
+    """F1-Score: media armonica tra Precision e Recall."""
+    return round(2 * precision * recall / (precision + recall), 4) if (precision + recall) else 0.0
+
+
+# ==============================================================================
+#  MAIN
+# ==============================================================================
+
 if __name__ == "__main__":
-    print("=== VALUTATORE SEMANTICO PROLOG ===")
-    
-    FILE_IDEALE = "/home/nick/UNI/IBN_tesi_n.baicchi/intenti/intent0/intent0.pl" 
-    FILE_LLM = "/home/nick/UNI/IBN_tesi_n.baicchi/intenti/intent1/intent1.pl"    
-    
-    # ... (Stampe di lettura file omesse per brevità) ...
+    FILE_IDEALE = "/home/nick/UNI/IBN_tesi_n.baicchi/intenti/intent0/intent0.pl"
+    FILE_LLM    = "/home/nick/UNI/IBN_tesi_n.baicchi/intenti/intent1/intent1.pl"
+
     set_ideale = estrai_set_da_pl(FILE_IDEALE)
-    print("--- Fatti Estratti ideale ---")
-    print(set_to_string(set_ideale) + "\n")
-    set_llm = estrai_set_da_pl(FILE_LLM)
+    set_llm    = estrai_set_da_pl(FILE_LLM)
+
+    print("=== VALUTATORE SEMANTICO PROLOG ===\n")
+    print("--- Fatti Estratti Ideale ---")
+    print(set_to_string(set_ideale), "\n")
     print("--- Fatti Estratti LLM ---")
-    print(set_to_string(set_llm) + "\n")
-    
-    score_jaccard = calcola_jaccard(set_ideale, set_llm)
-    score_omissioni = calcola_sensibilita_omissioni(set_ideale, set_llm) # Recall
-    score_allucinazioni = calcola_sensibilita_allucinazioni(set_ideale, set_llm) # Precision
-    score_f1 = calcola_f1_score(score_allucinazioni, score_omissioni)
-    
+    print(set_to_string(set_llm), "\n")
+
+    recall    = calcola_recall(set_ideale, set_llm)
+    precision = calcola_precision(set_ideale, set_llm)
+    jaccard   = calcola_jaccard(set_ideale, set_llm)
+    f1        = calcola_f1(precision, recall)
+
     print("==================================================")
     print("📊 RISULTATI VALUTAZIONE LOGICA")
     print("==================================================")
-    print(f"✅ Sensibilità alle Omissioni (Recall)     : {score_omissioni}")
-    print(f"🎯 Sensibilità alle Allucinazioni (Precision): {score_allucinazioni}")
-    print(f"⚖️ Jaccard Similarity (Globale)            : {score_jaccard}")
-    print(f"🏆 F1-Score (Equilibrio)                   : {score_f1}")
+    print(f"✅ Recall      (Omissioni)     : {recall}")
+    print(f"🎯 Precision   (Allucinazioni) : {precision}")
+    print(f"⚖️  Jaccard     (Globale)       : {jaccard}")
+    print(f"🏆 F1-Score    (Equilibrio)    : {f1}")
     print("==================================================")
