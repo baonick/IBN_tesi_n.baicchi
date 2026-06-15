@@ -1,0 +1,6 @@
+The cybersecurity provider secureMailOp requires a service to manage 10,000 corporate mailboxes. This pipeline intercepts incoming emails, 
+removes phishing links, analyzes attachments in an isolated environment, and delivers only safe messages to the server. Requiring decoding 
+to be applied after the initial node, the chain begins with a mail gateway allocated at the edge. Preferring a latency below 50 milliseconds, 
+the gateway connects to a phishing filter located in the cloud. With a mandatory requirement for bandwidth higher than 100 Mbps, the filter 
+links to a sandbox scanner located in the cloud. Applying strictly required logging before this node, the sandbox scanner is integrated into 
+the chain. Finally, the service concludes by connecting the scanner to a safe delivery node located in the cloud.

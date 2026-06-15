@@ -1,0 +1,7 @@
+ID: webFilterVF | Hardware: 4 | Description: Filters dangerous websites and malicious URLs.
+ID: malwareScannerVF | Hardware: 16 | Description: Scans downloaded files in a sandbox against malware.
+ID: dlpEngineVF | Hardware: 8 | Description: Prevents sensitive data leakage outside the network.
+ID: mailGatewayVF | Hardware: 4 | Description: Intercepts incoming corporate emails at the network perimeter.
+ID: phishingFilterVF | Hardware: 8 | Description: Scans and removes malicious phishing links from email bodies.
+ID: sandboxScannerVF | Hardware: 16 | Description: Analyzes attachments in an isolated environment to detect malware.
+ID: safeDeliveryVF | Hardware: 4 | Description: Delivers sanitized and approved messages to the internal corporate server.

@@ -1,0 +1,5 @@
+The IT provider corpITOp requires a service to manage 5,000 office employees. This service must filter dangerous websites, 
+scan downloaded files for malware, and ensure that sensitive data does not leave the network. The service chain includes, 
+in order: a web filter allocated at the edge, a malware scanner located in the cloud, and a dlp engine located in the cloud. 
+Regarding requirements, it is a mandatory requirement that the latency from the web filter to the malware scanner remains below 10 milliseconds. 
+Furthermore, the bandwidth between the malware scanner and the dlp engine must be greater than 500 mbps.
