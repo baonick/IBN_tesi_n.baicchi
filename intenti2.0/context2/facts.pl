@@ -1,6 +1,6 @@
 intent(secureMailIntent, secureMailOp, 10000, emailSanitizationService).
 
-% Non-Changing Properties (9 parameters)
+
 propertyExpectation(latReq, secureMailIntent, latency, lower, soft, 50, ms, mailGatewayVF, phishingFilterVF).
 propertyExpectation(bwReq, secureMailIntent, bandwidth, higher, hard, 100, mbps, phishingFilterVF, sandboxScannerVF).
 

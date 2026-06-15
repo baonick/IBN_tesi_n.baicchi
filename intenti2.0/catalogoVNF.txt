@@ -5,3 +5,15 @@ ID: mailGatewayVF | Hardware: 4 | Description: Intercepts incoming corporate ema
 ID: phishingFilterVF | Hardware: 8 | Description: Scans and removes malicious phishing links from email bodies.
 ID: sandboxScannerVF | Hardware: 16 | Description: Analyzes attachments in an isolated environment to detect malware.
 ID: safeDeliveryVF | Hardware: 4 | Description: Delivers sanitized and approved messages to the internal corporate server.
+ID: trafficAnalyzerVF | Hardware: 8 | Description: Continuously monitors incoming network packets to detect volumetric anomalies and traffic spikes.
+ID: scrubbingFilterVF | Hardware: 32 | Description: Filters out malicious DDoS attack traffic, discarding bad packets while passing legitimate ones.
+ID: rateLimiterVF | Hardware: 16 | Description: Enforces per-IP and per-service traffic thresholds to prevent resource exhaustion.
+ID: webServerVF | Hardware: 12 | Description: The backend web hosting engine delivering the actual application contents to legitimate users.
+ID: dbScannerVF | Hardware: 16 | Description: Scans corporate databases and identifies unprotected personally identifiable information (PII).
+ID: anonymizerVF | Hardware: 24 | Description: Applies automated data masking, pseudonymization, and anonymization algorithms to sensitive records.
+ID: reportGeneratorVF | Hardware: 8 | Description: Compiles audit trails and generates structured compliance reports for data protection regulators.
+ID: trafficSplitterVF | Hardware: 8 | Description: Intercepts network flows and splits HTTPS traffic into metadata streams and encrypted payloads.
+ID: featureExtractorVF | Hardware: 16 | Description: Extracts TLS fingerprinting, packet length, and timing features without decryption.
+ID: aiClassifierVF | Hardware: 32 | Description: Runs machine learning models to classify traffic patterns as benign, malware, or botnet activity.
+ID: alertManagerVF | Hardware: 4 | Description: Generates real-time alerts and records logs for detected security anomalies.
+ID: policyEnforcerVF | Hardware: 8 | Description: Dynamically blocks, drops, or reroutes malicious encrypted traffic flows.

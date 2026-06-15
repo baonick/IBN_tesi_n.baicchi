@@ -1,0 +1,6 @@
+The network security provider secureCryptoOp requires an encrypted traffic analysis service to support 25,000 corporate users. This service inspects HTTPS flows 
+without fully decrypting them, using AI to identify malware or botnet patterns. Specifying that decoding is applied after the first VNF, and mandating that 
+this initial component and the subsequent extraction service are deployed on the same hosting node, the service begins with a traffic splitter allocated at 
+the edge connected to a feature extractor located in the cloud. Preferring that the total chain hardware is lower than 80 gigabytes, the chain incorporates 
+an ai classifier located in the cloud followed by an alert manager located in the cloud. Finally, ensuring that security is executed before the final enforcement point, 
+the system completes the pipeline with a policy enforcer located in the cloud.

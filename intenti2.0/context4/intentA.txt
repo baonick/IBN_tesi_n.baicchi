@@ -1,0 +1,6 @@
+The compliance provider gdprComplianceOp requires a GDPR verification service to manage 5,000 corporate database connections. This service scans 
+corporate databases to identify unprotected personal data, applies automatic anonymization, and generates reports for regulators. The deployed service 
+chain includes, in order: a database scanner allocated at the edge, an anonymizer located in the cloud, and a report generator located in the cloud. 
+Regarding requirements, privacy must be applied after the database scanner. Furthermore, it is desired that the latency from the database scanner to the 
+anonymizer remains lower than 20 ms. It is strictly required that the bandwidth from the anonymizer to the report generator is higher than 50 Mbps. Finally, 
+security is mandatory before the report generator.
