@@ -1,0 +1,6 @@
+The gaming provider cloudGamingOp requires a service to manage 40,000 active gamers. This service executes video games on powerful servers 
+and sends the video stream to the user, guaranteeing a very low latency to avoid making the game unplayable. The deployed service chain 
+includes, in order: a game executor allocated in the cloud, a stream packer allocated in the cloud, and a delivery optimizer allocated 
+at the edge. Regarding requirements, encoding is applied after the game executor. Furthermore, it is strictly required that the latency 
+from the stream packer to the delivery optimizer remains below 5 ms. Finally, the provider prefers that the game executor and the stream 
+packer operate on dedicated nodes.

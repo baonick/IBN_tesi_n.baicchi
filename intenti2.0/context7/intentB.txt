@@ -1,0 +1,6 @@
+Cloud gaming service provider GamingOp needs a service to handle 40,000 active players. This service runs games on powerful servers and 
+streams the video to the user, ensuring very low latency to prevent the game from becoming unplayable. The service chain begins with a 
+game executor hosted in the cloud. Encoding is applied to this component. Ideally, this game executor is preferred to run on a dedicated node. 
+The chain then connects to a streaming packager hosted in the cloud; this component is also preferred to run on a dedicated node. Finally, 
+the traffic is routed to a distribution optimizer hosted at the edge, ensuring that the latency from the streaming packager to this distribution 
+optimizer remains less than 5 ms.

@@ -1,0 +1,6 @@
+The government provider govMessagingOp requires a service to manage 50,000 institutional messages. This service receives digital communications, 
+verifies the electronic signature of the sender, checks its integrity, and archives the message in a legal vault. The service chain begins with 
+a message receiver allocated at the edge. For this component, caching is applied after it. The chain connects to a signature verifier located in 
+the cloud. It is strictly required that this signature verifier and the next component, an integrity checker located in the cloud, are deployed 
+on the same hosting node. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 100 gb. Finally, 
+the messages are routed to a legal vault located in the cloud, ensuring that compression is executed before it.

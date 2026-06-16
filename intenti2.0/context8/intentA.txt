@@ -1,0 +1,7 @@
+The media provider mediaBroadcastOp requires a live multicamera streaming service to support 30,000 concurrent viewers. 
+This system receives video streams from different angles, allows cloud mixing, adds advertising graphics, and distributes the signal to 
+thousands of viewers simultaneously. The deployed service chain includes, in order: a stream ingester allocated at the edge, a cloud studio 
+located in the cloud, a graphic injector located in the cloud, and a stream distributor located in the cloud. Regarding requirements, 
+compression is applied after the stream ingester. Furthermore, it is strictly required that the bandwidth from the graphic injector to 
+the stream distributor remains higher than 5000 mbps. Additionally, the provider prefers that the total chain hardware is lower than 150 gb. 
+Finally, caching is executed before the stream distributor.
