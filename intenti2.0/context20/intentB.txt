@@ -1,0 +1,6 @@
+The infrastructure provider serverMonOp requires a telemetry monitoring service to manage 50,000 virtual machines. This service collects temperature, 
+CPU load, and memory usage data, aggregating them to identify anomalies before failure occurs. The service chain begins with a telemetry collector at the edge. 
+It is mandatory that this telemetry collector and the next component, a data aggregator located in the cloud, are deployed on the same hosting node. 
+The chain then connects to an anomaly detector located in the cloud, and subsequently to an alert dispatcher located in the cloud. Regarding constraints, 
+it is strictly required that the latency from the begin to the end of the chain remains below 100 ms, and the provider ideally prefers that the bandwidth 
+from the begin to the end of the chain remains higher than 2000 mbps.

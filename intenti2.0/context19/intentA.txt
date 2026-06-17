@@ -1,0 +1,6 @@
+The logistics provider aeroDeliveryOp requires a drone fleet control service to manage 5,000 active delivery drones. This system manages digital 
+flight plans, avoids software collisions, and ensures that the command signal is always a priority. The deployed service chain includes, in order: 
+a flight telemetry ingester allocated at the edge, a collision avoider located in the cloud, a command prioritizer located in the cloud, and a route 
+dispatcher allocated at the edge. Regarding requirements, caching is applied after the flight telemetry ingester. Furthermore, the provider prefers 
+that the total chain hardware remains lower than 200 gb. It is strictly required that the latency from the flight telemetry ingester to the collision 
+avoider remains below 10 ms. Finally, the provider prefers that the bandwidth from the collision avoider to the route dispatcher remains higher than 2000 mbps.

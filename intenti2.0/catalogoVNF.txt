@@ -58,12 +58,27 @@ ID: documentReceiverVF | Hardware: 12 | Description: Ingests and standardizes ph
 ID: authenticityCheckerVF | Hardware: 24 | Description: Extracts data and verifies the physical authenticity of the uploaded documents using computer vision.
 ID: amlMatcherVF | Hardware: 16 | Description: Cross-references extracted personal data against international anti-money laundering (AML) blacklists.
 ID: profileCreatorVF | Hardware: 16 | Description: Consolidates the verified data to generate and securely store the final digital identity profile.
-
-
-
-
-
-
+ID: saleDataCollectorVF | Hardware: 8 | Description: Ingests raw sales transaction data from local point-of-sale systems.
+ID: xmlConverterVF | Hardware: 16 | Description: Transforms sales data into the standardized XML format required for electronic invoicing.
+ID: digitalSignerVF | Hardware: 12 | Description: Applies a secure digital signature to the XML files to ensure legal authenticity.
+ID: taxAuthorityTransmitterVF | Hardware: 8 | Description: Interfaces with the national tax authority's API to transmit and validate the signed electronic invoices.
+ID: gpsIngesterVF | Hardware: 8 | Description: Collects and normalizes raw GPS telemetry coordinates from the courier fleet in real time.
+ID: trafficAnalyzerVF | Hardware: 24 | Description: Analyzes live city traffic data, road closures, and historical congestion patterns.
+ID: routeOptimizerVF | Hardware: 32 | Description: Executes pathfinding algorithms to constantly recalculate the fastest and most fuel-efficient route for each delivery.
+ID: terminalUpdaterVF | Hardware: 12 | Description: Packages the new route instructions and synchronizes them directly to the mobile devices of the couriers.
+ID: sensorDataCollectorVF | Hardware: 8 | Description: Ingests occupancy signals from IoT parking stall sensors across the city.
+ID: mapUpdaterVF | Hardware: 16 | Description: Processes occupancy data to maintain a real-time digital map of available parking spaces.
+ID: paymentProcessorVF | Hardware: 24 | Description: Manages secure financial transactions and automated billing through the parking app.
+ID: statusLoggerVF | Hardware: 12 | Description: Maintains a comprehensive audit log of parking events, billing history, and system status updates.
+ID: securityEnforcerVF | Hardware: 16 | Description: Implements authentication and data encryption protocols to protect user and payment data.
+ID: flightTelemetryIngesterVF | Hardware: 12 | Description: Receives raw telemetry, GPS coordinates, and real-time status data from the active drone fleet.
+ID: collisionAvoiderVF | Hardware: 32 | Description: Processes incoming flight paths to proactively detect and resolve potential mid-air software collisions.
+ID: commandPrioritizerVF | Hardware: 16 | Description: Ensures critical control signals and emergency instructions bypass standard traffic and receive immediate processing.
+ID: routeDispatcherVF | Hardware: 12 | Description: Packages and transmits updated, safe flight plans and real-time commands back to individual drones.
+ID: telemetryCollectorVF | Hardware: 8 | Description: Gathers real-time raw telemetry streams (CPU, RAM, Temp) from thousands of virtual machines.
+ID: dataAggregatorVF | Hardware: 16 | Description: Normalizes and aggregates incoming telemetry streams into structured time-series datasets.
+ID: anomalyDetectorVF | Hardware: 24 | Description: Runs predictive AI models to identify abnormal patterns and potential hardware failure precursors.
+ID: alertDispatcherVF | Hardware: 8 | Description: Issues instant alerts to maintenance teams when critical thresholds or anomalies are detected.
 
 
 

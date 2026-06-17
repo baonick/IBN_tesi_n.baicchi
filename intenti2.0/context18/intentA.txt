@@ -1,0 +1,6 @@
+The municipal provider smartParkOp requires a parking management backend to handle 100,000 active parking spots. This system receives occupancy alerts, 
+updates the city map, and processes automatic payments. The service chain includes, in order: a sensor data collector at the edge, a map updater in the cloud, 
+a payment processor in the cloud, a status logger in the cloud, and a security enforcer in the cloud. Regarding requirements, compression is applied after the 
+sensor data collector. Encoding is executed before the payment processor. Security is applied after the payment processor. Logging is executed before the status logger. 
+Furthermore, it is mandatory that the map updater and the payment processor are deployed with affinity dedicated to specific nodes. Finally, it is strictly 
+required that the latency from the sensor data collector to the security enforcer remains below 30 ms.
