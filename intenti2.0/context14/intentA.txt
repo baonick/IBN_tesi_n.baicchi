@@ -1,0 +1,7 @@
+The financial provider hftGlobalOp requires a high frequency trading service to manage 500,000 orders. This infrastructure receives stock prices, 
+executes decision algorithms, and sends purchase orders seeking the fastest network path. The deployed service chain includes, in order: a market 
+feed allocated at the edge, a trading algo allocated at the edge, a risk checker located in the cloud, and an order dispatcher allocated at the edge. 
+Regarding requirements, caching is applied after the market feed. Furthermore, it is strictly required that the latency from the market feed to the 
+trading algo remains below 2 ms. The provider prefers that the bandwidth from the trading algo to the risk checker remains higher than 5000 mbps. 
+Additionally, it is desired that the latency from the risk checker to the order dispatcher remains below 5 ms. Finally, logging is executed before 
+the order dispatcher.

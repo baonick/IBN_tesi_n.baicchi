@@ -1,0 +1,6 @@
+The financial provider onlineBankOp requires a digital identity verification service to manage 10,000 daily uploads. This service processes photos of 
+documents uploaded by users, verifies their authenticity, and compares the data with international blacklists to prevent money laundering. Specifying that 
+encoding is applied after the initial receiving function, the service begins with a document receiver allocated at the edge. Ensuring that security is 
+executed before the verification phase, the chain connects to an authenticity checker located in the cloud. Specifying that privacy is applied after the 
+blacklist matching service, the chain incorporates an aml matcher located in the cloud. Finally, ensuring that compression is executed before the final 
+profiling engine, the system completes the pipeline with a profile creator located in the cloud.

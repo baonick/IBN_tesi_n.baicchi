@@ -36,9 +36,28 @@ ID: assetValidatorVF | Hardware: 12 | Description: Verifies the integrity of 3D 
 ID: renderDistributorVF | Hardware: 32 | Description: Splits the rendering workload into individual frame tasks and dynamically distributes them across the compute cluster.
 ID: frameAssemblerVF | Hardware: 24 | Description: Collects completed frames, verifies structural integrity, and reassembles them into a continuous sequence.
 ID: colorGraderVF | Hardware: 20 | Description: Applies automated color correction, grading, and visual effects encoding to the reassembled video sequence.
-
-
-
+ID: audioExtractorVF | Hardware: 8 | Descrizione: Intercetta ed estrae la traccia audio dal flusso video in diretta con buffering minimo.
+ID: speechToTextVF | Hardware: 32 | Descrizione: Trascrive l'audio estratto in testo in tempo reale utilizzando reti neurali AI avanzate.
+ID: multiTranslatorVF | Hardware: 24 | Descrizione: Traduce simultaneamente il testo trascritto in tre diverse lingue di destinazione.
+ID: subtitleInjectorVF | Hardware: 12 | Descrizione: Codifica e inserisce il testo tradotto nel flusso video come sottotitoli sincronizzati in tempo reale.
+ID: ocrScannerVF | Hardware: 16 | Description: Reads uploaded PDF files and converts scanned images into machine-readable digital text.
+ID: textExtractorVF | Hardware: 12 | Description: Parses the digital text to identify key entities, metadata, and structural document features.
+ID: aiClassifierVF | Hardware: 32 | Description: Uses natural language processing models to categorize the document as an invoice, contract, or reminder.
+ID: dataRedactorVF | Hardware: 16 | Description: Masks personally identifiable information and sensitive financial data within the document to ensure compliance.
+ID: documentRouterVF | Hardware: 8 | Description: Forwards the categorized and processed document to the appropriate corporate department's inbox.
+ID: requestInterceptorVF | Hardware: 8 | Description: Captures real-time digital payment requests from gateways and sanitizes incoming data payloads.
+ID: profileMatcherVF | Hardware: 16 | Description: Compares transaction details against historical user spending patterns using optimized lookup tables.
+ID: mlAnalyzerVF | Hardware: 32 | Description: Executes deep learning inference to calculate fraud probability scores in real-time.
+ID: policyEnforcerVF | Hardware: 12 | Description: Applies security policies to authorize or block transactions based on the generated risk scores.
+ID: responseEmitterVF | Hardware: 8 | Description: Sends the final authorization or rejection response back to the originating payment gateway.
+ID: marketFeedVF | Hardware: 16 | Description: Ingests and normalizes raw, real-time stock market tick data directly from exchange gateways.
+ID: tradingAlgoVF | Hardware: 32 | Description: Executes complex quantitative decision algorithms to identify profitable trading opportunities in microseconds.
+ID: riskCheckerVF | Hardware: 16 | Description: Validates proposed trades against compliance and financial exposure limits before execution.
+ID: orderDispatcherVF | Hardware: 8 | Description: Routes approved purchase and sell orders to the market using the fastest available network path.
+ID: documentReceiverVF | Hardware: 12 | Description: Ingests and standardizes photos of identity documents uploaded by users.
+ID: authenticityCheckerVF | Hardware: 24 | Description: Extracts data and verifies the physical authenticity of the uploaded documents using computer vision.
+ID: amlMatcherVF | Hardware: 16 | Description: Cross-references extracted personal data against international anti-money laundering (AML) blacklists.
+ID: profileCreatorVF | Hardware: 16 | Description: Consolidates the verified data to generate and securely store the final digital identity profile.
 
 
 

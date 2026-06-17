@@ -1,0 +1,8 @@
+The enterprise provider corpDocOp requires a document classification engine to manage 50,000 daily files. This system analyzes PDF files or 
+OCR scans, identifies the document type like invoice, contract, or reminder, and routes it to the competent business function. 
+The deployed service chain includes, in order: an ocr scanner allocated at the edge, a text extractor located in the edge, an ai 
+classifier located in the cloud, a data redactor located in the cloud, and a document router located in the cloud. Regarding requirements, 
+security is applied after the ocr scanner. Furthermore, it is a mandatory requirement that the ocr scanner and the text extractor are deployed 
+on the same hosting node. It is strictly required that the latency from the text extractor to the ai classifier remains below 50 ms. 
+Additionally, privacy is executed before the data redactor. Finally, the provider prefers that the bandwidth from the ai classifier to 
+the document router remains higher than 500 mbps.

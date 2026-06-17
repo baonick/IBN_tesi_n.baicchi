@@ -1,0 +1,7 @@
+The financial provider hftGlobalOp requires a high frequency trading service to manage 500,000 orders. This infrastructure receives stock prices, 
+executes decision algorithms, and sends purchase orders seeking the fastest network path. Specifying that caching is applied after the initial ingestion 
+function, the service begins with a market feed allocated at the edge. Mandating that the latency from this first component to the decision engine remains 
+below 2 ms, the chain connects to a trading algo allocated at the edge. Preferring that the bandwidth from the decision engine to the validation layer remains 
+higher than 5000 mbps, the chain incorporates a risk checker located in the cloud. Preferring that the latency from the validation layer to the final execution 
+phase remains below 5 ms, and ensuring that logging is executed before this final component, the system completes the pipeline with an order dispatcher allocated 
+at the edge.

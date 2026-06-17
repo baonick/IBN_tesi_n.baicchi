@@ -1,0 +1,7 @@
+The financial provider fraudSafeOp requires an antifraud analysis service to manage 200,000 transactions per hour. This system intercepts every digital 
+payment request, compares it with habitual user spending patterns via machine learning, and authorizes the transaction in a few milliseconds. 
+Specifying that security is applied after the initial interception phase, and mandating that the request interceptor and the profile matcher are deployed 
+on the same edge node, the service begins with a request interceptor allocated at the edge connected to a profile matcher at the edge. Ensuring that privacy 
+is executed before the categorization phase, the chain incorporates an ml analyzer located in the cloud. Preferring that the bandwidth from the ml analyzer to 
+the policy enforcer remains higher than 1000 mbps, the chain adds a policy enforcer located in the cloud. Finally, preferring that the total chain hardware 
+remains lower than 120 gb, the system completes the pipeline with a response emitter located in the cloud.

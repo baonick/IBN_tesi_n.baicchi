@@ -1,0 +1,8 @@
+The enterprise provider corpDocOp requires a document classification engine to manage 50,000 daily files. This system analyzes PDF 
+files or OCR scans, identifies the document type like invoice, contract, or reminder, and routes it to the competent business function. 
+Specifying that security is applied after the initial scanning phase, and mandating that this first component and the subsequent extraction 
+service are deployed on the same hosting node, the service begins with an ocr scanner allocated at the edge connected to a text extractor 
+located in the edge. Strictly requiring that the latency from the extraction service to the categorization engine remains below 50 ms, the 
+chain incorporates an ai classifier located in the cloud. Ensuring that privacy is executed before the masking service, the chain connects 
+to a data redactor located in the cloud. Finally, preferring a bandwidth higher than 500 mbps between the categorization engine and the final 
+distribution point, the system completes the pipeline with a document router located in the cloud.
