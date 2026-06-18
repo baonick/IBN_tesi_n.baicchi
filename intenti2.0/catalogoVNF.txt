@@ -79,7 +79,23 @@ ID: telemetryCollectorVF | Hardware: 8 | Description: Gathers real-time raw tele
 ID: dataAggregatorVF | Hardware: 16 | Description: Normalizes and aggregates incoming telemetry streams into structured time-series datasets.
 ID: anomalyDetectorVF | Hardware: 24 | Description: Runs predictive AI models to identify abnormal patterns and potential hardware failure precursors.
 ID: alertDispatcherVF | Hardware: 8 | Description: Issues instant alerts to maintenance teams when critical thresholds or anomalies are detected.
-
-
-
-
+ID: sensorDataDecoderVF | Hardware: 16 | Description: Receives and decodes raw telemetry and sensor data streams from autonomous warehouse vehicles.
+ID: collisionPathSolverVF | Hardware: 32 | Description: Analyzes spatial data to calculate collision-free trajectories for the fleet in real-time.
+ID: commandEncoderVF | Hardware: 16 | Description: Encodes finalized steering and braking instructions into secure control signals for the vehicles.
+ID: patientDataReceiverVF | Hardware: 8 | Description: Receives and terminates incoming data streams transmitted from external home patient monitoring devices.
+ID: cardiacAnomalyAnalyzerVF | Hardware: 24 | Description: Runs specialized algorithms to analyze heart rate variability and detect potential cardiac anomalies.
+ID: medicalAlertLoggerVF | Hardware: 12 | Description: Records anonymized health events, anomalies, and system operations for medical auditing purposes.
+ID: doctorNotifierVF | Hardware: 8 | Description: Routes urgent alerts and critical diagnostic data directly to the workstation of the on-duty physician.
+ID: dicomIngesterVF | Hardware: 16 | Description: Receives and terminates high-resolution DICOM medical image streams (CT/MRI) transmitted from external hospital networks.
+ID: lesionAnalyzerVF | Hardware: 32 | Description: Executes deep learning computer vision algorithms to process medical images and highlight suspicious lesions.
+ID: metadataExtractorVF | Hardware: 12 | Description: Extracts, structures, and cross-references clinical metadata alongside AI detection coordinates.
+ID: secureArchiverVF | Hardware: 24 | Description: Encrypts and securely archives the finalized medical images and structured AI diagnostic reports.
+ID: ballotIngesterVF | Hardware: 12 | Description: Receives and decrypts inbound digital ballot submissions from external client applications.
+ID: anonymizerVF | Hardware: 16 | Description: Strips voter identification metadata from the ballot package to guarantee absolute voter privacy.
+ID: integrityEnforcerVF | Hardware: 24 | Description: Applies cryptographic hashing and validation protocols to prevent data alteration or fraud.
+ID: voteCounterVF | Hardware: 16 | Description: Real-time aggregation module that tallies certified and anonymized votes.
+ID: auditLoggerVF | Hardware: 12 | Description: Maintains a tamper-proof audit trail of the entire electoral process for compliance verification.
+ID: dataExtractorVF | Hardware: 8 | Description: Extracts raw public datasets from heterogeneous governmental databases and legacy repositories.
+ID: formatNormalizerVF | Hardware: 16 | Description: Converts and normalizes raw data into standardized open formats like CSV, JSON, and XML.
+ID: metadataEnricherVF | Hardware: 12 | Description: Generates, structures, and attaches standardized metadata tags to improve dataset discoverability and search performance.
+ID: downloadProviderVF | Hardware: 16 | Description: Exposes public endpoints and handles file downloads, compression packages, and public data access requests.

@@ -1,0 +1,6 @@
+The healthcare provider medDiagnosticOp requires a radiology AI diagnostics service to manage 10,000 daily scans. 
+This pipeline receives high-resolution medical images, processes them with computer vision algorithms to highlight suspicious lesions, and stores them securely. 
+The service chain begins with a dicom ingester allocated at the edge, specifying that data compression is applied after it. The chain then connects to a lesion 
+analyzer located in the cloud and a metadata extractor located in the cloud; for these two components, it is mandatory that they are isolated on dedicated hardware 
+nodes, while ensuring the bandwidth from the initial ingester to the lesion analyzer remains higher than 500 mbps. Finally, the system routes the data to a secure 
+archiver located in the cloud, ensuring that data encoding is executed before it.

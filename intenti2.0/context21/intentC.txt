@@ -1,0 +1,5 @@
+The industrial provider autoWarehouseOp requires a remote control system for autonomous machines to manage 500 warehouse robots. 
+This software receives sensor data, calculates paths to avoid collisions, and sends steering and braking commands. Specifying that decoding 
+is applied after the initial telemetry processing, the service begins with a sensor data decoder allocated at the edge connected to a collision path solver 
+located in the cloud. Strictly requiring that the latency from the input stage to the output stage remains below 20 ms, and ensuring that encoding is executed 
+before the final instruction generator, the system completes the pipeline with a command encoder allocated at the edge.
