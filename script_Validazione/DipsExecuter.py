@@ -22,7 +22,6 @@ def trova_target_list(percorso_file):
             for riga in f:
                 match = pattern.search(riga)
                 if match:
-                    # match.group(1) contiene es: "meterGatewayVF, loadAnalyzerVF, gridDbVF"
                     # Rimuoviamo gli spazi e creiamo una lista pulita
                     vnfs = [v.strip() for v in match.group(1).split(',')]
                     return vnfs
@@ -94,15 +93,27 @@ def DipsExecutor(CARTELLA_DIPS, FILE_PL, FILE_TXT_OUTPUT):
             f.write("TARGET:NESSUN_TARGET\nERRORE_TIMEOUT")
 
 
-
-
 if __name__ == "__main__":
-    CARTELLA_DIPS = "/home/nick/UNI/dips"
+    # Percorso all'installazione di DIPS
+    CARTELLA_DIPS = "/home/nick/Scrivania/Tesi_git/dips"
+    
+    # Percorso della directory base che contiene le cartelle context1, context2, ..., context30
+    BASE_DIR = "/home/nick/Scrivania/Tesi_git/IBN_tesi_n.baicchi/intenti2.0" 
 
-    FILE_PL = "/home/nick/UNI/IBN_tesi_n.baicchi/intenti/intent0/intent0.pl"
-    FILE_TXT_OUTPUT = "output_intent0.txt"
-    DipsExecutor(CARTELLA_DIPS, FILE_PL, FILE_TXT_OUTPUT)
-
-    FILE_PL1 = "/home/nick/UNI/IBN_tesi_n.baicchi/intenti/intent1/intent1.pl"
-    FILE_TXT_OUTPUT1 = "output_intent1.txt"
-    DipsExecutor(CARTELLA_DIPS, FILE_PL1, FILE_TXT_OUTPUT1)
+    # Ciclo per entrare in context1 fino a context30
+    for i in range(1, 31):
+        context_folder = f"context{i}"
+        
+        # Costruisce il percorso per il file Prolog in ingresso
+        file_pl = os.path.join(BASE_DIR, context_folder, "facts.pl")
+        
+        # NUOVO: Costruisce il percorso per il file di output SALVANDOLO NELLA CARTELLA DEL CONTESTO
+        file_txt_output = os.path.join(BASE_DIR, context_folder, "resultDips.txt")
+        
+        print(f"\n=======================================================")
+        print(f"Inizio elaborazione per: {context_folder}")
+        
+        if os.path.exists(file_pl):
+            DipsExecutor(CARTELLA_DIPS, file_pl, file_txt_output)
+        else:
+            print(f"⚠️ ATTENZIONE: Il file {file_pl} non esiste. Salto l'esecuzione per {context_folder}.")

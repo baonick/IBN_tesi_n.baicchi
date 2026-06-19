@@ -1,7 +1,7 @@
 intent(vodDistributionIntent, vodStreamOp, 80000, vodDistributionService).
 
 
-propertyExpectation(bwReq, vodDistributionIntent, bandwidth, higher, hard, 10000, mbps, transcoderVF, cachingNodeVF).
+propertyExpectation(bwReq, vodDistributionIntent, bandwidth, greater, hard, 10000, megabps, transcoderVF, cachingNodeVF).
 propertyExpectation(affReq, vodDistributionIntent, affinity, same, soft, _, _, drmEncryptorVF, transcoderVF).
 
 propertyExpectation(encReq, vodDistributionIntent, encoding, _, drmEncryptorVF, _).
@@ -13,6 +13,6 @@ vnf(drmEncryptorVF, cloud, 16).
 vnf(transcoderVF, cloud, 32).
 vnf(cachingNodeVF, edge, 12).
 
-vnfXUser(drmEncryptorVF, m, (1, 80000), 24).
-vnfXUser(transcoderVF, l, (1, 80000), 64).
-vnfXUser(cachingNodeVF, m, (1, 80000), 16).
+vnfXUser(drmEncryptorVF, l, (1, 80000), 16).
+vnfXUser(transcoderVF, l, (1, 80000), 32).
+vnfXUser(cachingNodeVF, l, (1, 80000), 12).

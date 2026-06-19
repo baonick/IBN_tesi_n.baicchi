@@ -3,4 +3,4 @@ streaming event, transforms it into text via AI, translates it into three langua
 The deployed service chain includes, in order: an audio extractor allocated at the edge, a speech to text function located in the cloud, 
 a multi translator located in the cloud, and a subtitle injector allocated at the edge. Regarding requirements, caching is applied after 
 the audio extractor. Furthermore, the provider prefers that the total chain hardware remains lower than 100 gb. Finally, it is strictly 
-required that the latency from the speech to text function to the subtitle injector remains below 10 ms.
+required that the latency from the speech to text function to the subtitle injector remains below 20 ms.

@@ -1,6 +1,6 @@
 intent(eVotingIntent, secureVoteOp, 200000, certifiedVotingService).
 
-propertyExpectation(bwReq, eVotingIntent, bandwidth, higher, soft, 100, mbps, ballotIngesterVF, anonymizerVF).
+propertyExpectation(bwReq, eVotingIntent, bandwidth, greater, soft, 100, megabps, ballotIngesterVF, anonymizerVF).
 
 propertyExpectation(privReq, eVotingIntent, privacy, _, anonymizerVF, _).
 propertyExpectation(secReq, eVotingIntent, security, _, _, integrityEnforcerVF).
@@ -14,8 +14,8 @@ vnf(integrityEnforcerVF, cloud, 24).
 vnf(voteCounterVF, cloud, 16).
 vnf(auditLoggerVF, cloud, 12).
 
-vnfXUser(ballotIngesterVF, m, (1, 200000), 24).
-vnfXUser(anonymizerVF, m, (1, 200000), 32).
-vnfXUser(integrityEnforcerVF, l, (1, 200000), 48).
-vnfXUser(voteCounterVF, m, (1, 200000), 32).
-vnfXUser(auditLoggerVF, s, (1, 200000), 24).
+vnfXUser(ballotIngesterVF, l, (1, 200000), 12).
+vnfXUser(anonymizerVF, l, (1, 200000), 16).
+vnfXUser(integrityEnforcerVF, l, (1, 200000), 24).
+vnfXUser(voteCounterVF, l, (1, 200000), 16).
+vnfXUser(auditLoggerVF, l, (1, 200000), 12).

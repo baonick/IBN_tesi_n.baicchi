@@ -1,7 +1,7 @@
 intent(liveSubsIntent, liveSubsOp, 10000, liveSubtitlingService).
 
 propertyExpectation(hwReq, liveSubsIntent, totChainHW, lower, soft, 100, gb, _, _).
-propertyExpectation(latReq, liveSubsIntent, latency, lower, hard, 10, ms, speechToTextVF, subtitleInjectorVF).
+%propertyExpectation(latReq, liveSubsIntent, latency, lower, hard, 20, ms, speechToTextVF, subtitleInjectorVF).
 
 propertyExpectation(cachReq, liveSubsIntent, caching, _, audioExtractorVF, _).
 
@@ -12,7 +12,7 @@ vnf(speechToTextVF, cloud, 32).
 vnf(multiTranslatorVF, cloud, 24).
 vnf(subtitleInjectorVF, edge, 12).
 
-vnfXUser(audioExtractorVF, s, (1, 10000), 8).
-vnfXUser(speechToTextVF, l, (1, 10000), 64).
-vnfXUser(multiTranslatorVF, m, (1, 10000), 32).
-vnfXUser(subtitleInjectorVF, m, (1, 10000), 16).
+vnfXUser(audioExtractorVF, l, (1, 10000), 8).
+vnfXUser(speechToTextVF, l, (1, 10000), 32).
+vnfXUser(multiTranslatorVF, l, (1, 10000), 24).
+vnfXUser(subtitleInjectorVF, l, (1, 10000), 12).

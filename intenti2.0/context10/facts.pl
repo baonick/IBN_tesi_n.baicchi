@@ -13,8 +13,8 @@ vnf(renderDistributorVF, cloud, 32).
 vnf(frameAssemblerVF, cloud, 24).
 vnf(colorGraderVF, cloud, 20).
 
-vnfXUser(sceneReceiverVF, m, (1, 5000), 16).
-vnfXUser(assetValidatorVF, s, (1, 5000), 12).
-vnfXUser(renderDistributorVF, l, (1, 5000), 64).
-vnfXUser(frameAssemblerVF, m, (1, 5000), 32).
-vnfXUser(colorGraderVF, m, (1, 5000), 24).
+vnfXUser(sceneReceiverVF, l, (1, 5000), 16).
+vnfXUser(assetValidatorVF, l, (1, 5000), 12).
+vnfXUser(renderDistributorVF, l, (1, 5000), 32).
+vnfXUser(frameAssemblerVF, l, (1, 5000), 24).
+vnfXUser(colorGraderVF, l, (1, 5000), 20).

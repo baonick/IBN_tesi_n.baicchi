@@ -13,7 +13,7 @@ vnf(scrubbingFilterVF, cloud, 32).
 vnf(rateLimiterVF, cloud, 16).
 vnf(webServerVF, cloud, 12).
 
-vnfXUser(trafficAnalyzerVF, l, (1, inf), 16).
-vnfXUser(scrubbingFilterVF, l, (1, inf), 64).
-vnfXUser(rateLimiterVF, l, (1, inf), 32).
-vnfXUser(webServerVF, l, (1, inf), 24).
+vnfXUser(trafficAnalyzerVF, l, (1, inf), 8).
+vnfXUser(scrubbingFilterVF, l, (1, inf), 32).
+vnfXUser(rateLimiterVF, l, (1, inf), 16).
+vnfXUser(webServerVF, l, (1, inf), 12).

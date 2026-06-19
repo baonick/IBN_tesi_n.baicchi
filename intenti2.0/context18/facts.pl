@@ -1,7 +1,7 @@
 intent(smartParkingIntent, smartParkOp, 100000, smartParkingBackend).
 
 propertyExpectation(affReq, smartParkingIntent, affinity, dedicated, hard, _, _, mapUpdaterVF, paymentProcessorVF).
-propertyExpectation(latReq, smartParkingIntent, latency, lower, hard, 30, ms, sensorDataCollectorVF, securityEnforcerVF).
+propertyExpectation(latReq, smartParkingIntent, latency, lower, hard, 100, ms, sensorDataCollectorVF, securityEnforcerVF).
 
 propertyExpectation(compReq, smartParkingIntent, compression, _, sensorDataCollectorVF, _).
 propertyExpectation(encReq, smartParkingIntent, encoding, _, _, paymentProcessorVF).
@@ -16,8 +16,8 @@ vnf(paymentProcessorVF, cloud, 24).
 vnf(statusLoggerVF, cloud, 12).
 vnf(securityEnforcerVF, cloud, 16).
 
-vnfXUser(sensorDataCollectorVF, s, (1, 100000), 16).
-vnfXUser(mapUpdaterVF, m, (1, 100000), 32).
-vnfXUser(paymentProcessorVF, l, (1, 100000), 64).
-vnfXUser(statusLoggerVF, m, (1, 100000), 24).
-vnfXUser(securityEnforcerVF, m, (1, 100000), 32).
+vnfXUser(sensorDataCollectorVF, l, (1, 100000), 8).
+vnfXUser(mapUpdaterVF, l, (1, 100000), 16).
+vnfXUser(paymentProcessorVF, l, (1, 100000), 24).
+vnfXUser(statusLoggerVF, l, (1, 100000), 12).
+vnfXUser(securityEnforcerVF, l, (1, 100000), 16).

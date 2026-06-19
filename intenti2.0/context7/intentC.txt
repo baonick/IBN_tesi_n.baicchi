@@ -2,5 +2,5 @@ Cloud gaming service provider GamingOp needs a service to handle 40,000 active p
 delivers the video stream to the user, ensuring very low latency to prevent the game from becoming unplayable. Specifying that encoding 
 be applied after the initial engine, the service begins with a game executor hosted in the cloud. Preferring that this first component 
 operate on a dedicated node, the chain includes a stream packer hosted in the cloud. Finally, strictly requiring that the latency from 
-the packaging service to the final distribution optimizer remain less than 5 ms and that it operates on a dedicated node, the system 
+the packaging service to the final distribution optimizer remain less than 30 ms and that it operates on a dedicated node, the system 
 completes the pipeline with a distribution optimizer hosted at the edge.

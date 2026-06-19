@@ -11,6 +11,6 @@ vnf(socialDataReceiverVF, edge, 16).
 vnf(sentimentAnalyzerVF, cloud, 32).
 vnf(reportDispatcherVF, cloud, 16).
 
-vnfXUser(socialDataReceiverVF, m, (1, 100000), 32).
-vnfXUser(sentimentAnalyzerVF, l, (1, 100000), 64).
-vnfXUser(reportDispatcherVF, m, (1, 100000), 32).
+vnfXUser(socialDataReceiverVF, l, (1, 100000), 16).
+vnfXUser(sentimentAnalyzerVF, l, (1, 100000), 32).
+vnfXUser(reportDispatcherVF, l, (1, 100000), 16).

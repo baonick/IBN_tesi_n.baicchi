@@ -2,4 +2,4 @@ The logistics provider deliveryLogisticsOp requires a route optimization service
 analyzes city traffic data, constantly recalculates the best route for each courier, and updates their terminals. The deployed service chain includes, in order: 
 a gps ingester allocated at the edge, a traffic analyzer located in the cloud, a route optimizer located in the cloud, and a terminal updater allocated at the edge. 
 Regarding requirements, compression is applied after the gps ingester. Furthermore, decoding is executed before the terminal updater. Finally, it is strictly required 
-that the latency from the begin to the end of the chain remains below 50 ms.
+that the latency from the begin to the end of the chain remains below 80 ms.

@@ -14,8 +14,8 @@ vnf(sandboxSimulatorVF, cloud, 32).
 vnf(optimizationEngineVF, cloud, 24).
 vnf(reportGeneratorVF, cloud, 16).
 
-vnfXUser(codeReceiverVF, s, (1, 20000), 16).
-vnfXUser(syntaxValidatorVF, m, (1, 20000), 24).
-vnfXUser(sandboxSimulatorVF, l, (1, 20000), 64).
-vnfXUser(optimizationEngineVF, l, (1, 20000), 48).
-vnfXUser(reportGeneratorVF, m, (1, 20000), 32).
+vnfXUser(codeReceiverVF, l, (1, 20000), 8).
+vnfXUser(syntaxValidatorVF, l, (1, 20000), 12).
+vnfXUser(sandboxSimulatorVF, l, (1, 20000), 32).
+vnfXUser(optimizationEngineVF, l, (1, 20000), 24).
+vnfXUser(reportGeneratorVF, l, (1, 20000), 16).
