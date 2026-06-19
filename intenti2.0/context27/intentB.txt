@@ -1,0 +1,5 @@
+The marketing provider sentimentOp requires a customer sentiment analysis platform to manage 100,000 daily reviews and comments. This software scans social media 
+inputs, identifies prevailing emotions toward specific products, and sends weekly reports to the marketing department. The service chain begins with a social data 
+receiver allocated at the edge, specifying that data privacy mechanisms are applied after it. The chain then connects to a sentiment analyzer located in the cloud, 
+ensuring that system security is executed before this component. Finally, the pipeline routes to a report dispatcher located in the cloud, mandating that this 
+reporting block and the previous sentiment analyzer are hosted together on the same physical infrastructure.

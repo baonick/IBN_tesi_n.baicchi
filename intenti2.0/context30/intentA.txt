@@ -1,0 +1,7 @@
+The software provider devToolsOp requires a code efficiency analyzer service to manage 20,000 daily evaluation requests. This platform receives code snippets, 
+executes a simulated runtime execution, and suggests specific optimizations to reduce computational resource consumption. 
+The deployed service chain includes, in order: a code receiver allocated at the edge, a syntax validator located in the cloud, 
+a sandbox simulator located in the cloud, an optimization engine located in the cloud, and a report generator located in the cloud. 
+Regarding operational requirements, data caching is applied after the syntax validator to avoid processing identical code inputs. Furthermore, 
+data compression is applied after the final report generator to streamline delivery. Finally, the provider prefers that the total chain hardware 
+remains lower than 110 gb to minimize overall infrastructure overhead.

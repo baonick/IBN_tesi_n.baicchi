@@ -1,0 +1,7 @@
+The industrial provider factoryCloudOp requires an augmented reality back-end service to support 500 active smart glasses on the shop floor. 
+This service sends visual technical instructions to workers' headsets, overlaying maintenance data on the framed machinery in real time. 
+The service chain begins with an ar stream receiver allocated at the edge. The chain then connects to an ar pose estimator located in the 
+cloud and a data overlay engine located in the cloud; for these two intensive blocks, it is mandatory that they are isolated on dedicated hardware nodes, 
+while ensuring that the network bandwidth between the initial stream receiver and the pose estimator remains higher than 200 mbps. Finally, the system 
+routes the processed graphics to an ar stream dispatcher located in the cloud, ensuring it is strictly required that the latency from the stream receiver 
+to this stream dispatcher remains below 12 ms. For the overall infrastructure, it is ideally preferred that the total chain hardware remains lower than 90 gb.

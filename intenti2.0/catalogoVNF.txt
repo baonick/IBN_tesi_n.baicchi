@@ -99,3 +99,25 @@ ID: dataExtractorVF | Hardware: 8 | Description: Extracts raw public datasets fr
 ID: formatNormalizerVF | Hardware: 16 | Description: Converts and normalizes raw data into standardized open formats like CSV, JSON, and XML.
 ID: metadataEnricherVF | Hardware: 12 | Description: Generates, structures, and attaches standardized metadata tags to improve dataset discoverability and search performance.
 ID: downloadProviderVF | Hardware: 16 | Description: Exposes public endpoints and handles file downloads, compression packages, and public data access requests.
+ID: sessionIngesterVF | Hardware: 8 | Description: Terminates incoming connection requests and manages active student dashboard sessions.
+ID: resourceAllocatorVF | Hardware: 16 | Description: Provisions and orchestrates temporary, isolated containerized programming environments for each student.
+ID: activityMonitorVF | Hardware: 24 | Description: Analyzes commands and executed code in real time to detect unauthorized usage, such as crypto-mining or malicious scripts.
+ID: userPrivacyEnforcerVF | Hardware: 12 | Description: Anonymizes student identities and masks sensitive academic data across the platform.
+ID: auditLoggerVF | Hardware: 12 | Description: Records comprehensive session logs, resource utilization history, and environment lifecycles for administrative review.
+ID: outputPackagerVF | Hardware: 16 | Description: Compiles, packages, and prepares student code submissions and workspace snapshots for download or grading.
+ID: socialDataReceiverVF | Hardware: 16 | Description: Ingests and aggregates real-time text streams, comments, and reviews from various social media platform APIs.
+ID: sentimentAnalyzerVF | Hardware: 32 | Description: Runs natural language processing (NLP) and machine learning models to detect and classify prevailing user emotions.
+ID: reportDispatcherVF | Hardware: 16 | Description: Compiles analytical insights into structured weekly summaries and dispatches them to marketing teams.
+ID: arStreamReceiverVF | Hardware: 12 | Description: Ingests real-time video streams and telemetry tracking data from workers' AR headsets.
+ID: arPoseEstimatorVF | Hardware: 24 | Description: Processes spatial data and computer vision tracking to align virtual coordinates with physical machinery.
+ID: dataOverlayEngineVF | Hardware: 32 | Description: Fetches real-time maintenance logs and dynamically renders the visual instruction graphics.
+ID: arStreamDispatcherVF | Hardware: 16 | Description: Streams the rendered technical overlay back to the workers' smart glasses with ultra-low streaming latency.
+ID: subscriptionIngesterVF | Hardware: 12 | Description: Ingests API calls, webhook events from external payment gateways, and direct client subscription requests.
+ID: billingCycleProcessorVF | Hardware: 24 | Description: Executes core logic for recurring billing, subscription state machine transitions, and tier upgrade calculations.
+ID: dunningManagerVF | Hardware: 16 | Description: Triggers and orchestrates automated retry schedules, account suspensions, and notification alerts for expired credit cards.
+ID: invoiceGeneratorVF | Hardware: 16 | Description: Compiles financial transaction records and generates secure, compliant digital invoices for clients.
+ID: codeReceiverVF | Hardware: 8 | Description: Ingests raw code snippets and scripts transmitted from client applications or IDE extensions.
+ID: syntaxValidatorVF | Hardware: 12 | Description: Parses inbound source code, executes static analysis, and builds abstract syntax trees (AST).
+ID: sandboxSimulatorVF | Hardware: 32 | Description: Executes isolated, safe virtual runtime simulations to capture compute footprint and execution metrics.
+ID: optimizationEngineVF | Hardware: 24 | Description: Evaluates performance bottlenecks and applies rule-based logic to suggest specific optimization fixes.
+ID: reportGeneratorVF | Hardware: 16 | Description: Aggregates benchmarking statistics and compiles structured, actionable optimization reports for developers.

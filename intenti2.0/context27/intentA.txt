@@ -1,0 +1,6 @@
+The marketing provider sentimentOp requires a customer sentiment analysis platform to manage 100,000 daily reviews and comments. This software scans social media 
+inputs, identifies prevailing emotions toward specific products, and sends weekly reports to the marketing department. The deployed service chain includes, 
+in order: a social data receiver allocated at the edge, a sentiment analyzer located in the cloud, and a report dispatcher located in the cloud. Regarding 
+system constraints, data privacy mechanisms are applied after the social data receiver, while system security is executed before the sentiment analyzer to 
+safeguard the AI processing logic. Finally, to eliminate data transfer overhead, it is mandatory that the sentiment analyzer and the report dispatcher are 
+co-located on the same physical hosting node.
