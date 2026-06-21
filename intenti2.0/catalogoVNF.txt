@@ -1,123 +1,183 @@
+
+1)
 ID: webFilterVF | Hardware: 4 | Description: Filters dangerous websites and malicious URLs.
 ID: malwareScannerVF | Hardware: 16 | Description: Scans downloaded files in a sandbox against malware.
 ID: dlpEngineVF | Hardware: 8 | Description: Prevents sensitive data leakage outside the network.
+
+2)
 ID: mailGatewayVF | Hardware: 4 | Description: Intercepts incoming corporate emails at the network perimeter.
 ID: phishingFilterVF | Hardware: 8 | Description: Scans and removes malicious phishing links from email bodies.
 ID: sandboxScannerVF | Hardware: 16 | Description: Analyzes attachments in an isolated environment to detect malware.
 ID: safeDeliveryVF | Hardware: 4 | Description: Delivers sanitized and approved messages to the internal corporate server.
-ID: trafficAnalyzerVF | Hardware: 8 | Description: Continuously monitors incoming network packets to detect volumetric anomalies and traffic spikes.
+
+3)
+ID: networkTrafficAnalyzerVF | Hardware: 8 | Description: Continuously monitors incoming network packets to detect volumetric anomalies and traffic spikes.
 ID: scrubbingFilterVF | Hardware: 32 | Description: Filters out malicious DDoS attack traffic, discarding bad packets while passing legitimate ones.
 ID: rateLimiterVF | Hardware: 16 | Description: Enforces per-IP and per-service traffic thresholds to prevent resource exhaustion.
 ID: webServerVF | Hardware: 12 | Description: The backend web hosting engine delivering the actual application contents to legitimate users.
+
+4)
 ID: dbScannerVF | Hardware: 16 | Description: Scans corporate databases and identifies unprotected personally identifiable information (PII).
 ID: anonymizerVF | Hardware: 24 | Description: Applies automated data masking, pseudonymization, and anonymization algorithms to sensitive records.
 ID: reportGeneratorVF | Hardware: 8 | Description: Compiles audit trails and generates structured compliance reports for data protection regulators.
+
+5)
 ID: trafficSplitterVF | Hardware: 8 | Description: Intercepts network flows and splits HTTPS traffic into metadata streams and encrypted payloads.
 ID: featureExtractorVF | Hardware: 16 | Description: Extracts TLS fingerprinting, packet length, and timing features without decryption.
 ID: aiClassifierVF | Hardware: 32 | Description: Runs machine learning models to classify traffic patterns as benign, malware, or botnet activity.
 ID: alertManagerVF | Hardware: 4 | Description: Generates real-time alerts and records logs for detected security anomalies.
 ID: policyEnforcerVF | Hardware: 8 | Description: Dynamically blocks, drops, or reroutes malicious encrypted traffic flows.
+
+6)
 ID: msgReceiverVF | Hardware: 8 | Description: Receives incoming digital communications and routes them into the validation pipeline.
 ID: sigVerifierVF | Hardware: 16 | Description: Verifies the digital signature of the sender using public cryptographic keys and certificate revocation lists.
 ID: integrityCheckerVF | Hardware: 12 | Description: Performs integrity checks on the message payload and attachments using cryptographic hashing.
 ID: legalVaultVF | Hardware: 32 | Description: Archives the validated message and its metadata into a long-term legally compliant storage vault.
+
+7)
 ID: gameExecutorVF | Hardware: 32 | Description: Executes the video game logic, processes player inputs, and renders high-definition 3D graphics.
 ID: streamPackerVF | Hardware: 16 | Description: Captures the rendered frame buffers and audio, compressing them into a highly efficient streaming format.
 ID: deliveryOptimizerVF | Hardware: 8 | Description: Minimizes transmission jitter and dynamically manages packet buffering directly at the edge for real-time video delivery.
+
+8)
 ID: streamIngesterVF | Hardware: 12 | Description: Receives, aggregates, and synchronizes live video feeds from multiple camera angles at the source.
 ID: cloudStudioVF | Hardware: 32 | Description: Provides real-time video mixing, multi-camera switching, and cloud-based directorial production controls.
 ID: graphicInjectorVF | Hardware: 16 | Description: Overlays dynamic advertising graphics, logos, and real-time promotional elements onto the live broadcast.
 ID: streamDistributorVF | Hardware: 24 | Description: Replicates, transcodes, and broadcasts the finalized live video stream to thousands of concurrent viewers.
+
+9)
 ID: drmEncryptorVF | Hardware: 16 | Description: Encrypts incoming movie assets using multi-DRM keys and manages digital rights licensing configurations.
 ID: transcoderVF | Hardware: 32 | Description: Compresses, transcodes, and encodes high-definition video files into multiple bitrates and resolution formats.
 ID: cachingNodeVF | Hardware: 12 | Description: Caches and stores pre-distributed video content closer to end-users to ensure smooth playback and prevent buffering.
+
+10)
 ID: sceneReceiverVF | Hardware: 16 | Description: Ingests raw 3D digital scenes, textures, and geometry assets from local production studios.
 ID: assetValidatorVF | Hardware: 12 | Description: Verifies the integrity of 3D assets, textures, and file paths before rendering begins.
 ID: renderDistributorVF | Hardware: 32 | Description: Splits the rendering workload into individual frame tasks and dynamically distributes them across the compute cluster.
 ID: frameAssemblerVF | Hardware: 24 | Description: Collects completed frames, verifies structural integrity, and reassembles them into a continuous sequence.
 ID: colorGraderVF | Hardware: 20 | Description: Applies automated color correction, grading, and visual effects encoding to the reassembled video sequence.
+
+11)
 ID: audioExtractorVF | Hardware: 8 | Descrizione: Intercetta ed estrae la traccia audio dal flusso video in diretta con buffering minimo.
 ID: speechToTextVF | Hardware: 32 | Descrizione: Trascrive l'audio estratto in testo in tempo reale utilizzando reti neurali AI avanzate.
 ID: multiTranslatorVF | Hardware: 24 | Descrizione: Traduce simultaneamente il testo trascritto in tre diverse lingue di destinazione.
 ID: subtitleInjectorVF | Hardware: 12 | Descrizione: Codifica e inserisce il testo tradotto nel flusso video come sottotitoli sincronizzati in tempo reale.
+
+12)
 ID: ocrScannerVF | Hardware: 16 | Description: Reads uploaded PDF files and converts scanned images into machine-readable digital text.
 ID: textExtractorVF | Hardware: 12 | Description: Parses the digital text to identify key entities, metadata, and structural document features.
-ID: aiClassifierVF | Hardware: 32 | Description: Uses natural language processing models to categorize the document as an invoice, contract, or reminder.
+ID: aiDocumentClassifierVF | Hardware: 32 | Description: Uses natural language processing models to categorize the document as an invoice, contract, or reminder.
 ID: dataRedactorVF | Hardware: 16 | Description: Masks personally identifiable information and sensitive financial data within the document to ensure compliance.
 ID: documentRouterVF | Hardware: 8 | Description: Forwards the categorized and processed document to the appropriate corporate department's inbox.
+
+13)
 ID: requestInterceptorVF | Hardware: 8 | Description: Captures real-time digital payment requests from gateways and sanitizes incoming data payloads.
 ID: profileMatcherVF | Hardware: 16 | Description: Compares transaction details against historical user spending patterns using optimized lookup tables.
 ID: mlAnalyzerVF | Hardware: 32 | Description: Executes deep learning inference to calculate fraud probability scores in real-time.
 ID: policyEnforcerVF | Hardware: 12 | Description: Applies security policies to authorize or block transactions based on the generated risk scores.
 ID: responseEmitterVF | Hardware: 8 | Description: Sends the final authorization or rejection response back to the originating payment gateway.
+
+14)
 ID: marketFeedVF | Hardware: 16 | Description: Ingests and normalizes raw, real-time stock market tick data directly from exchange gateways.
 ID: tradingAlgoVF | Hardware: 32 | Description: Executes complex quantitative decision algorithms to identify profitable trading opportunities in microseconds.
 ID: riskCheckerVF | Hardware: 16 | Description: Validates proposed trades against compliance and financial exposure limits before execution.
 ID: orderDispatcherVF | Hardware: 8 | Description: Routes approved purchase and sell orders to the market using the fastest available network path.
+
+15)
 ID: documentReceiverVF | Hardware: 12 | Description: Ingests and standardizes photos of identity documents uploaded by users.
 ID: authenticityCheckerVF | Hardware: 24 | Description: Extracts data and verifies the physical authenticity of the uploaded documents using computer vision.
 ID: amlMatcherVF | Hardware: 16 | Description: Cross-references extracted personal data against international anti-money laundering (AML) blacklists.
 ID: profileCreatorVF | Hardware: 16 | Description: Consolidates the verified data to generate and securely store the final digital identity profile.
+
+16)
 ID: saleDataCollectorVF | Hardware: 8 | Description: Ingests raw sales transaction data from local point-of-sale systems.
 ID: xmlConverterVF | Hardware: 16 | Description: Transforms sales data into the standardized XML format required for electronic invoicing.
 ID: digitalSignerVF | Hardware: 12 | Description: Applies a secure digital signature to the XML files to ensure legal authenticity.
 ID: taxAuthorityTransmitterVF | Hardware: 8 | Description: Interfaces with the national tax authority's API to transmit and validate the signed electronic invoices.
+
+17)
 ID: gpsIngesterVF | Hardware: 8 | Description: Collects and normalizes raw GPS telemetry coordinates from the courier fleet in real time.
 ID: trafficAnalyzerVF | Hardware: 24 | Description: Analyzes live city traffic data, road closures, and historical congestion patterns.
 ID: routeOptimizerVF | Hardware: 32 | Description: Executes pathfinding algorithms to constantly recalculate the fastest and most fuel-efficient route for each delivery.
 ID: terminalUpdaterVF | Hardware: 12 | Description: Packages the new route instructions and synchronizes them directly to the mobile devices of the couriers.
+
+18)
 ID: sensorDataCollectorVF | Hardware: 8 | Description: Ingests occupancy signals from IoT parking stall sensors across the city.
 ID: mapUpdaterVF | Hardware: 16 | Description: Processes occupancy data to maintain a real-time digital map of available parking spaces.
 ID: paymentProcessorVF | Hardware: 24 | Description: Manages secure financial transactions and automated billing through the parking app.
 ID: statusLoggerVF | Hardware: 12 | Description: Maintains a comprehensive audit log of parking events, billing history, and system status updates.
 ID: securityEnforcerVF | Hardware: 16 | Description: Implements authentication and data encryption protocols to protect user and payment data.
+
+19)
 ID: flightTelemetryIngesterVF | Hardware: 12 | Description: Receives raw telemetry, GPS coordinates, and real-time status data from the active drone fleet.
 ID: collisionAvoiderVF | Hardware: 32 | Description: Processes incoming flight paths to proactively detect and resolve potential mid-air software collisions.
 ID: commandPrioritizerVF | Hardware: 16 | Description: Ensures critical control signals and emergency instructions bypass standard traffic and receive immediate processing.
 ID: routeDispatcherVF | Hardware: 12 | Description: Packages and transmits updated, safe flight plans and real-time commands back to individual drones.
+
+20)
 ID: telemetryCollectorVF | Hardware: 8 | Description: Gathers real-time raw telemetry streams (CPU, RAM, Temp) from thousands of virtual machines.
 ID: dataAggregatorVF | Hardware: 16 | Description: Normalizes and aggregates incoming telemetry streams into structured time-series datasets.
 ID: anomalyDetectorVF | Hardware: 24 | Description: Runs predictive AI models to identify abnormal patterns and potential hardware failure precursors.
 ID: alertDispatcherVF | Hardware: 8 | Description: Issues instant alerts to maintenance teams when critical thresholds or anomalies are detected.
+
+21)
 ID: sensorDataDecoderVF | Hardware: 16 | Description: Receives and decodes raw telemetry and sensor data streams from autonomous warehouse vehicles.
 ID: collisionPathSolverVF | Hardware: 32 | Description: Analyzes spatial data to calculate collision-free trajectories for the fleet in real-time.
 ID: commandEncoderVF | Hardware: 16 | Description: Encodes finalized steering and braking instructions into secure control signals for the vehicles.
+
+22)
 ID: patientDataReceiverVF | Hardware: 8 | Description: Receives and terminates incoming data streams transmitted from external home patient monitoring devices.
 ID: cardiacAnomalyAnalyzerVF | Hardware: 24 | Description: Runs specialized algorithms to analyze heart rate variability and detect potential cardiac anomalies.
 ID: medicalAlertLoggerVF | Hardware: 12 | Description: Records anonymized health events, anomalies, and system operations for medical auditing purposes.
 ID: doctorNotifierVF | Hardware: 8 | Description: Routes urgent alerts and critical diagnostic data directly to the workstation of the on-duty physician.
+
+23)
 ID: dicomIngesterVF | Hardware: 16 | Description: Receives and terminates high-resolution DICOM medical image streams (CT/MRI) transmitted from external hospital networks.
 ID: lesionAnalyzerVF | Hardware: 32 | Description: Executes deep learning computer vision algorithms to process medical images and highlight suspicious lesions.
 ID: metadataExtractorVF | Hardware: 12 | Description: Extracts, structures, and cross-references clinical metadata alongside AI detection coordinates.
 ID: secureArchiverVF | Hardware: 24 | Description: Encrypts and securely archives the finalized medical images and structured AI diagnostic reports.
+
+24)
 ID: ballotIngesterVF | Hardware: 12 | Description: Receives and decrypts inbound digital ballot submissions from external client applications.
-ID: anonymizerVF | Hardware: 16 | Description: Strips voter identification metadata from the ballot package to guarantee absolute voter privacy.
+ID: anonymizerVoteVF | Hardware: 16 | Description: Strips voter identification metadata from the ballot package to guarantee absolute voter privacy.
 ID: integrityEnforcerVF | Hardware: 24 | Description: Applies cryptographic hashing and validation protocols to prevent data alteration or fraud.
 ID: voteCounterVF | Hardware: 16 | Description: Real-time aggregation module that tallies certified and anonymized votes.
-ID: auditLoggerVF | Hardware: 12 | Description: Maintains a tamper-proof audit trail of the entire electoral process for compliance verification.
+ID: electoralAuditLoggerVF | Hardware: 12 | Description: Maintains a tamper-proof audit trail of the entire electoral process for compliance verification.
+
+25)
 ID: dataExtractorVF | Hardware: 8 | Description: Extracts raw public datasets from heterogeneous governmental databases and legacy repositories.
 ID: formatNormalizerVF | Hardware: 16 | Description: Converts and normalizes raw data into standardized open formats like CSV, JSON, and XML.
 ID: metadataEnricherVF | Hardware: 12 | Description: Generates, structures, and attaches standardized metadata tags to improve dataset discoverability and search performance.
 ID: downloadProviderVF | Hardware: 16 | Description: Exposes public endpoints and handles file downloads, compression packages, and public data access requests.
+
+26)
 ID: sessionIngesterVF | Hardware: 8 | Description: Terminates incoming connection requests and manages active student dashboard sessions.
 ID: resourceAllocatorVF | Hardware: 16 | Description: Provisions and orchestrates temporary, isolated containerized programming environments for each student.
 ID: activityMonitorVF | Hardware: 24 | Description: Analyzes commands and executed code in real time to detect unauthorized usage, such as crypto-mining or malicious scripts.
 ID: userPrivacyEnforcerVF | Hardware: 12 | Description: Anonymizes student identities and masks sensitive academic data across the platform.
 ID: auditLoggerVF | Hardware: 12 | Description: Records comprehensive session logs, resource utilization history, and environment lifecycles for administrative review.
 ID: outputPackagerVF | Hardware: 16 | Description: Compiles, packages, and prepares student code submissions and workspace snapshots for download or grading.
+
+27)
 ID: socialDataReceiverVF | Hardware: 16 | Description: Ingests and aggregates real-time text streams, comments, and reviews from various social media platform APIs.
 ID: sentimentAnalyzerVF | Hardware: 32 | Description: Runs natural language processing (NLP) and machine learning models to detect and classify prevailing user emotions.
 ID: reportDispatcherVF | Hardware: 16 | Description: Compiles analytical insights into structured weekly summaries and dispatches them to marketing teams.
+
+28)
 ID: arStreamReceiverVF | Hardware: 12 | Description: Ingests real-time video streams and telemetry tracking data from workers' AR headsets.
 ID: arPoseEstimatorVF | Hardware: 24 | Description: Processes spatial data and computer vision tracking to align virtual coordinates with physical machinery.
 ID: dataOverlayEngineVF | Hardware: 32 | Description: Fetches real-time maintenance logs and dynamically renders the visual instruction graphics.
 ID: arStreamDispatcherVF | Hardware: 16 | Description: Streams the rendered technical overlay back to the workers' smart glasses with ultra-low streaming latency.
+
+29)
 ID: subscriptionIngesterVF | Hardware: 12 | Description: Ingests API calls, webhook events from external payment gateways, and direct client subscription requests.
 ID: billingCycleProcessorVF | Hardware: 24 | Description: Executes core logic for recurring billing, subscription state machine transitions, and tier upgrade calculations.
 ID: dunningManagerVF | Hardware: 16 | Description: Triggers and orchestrates automated retry schedules, account suspensions, and notification alerts for expired credit cards.
 ID: invoiceGeneratorVF | Hardware: 16 | Description: Compiles financial transaction records and generates secure, compliant digital invoices for clients.
+
+30)
 ID: codeReceiverVF | Hardware: 8 | Description: Ingests raw code snippets and scripts transmitted from client applications or IDE extensions.
 ID: syntaxValidatorVF | Hardware: 12 | Description: Parses inbound source code, executes static analysis, and builds abstract syntax trees (AST).
 ID: sandboxSimulatorVF | Hardware: 32 | Description: Executes isolated, safe virtual runtime simulations to capture compute footprint and execution metrics.
 ID: optimizationEngineVF | Hardware: 24 | Description: Evaluates performance bottlenecks and applies rule-based logic to suggest specific optimization fixes.
-ID: reportGeneratorVF | Hardware: 16 | Description: Aggregates benchmarking statistics and compiles structured, actionable optimization reports for developers.
+ID: developersReportGeneratorVF | Hardware: 16 | Description: Aggregates benchmarking statistics and compiles structured, actionable optimization reports for developers.
