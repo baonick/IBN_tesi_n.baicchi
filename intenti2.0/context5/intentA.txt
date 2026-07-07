@@ -1,6 +1,6 @@
 The network security provider secureCryptoOp requires an encrypted traffic analysis service to support 25,000 corporate users. This service inspects HTTPS flows 
-without fully decrypting them, using AI to identify malware or botnet patterns. The deployed service chain includes, in order: a traffic splitter allocated at 
-the edge, a feature extractor located in the edge, an ai classifier located in the cloud, an alert manager located in the cloud, and a policy enforcer located 
-in the cloud. Regarding requirements, decoding is applied after the traffic splitter. Furthermore, the provider prefers to keep the total chain hardware lower 
-than 80 gigabytes. It is mandatory that the traffic splitter and the feature extractor are deployed on the same hosting node. Finally, security is enforced 
-before the policy enforcer.
+without fully decrypting them, using AI to identify malware or botnet patterns. The deployed service chain includes, in order: trafficSplitterVF allocated at 
+the edge, a featureExtractorVF located in the edge, an aiClassifierVF located in the cloud, an alertManagerVF located in the cloud, and a policyEnforcerVF located 
+in the cloud. Regarding requirements, decoding is applied after the trafficSplitterVF. Furthermore, the provider prefers to keep the total chain hardware lower 
+than 80 gigabytes. It is mandatory that the trafficSplitterVF and the featureExtractorVF are deployed on the same hosting node. Finally, security is enforced 
+before the policyEnforcerVF.

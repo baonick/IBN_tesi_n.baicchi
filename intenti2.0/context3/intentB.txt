@@ -1,6 +1,6 @@
 The website security provider ddosProtectionOp requires an anti-DDoS defense system to handle 50,000 active web users. 
-This system analyzes incoming traffic, cleans malicious flows, and ensures server availability. The service chain starts with a traffic analyzer located at the edge. 
-A bandwidth higher than 500 megabps is strictly required from this analyzer to a scrubbing filter located in the cloud. For this filter, it is mandatory 
-that security is executed before it. The chain then connects to a rate limiter located in the cloud. It is ideally preferred that logging is applied after 
-the rate limiter. Finally, the traffic is directed to a web server located in the cloud, where a latency lower than 10 ms is desired between the rate limiter 
-and the server.
+This system analyzes incoming traffic, cleans malicious flows, and ensures server availability. The service chain starts with a networkTrafficAnalyzerVF located at the edge. 
+A bandwidth higher than 500 megabps is strictly required from this networkTrafficAnalyzerVF to a scrubbingFilterVF located in the cloud. For this scrubbingFilterVF, it is mandatory 
+that security is executed before it. The chain then connects to a rateLimiterVF located in the cloud. It is ideally preferred that logging is applied after 
+the rateLimiterVF. Finally, the traffic is directed to a webServerVF located in the cloud, where a latency lower than 10 ms is desired between the rateLimiterVF 
+and the webServerVF.

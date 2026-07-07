@@ -1,7 +1,7 @@
 The media provider vodStreamOp requires a video on demand distribution service to manage 80,000 active subscribers. 
 This service optimizes movie delivery by encrypting content with DRM, compressing it into different formats, and storing it on 
-nodes close to the user to avoid buffering. The deployed service chain includes, in order: a DRM encryptor allocated in the cloud, 
-a transcoder allocated in the cloud, and a caching node allocated at the edge. Regarding requirements, encoding is applied after 
-the DRM encryptor. Furthermore, it is strictly required that the bandwidth from the transcoder to the caching 
-node remains higher than 10000 mbps. Finally, the provider prefers that the DRM encryptor and the transcoder operate on the same node, 
-while decoding is applied before the caching node.
+nodes close to the user to avoid buffering. The deployed service chain includes, in order: a drmEncryptorVF allocated in the cloud, 
+a transcoderVF allocated in the cloud, and a cachingNodeVF node allocated at the edge. Regarding requirements, encoding is applied after 
+the drmEncryptorVF. Furthermore, it is strictly required that the bandwidth from the transcoderVF to the cachingNodeVF 
+node remains higher than 10000 mbps. Finally, the provider prefers that the drmEncryptorVF and the transcoderVF operate on the same node, 
+while decoding is applied before the cachingNodeVF node.

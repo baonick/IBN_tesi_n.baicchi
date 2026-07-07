@@ -1,7 +1,7 @@
 The media provider mediaBroadcastOp requires a live multicamera streaming service to support 30,000 concurrent viewers. 
 This system receives video streams from different angles, allows cloud mixing, adds advertising graphics, and distributes the signal to 
-thousands of viewers simultaneously. Specifying that compression is applied after the initial ingesting function, the service begins with a 
-stream ingester allocated at the edge connected to a cloud studio located in the cloud. Mandating a bandwidth higher than 5000 mbps between 
-the upcoming graphics layer and the final destination, the chain incorporates a graphic injector located in the cloud. 
-Preferring that the total chain hardware is lower than 150 gb, and ensuring that caching is executed before the final distribution engine, 
-the system completes the pipeline with a stream distributor located in the cloud.
+thousands of viewers simultaneously. Specifying that compression is applied after the initial streamIngesterVF, the service begins with a 
+streamIngesterVF allocated at the edge connected to a cloudStudioVF located in the cloud. Mandating a bandwidth higher than 5000 mbps between 
+the upcoming graphicInjectorVF and the final destination, the chain incorporates a graphicInjectorVF located in the cloud. 
+Preferring that the total chain hardware is lower than 150 gb, and ensuring that caching is executed before the final streamDistributorVF, 
+the system completes the pipeline with a streamDistributorVF located in the cloud.
