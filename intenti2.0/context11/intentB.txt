@@ -1,6 +1,6 @@
 The media provider liveSubsOp requires a live subtitling service to manage 10,000 concurrent streams. This service intercepts the audio of a 
 streaming event, transforms it into text via AI, translates it into three languages, and reinserts it into the video feed as subtitles. 
-The service chain begins with an audio extractor allocated at the edge. For this component, caching is applied after it. The chain then 
-connects to a speech to text function located in the cloud followed by a multi translator located in the cloud. For the entire deployment, 
-it is ideally preferred that the total chain hardware remains lower than 100 gb. Finally, the text is routed to a subtitle injector allocated 
-at the edge, ensuring that the latency from the speech to text function to this subtitle injector must remain below 20 ms.
+The service chain begins with an audioExtractorVF allocated at the edge. For this component, caching is applied after it. The chain then 
+connects to a speechToTextVF located in the cloud followed by a multiTranslatorVF located in the cloud. For the entire deployment, 
+it is ideally preferred that the total chain hardware remains lower than 100 gb. Finally, the text is routed to a subtitleInjectorVF allocated 
+at the edge, ensuring that the latency from the speechToTextVF to this subtitleInjectorVF must remain below 20 ms.

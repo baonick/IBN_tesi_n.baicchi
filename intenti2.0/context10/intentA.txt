@@ -1,6 +1,6 @@
 The media provider cinemaRenderOp requires a service to manage 5,000 rendering projects. This infrastructure receives raw digital scenes, 
 distributes the rendering computation across hundreds of virtual nodes, and reassembles the finished frames for post-production. 
-The deployed service chain includes, in order: a scene receiver allocated at the edge, an asset validator located in the cloud, 
-a render distributor located in the cloud, a frame assembler located in the cloud, and a color grader located in the cloud. 
-Regarding requirements, compression is applied after the scene receiver. Furthermore, the provider prefers that the total chain hardware 
-remains lower than 800 gb. Finally, caching is executed before the color grader.
+The deployed service chain includes, in order: a sceneReceiverVF allocated at the edge, an assetValidatorVF located in the cloud, 
+a renderDistributorVF located in the cloud, a frameAssemblerVF located in the cloud, and a colorGraderVF located in the cloud. 
+Regarding requirements, compression is applied after the sceneReceiverVF. Furthermore, the provider prefers that the total chain hardware 
+remains lower than 800 gb. Finally, caching is executed before the colorGraderVF.

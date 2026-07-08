@@ -1,5 +1,5 @@
 The logistics provider deliveryLogisticsOp requires a route optimization service to manage 15,000 couriers. This software receives the GPS positions of a fleet, 
 analyzes city traffic data, constantly recalculates the best route for each courier, and updates their terminals. Specifying that compression is applied after the 
-initial telemetry receiver, the service begins with a gps ingester allocated at the edge connected to a traffic analyzer located in the cloud and a route optimizer 
-located in the cloud. Ensuring that decoding is executed before the final synchronization engine, the system incorporates a terminal updater allocated at the edge. 
+initial node, the service begins with a gpsIngesterVF allocated at the edge connected to a trafficAnalyzerVF located in the cloud and a routeOptimizerVF 
+located in the cloud. Ensuring that decoding is executed before the final node, the system incorporates a terminalUpdaterVF allocated at the edge. 
 Finally, strictly requiring that the latency from the begin to the end of the chain remains below 80 ms, the system completes the optimization pipeline.

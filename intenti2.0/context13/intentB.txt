@@ -1,7 +1,6 @@
 The financial provider fraudSafeOp requires an antifraud analysis service to manage 200,000 transactions per hour. This system intercepts every digital payment 
 request, compares it with habitual user spending patterns via machine learning, and authorizes the transaction in a few milliseconds. 
-The service chain begins with a request interceptor allocated at the edge. For this component, security is applied after it. It is mandatory that this request 
-interceptor and the next component, a profile matcher, operate on the same node at the edge. The chain then connects to an ml analyzer located in the cloud, 
-ensuring that privacy is executed before it. The chain then proceeds to a policy enforcer located in the cloud; it is ideally preferred that the bandwidth from 
-the ml analyzer to this policy enforcer remains higher than 1000 mbps. Finally, the system routes to a response emitter located in the cloud, with a preference 
+The service chain begins with a requestInterceptorVF allocated at the edge. For this component, security is applied after it. It is mandatory that this requestInterceptorVF and the next component, a profileMatcherVF, operate on the same node at the edge. The chain then connects to an mlAnalyzerVF located in the cloud, 
+ensuring that privacy is executed before it. The chain then proceeds to a policyEnforcerVF located in the cloud; it is ideally preferred that the bandwidth from 
+the mlAnalyzerVF to this policyEnforcerVF remains higher than 1000 mbps. Finally, the system routes to a responseEmitterVF located in the cloud, with a preference 
 that the total chain hardware remains lower than 120 gb.
