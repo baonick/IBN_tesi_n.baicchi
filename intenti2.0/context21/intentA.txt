@@ -1,5 +1,5 @@
 The industrial provider autoWarehouseOp requires a remote control system for autonomous machines to manage 500 warehouse robots. 
 This software receives sensor data, calculates paths to avoid collisions, and sends steering and braking commands. The deployed service chain includes, 
-in order: a sensor data decoder allocated at the edge, a collision path solver located in the cloud, and a command encoder allocated at the edge. 
-Regarding requirements, decoding is applied after the sensor data decoder. Furthermore, it is strictly required that the latency from the sensor data decoder 
-to the command encoder remains below 500 ms. Finally, encoding is executed before the command encoder.
+in order: a sensorDataDecoderVF allocated at the edge, a collisionPathSolverVF located in the cloud, and a commandEncoderVF allocated at the edge. 
+Regarding requirements, decoding is applied after the sensorDataDecoderVF. Furthermore, it is strictly required that the latency from the sensorDataDecoderVF 
+to the commandEncoderVF remains below 500 ms. Finally, encoding is executed before the commandEncoderVF.

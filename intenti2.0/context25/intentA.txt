@@ -1,6 +1,6 @@
 The digital provider govDataOp requires an open data portal service to manage 30,000 dataset downloads per day. This system extracts datasets from public databases, 
 normalizes them into open formats, adds search metadata, and makes them available for public download. The deployed service chain includes, in order: 
-a data extractor allocated at the edge, a format normalizer located in the cloud, a metadata enricher located in the cloud, 
-and a download provider located in the cloud. Regarding operational requirements, data caching is applied after the format normalizer. 
-Furthermore, it is strictly required that the latency from the data extractor to the download provider remains below 200 ms. 
-The provider prefers that the network bandwidth from the format normalizer to the metadata enricher remains higher than 1000 mbps. Finally, it is mandatory that the format normalizer and the metadata enricher are hosted together on the exact same physical server to optimize data exchange.
+adataExtractorVF allocated at the edge, a formatNormalizerVF located in the cloud, a metadataEnricherVF located in the cloud, 
+and a downloadProviderVF located in the cloud. Regarding operational requirements, data caching is applied after the formatNormalizerVF. 
+Furthermore, it is strictly required that the latency from thedataExtractorVF to the downloadProviderVF remains below 200 ms. 
+The provider prefers that the network bandwidth from the formatNormalizerVF to the metadataEnricherVF remains higher than 1000 mbps. Finally, it is mandatory that the formatNormalizerVF and the metadataEnricherVF are hosted together on the exact same physical server to optimize data exchange.

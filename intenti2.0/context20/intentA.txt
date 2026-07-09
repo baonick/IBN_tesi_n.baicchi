@@ -1,6 +1,5 @@
 The infrastructure provider serverMonOp requires a telemetry monitoring service to manage 50,000 virtual machines. This service collects temperature, 
-CPU load, and memory usage data, aggregating them to identify anomalies before failure occurs. The deployed service chain includes, in order: a telemetry 
-collector at the edge, a data aggregator in the edge, an anomaly detector in the cloud, and an alert dispatcher in the cloud. Regarding requirements, 
+CPU load, and memory usage data, aggregating them to identify anomalies before failure occurs. The deployed service chain includes, in order: a telemetryCollectorVF at the edge, adataAggregatorVF in the edge, an anomalyDetectorVF in the cloud, and an alertDispatcherVF in the cloud. Regarding requirements, 
 it is strictly required that the latency from the begin to the end of the chain remains below 100 ms. The provider prefers that the bandwidth from the 
-begin to the end of the chain remains higher than 2000 mbps. Finally, it is mandatory that the telemetry collector and the data aggregator are deployed 
+begin to the end of the chain remains higher than 2000 mbps. Finally, it is mandatory that the telemetryCollectorVF and the dataAggregatorVF are deployed 
 on the same hosting node.

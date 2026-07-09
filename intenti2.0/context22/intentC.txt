@@ -1,6 +1,6 @@
 The healthcare provider healthCareOp requires a post-operative tele-monitoring service to manage 5,000 active patients. 
 This service receives digitalized patient vital data from home, analyzes cardiac anomalies, and notifies the doctor on duty immediately in case of danger. 
-Specifying that privacy is applied after the initial receiving unit, the service begins with a patient data receiver allocated at the edge connected to a 
-cardiac anomaly analyzer located in the cloud. Ensuring that logging is executed before the auditing layer, the chain incorporates a medical alert logger 
-located in the cloud. Finally, strictly requiring that the latency from the initial receiving unit to the final notification engine remains below 100 ms, 
-and preferring that the total chain hardware remains lower than 80 gb, the system completes the pipeline with a doctor notifier located in the cloud.
+Specifying that privacy is applied after the initial unit, the service begins with a patientDataReceiverVF allocated at the edge connected to a 
+cardiacAnomalyAnalyzerVF located in the cloud. Ensuring that logging is executed before, the chain incorporates a medicalAlertLoggerVF 
+located in the cloud. Finally, strictly requiring that the latency from the patientDataReceiverVF to the final node remains below 100 ms, 
+and preferring that the total chain hardware remains lower than 80 gb, the system completes the pipeline with a doctorNotifierVF located in the cloud.

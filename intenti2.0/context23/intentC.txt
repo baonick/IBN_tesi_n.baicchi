@@ -1,7 +1,6 @@
 The healthcare provider medDiagnosticOp requires a radiology AI diagnostics service to manage 10,000 daily scans. 
 This pipeline receives high-resolution medical images, processes them with computer vision algorithms to highlight suspicious lesions, and stores them securely. 
-Specifying that data compression is applied after the initial receiving function, the service begins with a dicom ingester allocated at the edge. 
-Preferring that the network bandwidth from this first component to the vision engine remains higher than 500 mbps, the chain connects to a lesion 
-analyzer located in the cloud. Mandating that this vision engine and the subsequent metadata extractor are strictly deployed on dedicated infrastructure servers, 
-the chain incorporates both blocks. Finally, ensuring that data encoding is executed before the final long-term storage unit, the system completes the pipeline 
-with a secure archiver located in the cloud.
+Specifying that data compression is applied after the initial receiving function, the service begins with a dicomIngesterVF allocated at the edge. 
+Preferring that the network bandwidth from this first component to thelesionAnalyzerVF remains higher than 500 mbps, the chain connects to a lesionAnalyzerVF located in the cloud. Mandating that thislesionAnalyzerVF and the subsequent metadataExtractorVF are strictly deployed on dedicated infrastructure servers, 
+the chain incorporates both blocks at the cloud. Finally, ensuring encoding is executed before the final unit, the system completes the pipeline 
+with a secureArchiverVF located in the cloud.

@@ -1,6 +1,5 @@
 The healthcare provider healthCareOp requires a post-operative tele-monitoring service to manage 5,000 active patients. This service receives digitalized patient vital 
-data from home, analyzes cardiac anomalies, and notifies the doctor on duty immediately in case of danger. The deployed service chain includes, in order: a patient 
-data receiver allocated at the edge, a cardiac anomaly analyzer located in the cloud, a medical alert logger located in the cloud, and a doctor notifier located 
-in the cloud. Regarding requirements, privacy is applied after the patient data receiver. Furthermore, logging is executed before the medical alert logger. 
-It is strictly required that the latency from the patient data receiver to the doctor notifier remains below 100 ms. Finally, the provider prefers that the 
+data from home, analyzes cardiac anomalies, and notifies the doctor on duty immediately in case of danger. The deployed service chain includes, in order: a patientDataReceiverVF allocated at the edge, a cardiacAnomalyAnalyzerVF located in the cloud, a medicalAlertLoggerVF located in the cloud, and a doctorNotifierVF located 
+in the cloud. Regarding requirements, privacy is applied after the patientDataReceiverVF. Furthermore, logging is executed before the medicalAlertLoggerVF. 
+It is strictly required that the latency from the patientDataReceiverVF to the doctorNotifierVF remains below 100 ms. Finally, the provider prefers that the 
 total chain hardware remains lower than 80 gb.

@@ -1,6 +1,6 @@
 The digital provider govDataOp requires an open data portal service to manage 30,000 dataset downloads per day. This system extracts datasets from public databases, 
 normalizes them into open formats, adds search metadata, and makes them available for public download. Strictly requiring that the response latency from the initial 
-gathering tool to the distribution endpoint remains below 200 ms, the service begins with a data extractor allocated at the edge. Specifying that data caching is 
-applied after the transformation engine, the chain connects to a format normalizer located in the cloud. Mandating that this transformation engine and the 
-subsequent metadata enricher are hosted together on the exact same physical server, and preferring that the network bandwidth between them remains higher 
-than 1000 mbps, the chain incorporates both blocks. Finally, the system completes the pipeline with a download provider located in the cloud.
+function to the final VNF below 200 ms, the service begins with a data extractor allocated at the edge. Specifying caching is 
+applied after the formatNormalizerVF, the chain connects to a formatNormalizerVF located in the cloud. Mandating that this formatNormalizerVF and the 
+subsequent metadataEnricherVF are hosted together on the exact same physical server, and preferring that the network bandwidth between them remains higher 
+than 1000 mbps, the chain incorporates both blocks in cloud. Finally, the system completes the pipeline with a downloadProviderVF located in the cloud.

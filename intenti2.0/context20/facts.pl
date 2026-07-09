@@ -1,7 +1,7 @@
 intent(telemetryMonitorIntent, serverMonOp, 50000, telemetryMonitoringService).
 
 propertyExpectation(affReq, telemetryMonitorIntent, affinity, same, hard, _, _, telemetryCollectorVF, dataAggregatorVF).
-propertyExpectation(latReq, telemetryMonitorIntent, latency, lower, hard, 1000, ms, telemetryCollectorVF, alertDispatcherVF).
+propertyExpectation(latReq, telemetryMonitorIntent, latency, lower, hard, 100, ms, telemetryCollectorVF, alertDispatcherVF).
 propertyExpectation(bwReq, telemetryMonitorIntent, bandwidth, greater, soft, 2000, megabps, telemetryCollectorVF, alertDispatcherVF).
 
 target(telemetryMonitoringService, [telemetryCollectorVF, dataAggregatorVF, anomalyDetectorVF, alertDispatcherVF]).
