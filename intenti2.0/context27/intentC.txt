@@ -1,6 +1,6 @@
 The marketing provider sentimentOp requires a customer sentiment analysis platform to manage 100,000 daily reviews and comments. 
 This software scans social media inputs, identifies prevailing emotions toward specific products, and sends weekly reports to the marketing department. 
-Specifying that data privacy mechanisms are applied after the data collection phase, the service begins with a social data receiver allocated at the edge. 
-Ensuring that system security is executed before the computational analysis, the chain connects to a sentiment analyzer located in the cloud. 
-Mandating that this analytical engine and the subsequent reporting tool are strictly deployed together on the same physical server node, 
-the system completes the pipeline with a report dispatcher located in the cloud.
+Specifying that data privacy mechanisms are applied after the socialDataReceiverVF, the service begins with a socialDataReceiverVF allocated at the edge. 
+Ensuring that security is executed before the next node, the chain connects to a sentimentAnalyzerVF located in the cloud. 
+Mandating that this sentimentAnalyzerVF and the subsequent reportDispatcherVF are strictly deployed together on the same physical server node, 
+the system completes the pipeline with a reportDispatcherVF located in the cloud.

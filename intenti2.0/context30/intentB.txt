@@ -1,6 +1,5 @@
 The software provider devToolsOp requires a code efficiency analyzer service to manage 20,000 daily evaluation requests. This platform receives code snippets, 
-executes a simulated runtime execution, and suggests specific optimizations to reduce computational resource consumption. The service chain begins with a code 
-receiver allocated at the edge, which handles the initial incoming snippets. The chain then connects to a syntax validator located in the cloud, ensuring that 
-data caching is applied after it. The pipeline continues to a sandbox simulator located in the cloud and an optimization engine located in the cloud to evaluate 
-runtime performance. Finally, the system routes the generated insights to a report generator located in the cloud, specifying that data compression is applied after it. 
+executes a simulated runtime execution, and suggests specific optimizations to reduce computational resource consumption. The service chain begins with a codeReceiverVF allocated at the edge, which handles the initial incoming snippets. The chain then connects to a syntaxValidatorVF located in the cloud, ensuring that 
+data caching is applied after it. The pipeline continues to a sandboxSimulatorVF located in the cloud and an optimizationEngineVF located in the cloud to evaluate 
+runtime performance. Finally, the system routes the generated insights to a developersReportGeneratorVF located in the cloud, specifying that data compression is applied after it. 
 For the whole cluster deployment, it is ideally preferred that the total chain hardware remains lower than 110 gb.

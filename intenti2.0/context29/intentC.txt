@@ -1,6 +1,5 @@
 The digital provider subscriptionOp requires a SaaS subscription management service to manage 50,000 active accounts. This recurring billing service handles 
 customer payment cycles, software plan upgrades, and automated reminders for expired credit cards. Specifying that customer privacy is applied after the 
-initial ingestion point, the service begins with a subscription ingester allocated at the edge. Ensuring that decoding is executed before the billing processing 
-layer, the chain connects to a billing cycle processor located in the cloud. Mandating that transaction logging is executed before the automated retry handler, 
-the pipeline incorporates a dunning manager located in the cloud. Finally, ensuring that data encoding is executed before the document generation stage, the system 
-completes the pipeline with an invoice generator located in the cloud.
+initial point, the service begins with a subscriptionIngesterVF allocated at the edge. Ensuring that decoding is executed before the billingCycleProcessorVF, the chain connects to a billingCycleProcessorVF located in the cloud. Mandating that transaction logging is executed before the dunningManagerVF, 
+the pipeline incorporates a dunningManagerVF located in the cloud. Finally, ensuring encoding is executed before the invoiceGeneratorVF stage, the system 
+completes the pipeline with an invoiceGeneratorVF located in the cloud.
