@@ -66,15 +66,15 @@ def estrai_set_da_pl(percorso_file):
         return set()
 
     testo = re.sub(r'%.*', '', testo)                    # rimuovi commenti
-    mappatura = crea_mappatura_vnf(trova_target_list(testo))
+    # mappatura = crea_mappatura_vnf(trova_target_list(testo))
 
     set_fatti = set()
     for m in re.finditer(r"([a-zA-Z0-9_]+)\((.*?)\)\.", testo):
         predicato, argomenti = m.group(1).strip(), m.group(2)
 
-        # Sostituisci nomi VNF originali con vnf_N
-        for orig, norm in mappatura.items():
-            argomenti = re.sub(rf'\b{re.escape(orig)}\b', norm, argomenti)
+        # LA NORMALIZZAZIONE DELLE VNF È STATA DISABILITATA
+        # for orig, norm in mappatura.items():
+        #     argomenti = re.sub(rf'\b{re.escape(orig)}\b', norm, argomenti)
 
         args_norm = normalizza_argomenti(predicato, argomenti)
         if args_norm:
