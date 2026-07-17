@@ -2,7 +2,7 @@ intent(eInvoiceIntent, eInvoiceOp, 50000, electronicInvoicingService).
 
 propertyExpectation(hwReq, eInvoiceIntent, totChainHW, lower, hard, 150, gb, _, _).
 propertyExpectation(latReq, eInvoiceIntent, latency, lower, hard, 30, ms, xmlConverterVF, digitalSignerVF).
-%propertyExpectation(bwReq, eInvoiceIntent, bandwidth, greater, soft, 100, megabps, digitalSignerVF, taxAuthorityTransmitterVF).
+propertyExpectation(bwReq, eInvoiceIntent, bandwidth, greater, soft, 100, megabps, digitalSignerVF, taxAuthorityTransmitterVF).
 
 
 target(electronicInvoicingService, [saleDataCollectorVF, xmlConverterVF, digitalSignerVF, taxAuthorityTransmitterVF]).

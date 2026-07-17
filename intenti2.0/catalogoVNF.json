@@ -1,0 +1,740 @@
+[
+    {
+        "group_id": 1,
+        "id": "webFilterVF",
+        "hardware": 4,
+        "description": "Filters dangerous websites and malicious URLs."
+    },
+    {
+        "group_id": 1,
+        "id": "malwareScannerVF",
+        "hardware": 16,
+        "description": "Scans downloaded files in a sandbox against malware."
+    },
+    {
+        "group_id": 1,
+        "id": "dlpEngineVF",
+        "hardware": 8,
+        "description": "Prevents sensitive data leakage outside the network."
+    },
+    {
+        "group_id": 2,
+        "id": "mailGatewayVF",
+        "hardware": 4,
+        "description": "Intercepts incoming corporate emails at the network perimeter."
+    },
+    {
+        "group_id": 2,
+        "id": "phishingFilterVF",
+        "hardware": 8,
+        "description": "Scans and removes malicious phishing links from email bodies."
+    },
+    {
+        "group_id": 2,
+        "id": "sandboxScannerVF",
+        "hardware": 16,
+        "description": "Analyzes attachments in an isolated environment to detect malware."
+    },
+    {
+        "group_id": 2,
+        "id": "safeDeliveryVF",
+        "hardware": 4,
+        "description": "Delivers sanitized and approved messages to the internal corporate server."
+    },
+    {
+        "group_id": 3,
+        "id": "networkTrafficAnalyzerVF",
+        "hardware": 8,
+        "description": "Continuously monitors incoming network packets to detect volumetric anomalies and traffic spikes."
+    },
+    {
+        "group_id": 3,
+        "id": "scrubbingFilterVF",
+        "hardware": 32,
+        "description": "Filters out malicious DDoS attack traffic, discarding bad packets while passing legitimate ones."
+    },
+    {
+        "group_id": 3,
+        "id": "rateLimiterVF",
+        "hardware": 16,
+        "description": "Enforces per-IP and per-service traffic thresholds to prevent resource exhaustion."
+    },
+    {
+        "group_id": 3,
+        "id": "webServerVF",
+        "hardware": 12,
+        "description": "The backend web hosting engine delivering the actual application contents to legitimate users."
+    },
+    {
+        "group_id": 4,
+        "id": "dbScannerVF",
+        "hardware": 16,
+        "description": "Scans corporate databases and identifies unprotected personally identifiable information (PII)."
+    },
+    {
+        "group_id": 4,
+        "id": "anonymizerVF",
+        "hardware": 24,
+        "description": "Applies automated data masking, pseudonymization, and anonymization algorithms to sensitive records."
+    },
+    {
+        "group_id": 4,
+        "id": "reportGeneratorVF",
+        "hardware": 8,
+        "description": "Compiles audit trails and generates structured compliance reports for data protection regulators."
+    },
+    {
+        "group_id": 5,
+        "id": "trafficSplitterVF",
+        "hardware": 8,
+        "description": "Intercepts network flows and splits HTTPS traffic into metadata streams and encrypted payloads."
+    },
+    {
+        "group_id": 5,
+        "id": "featureExtractorVF",
+        "hardware": 16,
+        "description": "Extracts TLS fingerprinting, packet length, and timing features without decryption."
+    },
+    {
+        "group_id": 5,
+        "id": "aiClassifierVF",
+        "hardware": 32,
+        "description": "Runs machine learning models to classify traffic patterns as benign, malware, or botnet activity."
+    },
+    {
+        "group_id": 5,
+        "id": "alertManagerVF",
+        "hardware": 4,
+        "description": "Generates real-time alerts and records logs for detected security anomalies."
+    },
+    {
+        "group_id": 5,
+        "id": "policyEnforcerVF",
+        "hardware": 8,
+        "description": "Dynamically blocks, drops, or reroutes malicious encrypted traffic flows."
+    },
+    {
+        "group_id": 6,
+        "id": "msgReceiverVF",
+        "hardware": 8,
+        "description": "Receives incoming digital communications and routes them into the validation pipeline."
+    },
+    {
+        "group_id": 6,
+        "id": "sigVerifierVF",
+        "hardware": 16,
+        "description": "Verifies the digital signature of the sender using public cryptographic keys and certificate revocation lists."
+    },
+    {
+        "group_id": 6,
+        "id": "integrityCheckerVF",
+        "hardware": 12,
+        "description": "Performs integrity checks on the message payload and attachments using cryptographic hashing."
+    },
+    {
+        "group_id": 6,
+        "id": "legalVaultVF",
+        "hardware": 32,
+        "description": "Archives the validated message and its metadata into a long-term legally compliant storage vault."
+    },
+    {
+        "group_id": 7,
+        "id": "gameExecutorVF",
+        "hardware": 32,
+        "description": "Executes the video game logic, processes player inputs, and renders high-definition 3D graphics."
+    },
+    {
+        "group_id": 7,
+        "id": "streamPackerVF",
+        "hardware": 16,
+        "description": "Captures the rendered frame buffers and audio, compressing them into a highly efficient streaming format."
+    },
+    {
+        "group_id": 7,
+        "id": "deliveryOptimizerVF",
+        "hardware": 8,
+        "description": "Minimizes transmission jitter and dynamically manages packet buffering directly at the edge for real-time video delivery."
+    },
+    {
+        "group_id": 8,
+        "id": "streamIngesterVF",
+        "hardware": 12,
+        "description": "Receives, aggregates, and synchronizes live video feeds from multiple camera angles at the source."
+    },
+    {
+        "group_id": 8,
+        "id": "cloudStudioVF",
+        "hardware": 32,
+        "description": "Provides real-time video mixing, multi-camera switching, and cloud-based directorial production controls."
+    },
+    {
+        "group_id": 8,
+        "id": "graphicInjectorVF",
+        "hardware": 16,
+        "description": "Overlays dynamic advertising graphics, logos, and real-time promotional elements onto the live broadcast."
+    },
+    {
+        "group_id": 8,
+        "id": "streamDistributorVF",
+        "hardware": 24,
+        "description": "Replicates, transcodes, and broadcasts the finalized live video stream to thousands of concurrent viewers."
+    },
+    {
+        "group_id": 9,
+        "id": "drmEncryptorVF",
+        "hardware": 16,
+        "description": "Encrypts incoming movie assets using multi-DRM keys and manages digital rights licensing configurations."
+    },
+    {
+        "group_id": 9,
+        "id": "transcoderVF",
+        "hardware": 32,
+        "description": "Compresses, transcodes, and encodes high-definition video files into multiple bitrates and resolution formats."
+    },
+    {
+        "group_id": 9,
+        "id": "cachingNodeVF",
+        "hardware": 12,
+        "description": "Caches and stores pre-distributed video content closer to end-users to ensure smooth playback and prevent buffering."
+    },
+    {
+        "group_id": 10,
+        "id": "sceneReceiverVF",
+        "hardware": 16,
+        "description": "Ingests raw 3D digital scenes, textures, and geometry assets from local production studios."
+    },
+    {
+        "group_id": 10,
+        "id": "assetValidatorVF",
+        "hardware": 12,
+        "description": "Verifies the integrity of 3D assets, textures, and file paths before rendering begins."
+    },
+    {
+        "group_id": 10,
+        "id": "renderDistributorVF",
+        "hardware": 32,
+        "description": "Splits the rendering workload into individual frame tasks and dynamically distributes them across the compute cluster."
+    },
+    {
+        "group_id": 10,
+        "id": "frameAssemblerVF",
+        "hardware": 24,
+        "description": "Collects completed frames, verifies structural integrity, and reassembles them into a continuous sequence."
+    },
+    {
+        "group_id": 10,
+        "id": "colorGraderVF",
+        "hardware": 20,
+        "description": "Applies automated color correction, grading, and visual effects encoding to the reassembled video sequence."
+    },
+    {
+        "group_id": 11,
+        "id": "audioExtractorVF",
+        "hardware": 8,
+        "description": "Intercetta ed estrae la traccia audio dal flusso video in diretta con buffering minimo."
+    },
+    {
+        "group_id": 11,
+        "id": "speechToTextVF",
+        "hardware": 32,
+        "description": "Trascrive l'audio estratto in testo in tempo reale utilizzando reti neurali AI avanzate."
+    },
+    {
+        "group_id": 11,
+        "id": "multiTranslatorVF",
+        "hardware": 24,
+        "description": "Traduce simultaneamente il testo trascritto in tre diverse lingue di destinazione."
+    },
+    {
+        "group_id": 11,
+        "id": "subtitleInjectorVF",
+        "hardware": 12,
+        "description": "Codifica e inserisce il testo tradotto nel flusso video come sottotitoli sincronizzati in tempo reale."
+    },
+    {
+        "group_id": 12,
+        "id": "ocrScannerVF",
+        "hardware": 16,
+        "description": "Reads uploaded PDF files and converts scanned images into machine-readable digital text."
+    },
+    {
+        "group_id": 12,
+        "id": "textExtractorVF",
+        "hardware": 12,
+        "description": "Parses the digital text to identify key entities, metadata, and structural document features."
+    },
+    {
+        "group_id": 12,
+        "id": "aiDocumentClassifierVF",
+        "hardware": 32,
+        "description": "Uses natural language processing models to categorize the document as an invoice, contract, or reminder."
+    },
+    {
+        "group_id": 12,
+        "id": "dataRedactorVF",
+        "hardware": 16,
+        "description": "Masks personally identifiable information and sensitive financial data within the document to ensure compliance."
+    },
+    {
+        "group_id": 12,
+        "id": "documentRouterVF",
+        "hardware": 8,
+        "description": "Forwards the categorized and processed document to the appropriate corporate department's inbox."
+    },
+    {
+        "group_id": 13,
+        "id": "requestInterceptorVF",
+        "hardware": 8,
+        "description": "Captures real-time digital payment requests from gateways and sanitizes incoming data payloads."
+    },
+    {
+        "group_id": 13,
+        "id": "profileMatcherVF",
+        "hardware": 16,
+        "description": "Compares transaction details against historical user spending patterns using optimized lookup tables."
+    },
+    {
+        "group_id": 13,
+        "id": "mlAnalyzerVF",
+        "hardware": 32,
+        "description": "Executes deep learning inference to calculate fraud probability scores in real-time."
+    },
+    {
+        "group_id": 13,
+        "id": "policyEnforcerVF",
+        "hardware": 12,
+        "description": "Applies security policies to authorize or block transactions based on the generated risk scores."
+    },
+    {
+        "group_id": 13,
+        "id": "responseEmitterVF",
+        "hardware": 8,
+        "description": "Sends the final authorization or rejection response back to the originating payment gateway."
+    },
+    {
+        "group_id": 14,
+        "id": "marketFeedVF",
+        "hardware": 16,
+        "description": "Ingests and normalizes raw, real-time stock market tick data directly from exchange gateways."
+    },
+    {
+        "group_id": 14,
+        "id": "tradingAlgoVF",
+        "hardware": 32,
+        "description": "Executes complex quantitative decision algorithms to identify profitable trading opportunities in microseconds."
+    },
+    {
+        "group_id": 14,
+        "id": "riskCheckerVF",
+        "hardware": 16,
+        "description": "Validates proposed trades against compliance and financial exposure limits before execution."
+    },
+    {
+        "group_id": 14,
+        "id": "orderDispatcherVF",
+        "hardware": 8,
+        "description": "Routes approved purchase and sell orders to the market using the fastest available network path."
+    },
+    {
+        "group_id": 15,
+        "id": "documentReceiverVF",
+        "hardware": 12,
+        "description": "Ingests and standardizes photos of identity documents uploaded by users."
+    },
+    {
+        "group_id": 15,
+        "id": "authenticityCheckerVF",
+        "hardware": 24,
+        "description": "Extracts data and verifies the physical authenticity of the uploaded documents using computer vision."
+    },
+    {
+        "group_id": 15,
+        "id": "amlMatcherVF",
+        "hardware": 16,
+        "description": "Cross-references extracted personal data against international anti-money laundering (AML) blacklists."
+    },
+    {
+        "group_id": 15,
+        "id": "profileCreatorVF",
+        "hardware": 16,
+        "description": "Consolidates the verified data to generate and securely store the final digital identity profile."
+    },
+    {
+        "group_id": 16,
+        "id": "saleDataCollectorVF",
+        "hardware": 8,
+        "description": "Ingests raw sales transaction data from local point-of-sale systems."
+    },
+    {
+        "group_id": 16,
+        "id": "xmlConverterVF",
+        "hardware": 16,
+        "description": "Transforms sales data into the standardized XML format required for electronic invoicing."
+    },
+    {
+        "group_id": 16,
+        "id": "digitalSignerVF",
+        "hardware": 12,
+        "description": "Applies a secure digital signature to the XML files to ensure legal authenticity."
+    },
+    {
+        "group_id": 16,
+        "id": "taxAuthorityTransmitterVF",
+        "hardware": 8,
+        "description": "Interfaces with the national tax authority's API to transmit and validate the signed electronic invoices."
+    },
+    {
+        "group_id": 17,
+        "id": "gpsIngesterVF",
+        "hardware": 8,
+        "description": "Collects and normalizes raw GPS telemetry coordinates from the courier fleet in real time."
+    },
+    {
+        "group_id": 17,
+        "id": "trafficAnalyzerVF",
+        "hardware": 24,
+        "description": "Analyzes live city traffic data, road closures, and historical congestion patterns."
+    },
+    {
+        "group_id": 17,
+        "id": "routeOptimizerVF",
+        "hardware": 32,
+        "description": "Executes pathfinding algorithms to constantly recalculate the fastest and most fuel-efficient route for each delivery."
+    },
+    {
+        "group_id": 17,
+        "id": "terminalUpdaterVF",
+        "hardware": 12,
+        "description": "Packages the new route instructions and synchronizes them directly to the mobile devices of the couriers."
+    },
+    {
+        "group_id": 18,
+        "id": "sensorDataCollectorVF",
+        "hardware": 8,
+        "description": "Ingests occupancy signals from IoT parking stall sensors across the city."
+    },
+    {
+        "group_id": 18,
+        "id": "mapUpdaterVF",
+        "hardware": 16,
+        "description": "Processes occupancy data to maintain a real-time digital map of available parking spaces."
+    },
+    {
+        "group_id": 18,
+        "id": "paymentProcessorVF",
+        "hardware": 24,
+        "description": "Manages secure financial transactions and automated billing through the parking app."
+    },
+    {
+        "group_id": 18,
+        "id": "statusLoggerVF",
+        "hardware": 12,
+        "description": "Maintains a comprehensive audit log of parking events, billing history, and system status updates."
+    },
+    {
+        "group_id": 18,
+        "id": "securityEnforcerVF",
+        "hardware": 16,
+        "description": "Implements authentication and data encryption protocols to protect user and payment data."
+    },
+    {
+        "group_id": 19,
+        "id": "flightTelemetryIngesterVF",
+        "hardware": 12,
+        "description": "Receives raw telemetry, GPS coordinates, and real-time status data from the active drone fleet."
+    },
+    {
+        "group_id": 19,
+        "id": "collisionAvoiderVF",
+        "hardware": 32,
+        "description": "Processes incoming flight paths to proactively detect and resolve potential mid-air software collisions."
+    },
+    {
+        "group_id": 19,
+        "id": "commandPrioritizerVF",
+        "hardware": 16,
+        "description": "Ensures critical control signals and emergency instructions bypass standard traffic and receive immediate processing."
+    },
+    {
+        "group_id": 19,
+        "id": "routeDispatcherVF",
+        "hardware": 12,
+        "description": "Packages and transmits updated, safe flight plans and real-time commands back to individual drones."
+    },
+    {
+        "group_id": 20,
+        "id": "telemetryCollectorVF",
+        "hardware": 8,
+        "description": "Gathers real-time raw telemetry streams (CPU, RAM, Temp) from thousands of virtual machines."
+    },
+    {
+        "group_id": 20,
+        "id": "dataAggregatorVF",
+        "hardware": 16,
+        "description": "Normalizes and aggregates incoming telemetry streams into structured time-series datasets."
+    },
+    {
+        "group_id": 20,
+        "id": "anomalyDetectorVF",
+        "hardware": 24,
+        "description": "Runs predictive AI models to identify abnormal patterns and potential hardware failure precursors."
+    },
+    {
+        "group_id": 20,
+        "id": "alertDispatcherVF",
+        "hardware": 8,
+        "description": "Issues instant alerts to maintenance teams when critical thresholds or anomalies are detected."
+    },
+    {
+        "group_id": 21,
+        "id": "sensorDataDecoderVF",
+        "hardware": 16,
+        "description": "Receives and decodes raw telemetry and sensor data streams from autonomous warehouse vehicles."
+    },
+    {
+        "group_id": 21,
+        "id": "collisionPathSolverVF",
+        "hardware": 32,
+        "description": "Analyzes spatial data to calculate collision-free trajectories for the fleet in real-time."
+    },
+    {
+        "group_id": 21,
+        "id": "commandEncoderVF",
+        "hardware": 16,
+        "description": "Encodes finalized steering and braking instructions into secure control signals for the vehicles."
+    },
+    {
+        "group_id": 22,
+        "id": "patientDataReceiverVF",
+        "hardware": 8,
+        "description": "Receives and terminates incoming data streams transmitted from external home patient monitoring devices."
+    },
+    {
+        "group_id": 22,
+        "id": "cardiacAnomalyAnalyzerVF",
+        "hardware": 24,
+        "description": "Runs specialized algorithms to analyze heart rate variability and detect potential cardiac anomalies."
+    },
+    {
+        "group_id": 22,
+        "id": "medicalAlertLoggerVF",
+        "hardware": 12,
+        "description": "Records anonymized health events, anomalies, and system operations for medical auditing purposes."
+    },
+    {
+        "group_id": 22,
+        "id": "doctorNotifierVF",
+        "hardware": 8,
+        "description": "Routes urgent alerts and critical diagnostic data directly to the workstation of the on-duty physician."
+    },
+    {
+        "group_id": 23,
+        "id": "dicomIngesterVF",
+        "hardware": 16,
+        "description": "Receives and terminates high-resolution DICOM medical image streams (CT/MRI) transmitted from external hospital networks."
+    },
+    {
+        "group_id": 23,
+        "id": "lesionAnalyzerVF",
+        "hardware": 32,
+        "description": "Executes deep learning computer vision algorithms to process medical images and highlight suspicious lesions."
+    },
+    {
+        "group_id": 23,
+        "id": "metadataExtractorVF",
+        "hardware": 12,
+        "description": "Extracts, structures, and cross-references clinical metadata alongside AI detection coordinates."
+    },
+    {
+        "group_id": 23,
+        "id": "secureArchiverVF",
+        "hardware": 24,
+        "description": "Encrypts and securely archives the finalized medical images and structured AI diagnostic reports."
+    },
+    {
+        "group_id": 24,
+        "id": "ballotIngesterVF",
+        "hardware": 12,
+        "description": "Receives and decrypts inbound digital ballot submissions from external client applications."
+    },
+    {
+        "group_id": 24,
+        "id": "anonymizerVoteVF",
+        "hardware": 16,
+        "description": "Strips voter identification metadata from the ballot package to guarantee absolute voter privacy."
+    },
+    {
+        "group_id": 24,
+        "id": "integrityEnforcerVF",
+        "hardware": 24,
+        "description": "Applies cryptographic hashing and validation protocols to prevent data alteration or fraud."
+    },
+    {
+        "group_id": 24,
+        "id": "voteCounterVF",
+        "hardware": 16,
+        "description": "Real-time aggregation module that tallies certified and anonymized votes."
+    },
+    {
+        "group_id": 24,
+        "id": "electoralAuditLoggerVF",
+        "hardware": 12,
+        "description": "Maintains a tamper-proof audit trail of the entire electoral process for compliance verification."
+    },
+    {
+        "group_id": 25,
+        "id": "dataExtractorVF",
+        "hardware": 8,
+        "description": "Extracts raw public datasets from heterogeneous governmental databases and legacy repositories."
+    },
+    {
+        "group_id": 25,
+        "id": "formatNormalizerVF",
+        "hardware": 16,
+        "description": "Converts and normalizes raw data into standardized open formats like CSV, JSON, and XML."
+    },
+    {
+        "group_id": 25,
+        "id": "metadataEnricherVF",
+        "hardware": 12,
+        "description": "Generates, structures, and attaches standardized metadata tags to improve dataset discoverability and search performance."
+    },
+    {
+        "group_id": 25,
+        "id": "downloadProviderVF",
+        "hardware": 16,
+        "description": "Exposes public endpoints and handles file downloads, compression packages, and public data access requests."
+    },
+    {
+        "group_id": 26,
+        "id": "sessionIngesterVF",
+        "hardware": 8,
+        "description": "Terminates incoming connection requests and manages active student dashboard sessions."
+    },
+    {
+        "group_id": 26,
+        "id": "resourceAllocatorVF",
+        "hardware": 16,
+        "description": "Provisions and orchestrates temporary, isolated containerized programming environments for each student."
+    },
+    {
+        "group_id": 26,
+        "id": "activityMonitorVF",
+        "hardware": 24,
+        "description": "Analyzes commands and executed code in real time to detect unauthorized usage, such as crypto-mining or malicious scripts."
+    },
+    {
+        "group_id": 26,
+        "id": "userPrivacyEnforcerVF",
+        "hardware": 12,
+        "description": "Anonymizes student identities and masks sensitive academic data across the platform."
+    },
+    {
+        "group_id": 26,
+        "id": "auditLoggerVF",
+        "hardware": 12,
+        "description": "Records comprehensive session logs, resource utilization history, and environment lifecycles for administrative review."
+    },
+    {
+        "group_id": 26,
+        "id": "outputPackagerVF",
+        "hardware": 16,
+        "description": "Compiles, packages, and prepares student code submissions and workspace snapshots for download or grading."
+    },
+    {
+        "group_id": 27,
+        "id": "socialDataReceiverVF",
+        "hardware": 16,
+        "description": "Ingests and aggregates real-time text streams, comments, and reviews from various social media platform APIs."
+    },
+    {
+        "group_id": 27,
+        "id": "sentimentAnalyzerVF",
+        "hardware": 32,
+        "description": "Runs natural language processing (NLP) and machine learning models to detect and classify prevailing user emotions."
+    },
+    {
+        "group_id": 27,
+        "id": "reportDispatcherVF",
+        "hardware": 16,
+        "description": "Compiles analytical insights into structured weekly summaries and dispatches them to marketing teams."
+    },
+    {
+        "group_id": 28,
+        "id": "arStreamReceiverVF",
+        "hardware": 12,
+        "description": "Ingests real-time video streams and telemetry tracking data from workers' AR headsets."
+    },
+    {
+        "group_id": 28,
+        "id": "arPoseEstimatorVF",
+        "hardware": 24,
+        "description": "Processes spatial data and computer vision tracking to align virtual coordinates with physical machinery."
+    },
+    {
+        "group_id": 28,
+        "id": "dataOverlayEngineVF",
+        "hardware": 32,
+        "description": "Fetches real-time maintenance logs and dynamically renders the visual instruction graphics."
+    },
+    {
+        "group_id": 28,
+        "id": "arStreamDispatcherVF",
+        "hardware": 16,
+        "description": "Streams the rendered technical overlay back to the workers' smart glasses with ultra-low streaming latency."
+    },
+    {
+        "group_id": 29,
+        "id": "subscriptionIngesterVF",
+        "hardware": 12,
+        "description": "Ingests API calls, webhook events from external payment gateways, and direct client subscription requests."
+    },
+    {
+        "group_id": 29,
+        "id": "billingCycleProcessorVF",
+        "hardware": 24,
+        "description": "Executes core logic for recurring billing, subscription state machine transitions, and tier upgrade calculations."
+    },
+    {
+        "group_id": 29,
+        "id": "dunningManagerVF",
+        "hardware": 16,
+        "description": "Triggers and orchestrates automated retry schedules, account suspensions, and notification alerts for expired credit cards."
+    },
+    {
+        "group_id": 29,
+        "id": "invoiceGeneratorVF",
+        "hardware": 16,
+        "description": "Compiles financial transaction records and generates secure, compliant digital invoices for clients."
+    },
+    {
+        "group_id": 30,
+        "id": "codeReceiverVF",
+        "hardware": 8,
+        "description": "Ingests raw code snippets and scripts transmitted from client applications or IDE extensions."
+    },
+    {
+        "group_id": 30,
+        "id": "syntaxValidatorVF",
+        "hardware": 12,
+        "description": "Parses inbound source code, executes static analysis, and builds abstract syntax trees (AST)."
+    },
+    {
+        "group_id": 30,
+        "id": "sandboxSimulatorVF",
+        "hardware": 32,
+        "description": "Executes isolated, safe virtual runtime simulations to capture compute footprint and execution metrics."
+    },
+    {
+        "group_id": 30,
+        "id": "optimizationEngineVF",
+        "hardware": 24,
+        "description": "Evaluates performance bottlenecks and applies rule-based logic to suggest specific optimization fixes."
+    },
+    {
+        "group_id": 30,
+        "id": "developersReportGeneratorVF",
+        "hardware": 16,
+        "description": "Aggregates benchmarking statistics and compiles structured, actionable optimization reports for developers."
+    }
+]

@@ -1,6 +1,6 @@
 intent(encryptedTrafficIntent, secureCryptoOp, 25000, cryptoAnalysisService).
 
-%propertyExpectation(affReq, encryptedTrafficIntent, affinity, same, hard, _, _, trafficSplitterVF, featureExtractorVF).
+propertyExpectation(affReq, encryptedTrafficIntent, affinity, same, hard, _, _, trafficSplitterVF, featureExtractorVF).
 propertyExpectation(hwReq, encryptedTrafficIntent, totChainHW, lower, soft, 80, gb, _, _).
 
 propertyExpectation(decReq, encryptedTrafficIntent, decoding, _, trafficSplitterVF, _).
