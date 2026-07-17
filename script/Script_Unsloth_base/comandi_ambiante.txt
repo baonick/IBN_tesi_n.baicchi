@@ -1,0 +1,64 @@
+# Guida all'Installazione dell'Ambiente (Python 3.10 + Unsloth)
+
+Questo documento contiene i comandi necessari per configurare un ambiente virtuale con Python 3.10 e installare PyTorch e Unsloth.
+
+---
+
+## 1. Installazione di Python 3.10 (e versioni precedenti)
+
+Per installare Python 3.10 su sistemi basati su Ubuntu/Debian tramite repository PPA:
+
+```bash
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt update
+sudo apt install python3.10 python3.10-venv python3.10-dev
+```
+
+## 2. Creazione dell'Ambiente Virtuale
+
+Crea un nuovo ambiente virtuale chiamato `unsloth_env` utilizzando Python 3.10:
+
+```bash
+python3.10 -m venv unsloth_env
+```
+
+## 3. Attivazione dell'Ambiente Virtuale
+
+Attiva l'ambiente appena creato (eseguire questo comando ogni volta che si apre una nuova sessione di terminale):
+
+```bash
+source unsloth_env/bin/activate
+```
+
+## 4. Aggiornamento di pip
+
+Aggiorna il gestore pacchetti `pip` all'ultima versione disponibile:
+
+```bash
+pip install --upgrade pip
+```
+
+## 5. Installazione di PyTorch (con supporto CUDA 12.1)
+
+Installa PyTorch, TorchVision e TorchAudio configurati per CUDA 12.1:
+
+```bash
+pip install --no-cache-dir torch==2.5.1 torchvision==0.20.1 torchaudio==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+```
+
+## 6. Installazione di Unsloth e Dipendenze Co-dipendenti
+
+Installa Unsloth direttamente dal repository GitHub e installa le altre dipendenze necessarie (`xformers`, `trl`, `peft`, `accelerate`, `bitsandbytes`, `datasets`):
+
+```bash
+pip install --no-cache-dir "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
+pip install --no-cache-dir --no-deps "xformers==0.0.28.post3" trl peft accelerate bitsandbytes datasets
+pip install torchao==0.5.0
+```
+
+
+
+posizione di dove va a scaricare i modelli di Hugging Face
+
+Su WSL2 / Linux, questa cartella si trova in:
+~/.cache/huggingface/hub/

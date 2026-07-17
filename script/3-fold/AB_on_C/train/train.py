@@ -47,7 +47,7 @@ def formatta_dati(examples):
         texts.append(text)
     return { "text" : texts }
 
-dataset = load_dataset("json", data_files="dataset.jsonl", split="train")
+dataset = load_dataset("json", data_files="dataset_train_AB.jsonl", split="train")
 dataset = dataset.map(formatta_dati, batched = True)
 
 # --- FASE 3: MOTORE DI ADDESTRAMENTO ---
@@ -67,10 +67,11 @@ trainer = SFTTrainer(
         logging_steps = 10,
         optim = "adamw_8bit",
         output_dir = "risultati",
+        save_strategy = "no",
     ),
 )
 
 trainer.train()
 
 # --- FASE 4: SALVATAGGIO ---
-model.save_pretrained("modello_ibn_prolog")
+model.save_pretrained("lama-3-8b-trainOn-AB")

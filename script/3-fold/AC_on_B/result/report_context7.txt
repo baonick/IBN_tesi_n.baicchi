@@ -1,0 +1,43 @@
+RISULTATI PER CONTEXT7
+File analizzato: output_context7_intentB.txt
+==================================================
+--- INTENTO TESTUALE ---
+Cloud gaming service provider GamingOp needs a service to handle 40,000 active players. This service runs games on powerful servers and 
+streams the video to the user, ensuring very low latency to prevent the game from becoming unplayable. The service chain begins with a 
+<gameExecutorVF, 32> hosted in the cloud. Encoding is applied after to this component. Ideally, this <gameExecutorVF, 32> is preferred to run on a dedicated node. 
+The chain then connects to a <streamPackerVF, 16> hosted in the cloud; this component is also preferred to run on a dedicated node. Finally, 
+the traffic is routed to a <deliveryOptimizerVF, 8> hosted at the edge, ensuring that the latency from the <streamPackerVF, 16> to this <deliveryOptimizerVF, 8> remains less than 30 ms.
+==================================================
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(cloudGamingOp,40000)
+propertyExpectation(affinity,dedicated,soft,_,_,gameExecutorVF,_)
+propertyExpectation(affinity,dedicated,soft,_,_,streamPackerVF,_)
+propertyExpectation(encoding,_,gameExecutorVF,_)
+propertyExpectation(latency,lower,hard,30,ms,streamPackerVF,deliveryOptimizerVF)
+target([gameExecutorVF,streamPackerVF,deliveryOptimizerVF])
+vnf(deliveryOptimizerVF,edge,8)
+vnf(gameExecutorVF,cloud,32)
+vnf(streamPackerVF,cloud,16)
+vnfXUser(deliveryOptimizerVF,l,(1,40000),8)
+vnfXUser(gameExecutorVF,l,(1,40000),32)
+vnfXUser(streamPackerVF,l,(1,40000),16)
+
+--- Fatti Estratti LLM ---
+intent(cloudGamingOp,40000)
+propertyExpectation(affinity,dedicated,soft,_,_,gameExecutorVF,_)
+propertyExpectation(affinity,dedicated,soft,_,_,streamPackerVF,_)
+propertyExpectation(encoding,_,gameExecutorVF,_)
+propertyExpectation(latency,lower,hard,30,ms,streamPackerVF,deliveryOptimizerVF)
+target([gameExecutorVF,streamPackerVF,deliveryOptimizerVF])
+vnf(deliveryOptimizerVF,edge,8)
+vnf(gameExecutorVF,cloud,32)
+vnf(streamPackerVF,cloud,16)
+vnfXUser(deliveryOptimizerVF,l,(1,40000),8)
+vnfXUser(gameExecutorVF,l,(1,40000),32)
+vnfXUser(streamPackerVF,l,(1,40000),16)
