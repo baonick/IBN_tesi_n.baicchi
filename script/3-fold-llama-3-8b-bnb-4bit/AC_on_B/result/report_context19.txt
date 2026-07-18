@@ -1,0 +1,47 @@
+RISULTATI PER CONTEXT19
+File analizzato: output_context19_intentB.txt
+==================================================
+--- INTENTO TESTUALE ---
+The logistics provider aeroDeliveryOp requires a drone fleet control service to manage 5,000 active delivery drones. This system manages digital flight plans, 
+avoids software collisions, and ensures that the command signal is always a priority. The service chain begins with a <flightTelemetryIngesterVF, 12> ingester allocated at the edge. 
+For this component, caching is applied after it. The chain then connects to a <collisionAvoiderVF, 32> located in the cloud, ensuring that it is strictly required for the 
+latency from the <flightTelemetryIngesterVF, 12> ingester to this <collisionAvoiderVF, 32> to remain below 10 ms. The chain proceeds to a <commandPrioritizerVF, 16> located in the cloud. 
+Finally, the system routes to a <routeDispatcherVF, 12> allocated at the edge; it is ideally preferred that the bandwidth from the <collisionAvoiderVF, 32> to this <routeDispatcherVF, 12> remains higher than 2000 mbps. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 200 gb.
+==================================================
+Recall    (Omissioni)     : 0.5714
+Precision (Allucinazioni) : 0.5714
+Jaccard   (Globale)       : 0.4000
+F1-Score  (Equilibrio)    : 0.5714
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(aeroDeliveryOp,5000)
+propertyExpectation(bandwidth,greater,soft,2000,megabps,collisionAvoiderVF,routeDispatcherVF)
+propertyExpectation(caching,_,flightTelemetryIngesterVF,_)
+propertyExpectation(latency,lower,hard,10,ms,flightTelemetryIngesterVF,collisionAvoiderVF)
+propertyExpectation(totChainHW,lower,soft,200,gb,_,_)
+target([flightTelemetryIngesterVF,collisionAvoiderVF,commandPrioritizerVF,routeDispatcherVF])
+vnf(collisionAvoiderVF,cloud,32)
+vnf(commandPrioritizerVF,cloud,16)
+vnf(flightTelemetryIngesterVF,edge,12)
+vnf(routeDispatcherVF,edge,12)
+vnfXUser(collisionAvoiderVF,l,(1,5000),32)
+vnfXUser(commandPrioritizerVF,l,(1,5000),16)
+vnfXUser(flightTelemetryIngesterVF,l,(1,5000),12)
+vnfXUser(routeDispatcherVF,l,(1,5000),12)
+
+--- Fatti Estratti LLM ---
+intent(aeroDeliveryOp,5000)
+propertyExpectation(bandwidth,greater,soft,2000,megabps,collisionAvoiderVF,routeDispatcherVF)
+propertyExpectation(caching,_,flightTelemetryIngesterVF,_)
+propertyExpectation(latency,lower,hard,10,ms,flightTelemetryIngesterVF,collisionAvoiderVF)
+propertyExpectation(totChainHW,lower,soft,200,gb,_,_)
+target([flightTelemetryIngesterVF,collisionAvoiderVF,commandPrioritizerVF,routeDispatcherVF])
+vnf(collisionAvoiderVF,cloud,32)
+vnf(commandPrioritizerVF,cloud,24)
+vnf(flightTelemetryIngesterVF,edge,16)
+vnf(routeDispatcherVF,edge,16)
+vnfXUser(collisionAvoiderVF,l,(1,5000),32)
+vnfXUser(commandPrioritizerVF,l,(1,5000),24)
+vnfXUser(flightTelemetryIngesterVF,l,(1,5000),16)
+vnfXUser(routeDispatcherVF,l,(1,5000),16)

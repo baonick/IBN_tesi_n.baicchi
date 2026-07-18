@@ -1,0 +1,21 @@
+intent(encryptedTrafficAnalysisIntent, secureCryptoOp, 25000, encryptedTrafficAnalysisService).
+
+propertyExpectation(affReq, encryptedTrafficAnalysisIntent, affinity, same, hard, _, _, trafficSplitterVF, featureExtractorVF).
+propertyExpectation(hwReq, encryptedTrafficAnalysisIntent, totChainHW, lower, soft, 80, gb, _, _).
+
+propertyExpectation(decReq, encryptedTrafficAnalysisIntent, decoding, _, trafficSplitterVF, _).
+propertyExpectation(secReq, encryptedTrafficAnalysisIntent, security, _, _, policyEnforcerVF).
+
+target(encryptedTrafficAnalysisService, [trafficSplitterVF, featureExtractorVF, aiClassifierVF, alertManagerVF, policyEnforcerVF]).
+
+vnf(trafficSplitterVF, edge, 16).
+vnf(featureExtractorVF, edge, 32).
+vnf(aiClassifierVF, cloud, 24).
+vnf(alertManagerVF, cloud, 8).
+vnf(policyEnforcerVF, cloud, 12).
+
+vnfXUser(trafficSplitterVF, l, (1, 25000), 16).
+vnfXUser(featureExtractorVF, l, (1, 25000), 32).
+vnfXUser(aiClassifierVF, l, (1, 25000), 24).
+vnfXUser(alertManagerVF, l, (1, 25000), 8).
+vnfXUser(policyEnforcerVF, l, (1, 25000), 12).

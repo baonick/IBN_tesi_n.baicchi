@@ -1,0 +1,23 @@
+intent(radiolysisAIIntent, medDiagnosticOp, 10000, radiologyAIService).
+
+propertyExpectation(bwReq, radiolysisAIIntent, bandwidth, greater, hard, 500, megabps, dicomIngesterVF, lesionAnalyzerVF).
+propertyExpectation(affReq1, radiolysisAIIntent, affinity, dedicated, hard, _, _, lesionAnalyzerVF).
+propertyExpectation(affReq2, radiolysisAIIntent, affinity, dedicated, hard, _, _, metadataExtractorVF).
+propertyExpectation(encReq, radiolysisAIIntent, encoding, _, _, secureArchiverVF).
+
+target(radiologyAIService, [dicomIngesterVF, lesionAnalyzerVF, metadataExtractorVF, secureArchiverVF]).
+
+vnf(dicomIngesterVF, edge, 8).
+vnf(lesionAnalyzerVF, cloud, 32).
+vnf(metadataExtractorVF, cloud, 16).
+vnf(secureArchiverVF, cloud, 12).
+
+vnfXUser(dicomIngesterVF, l, (1, 10000), 8).
+vnfXUser(lesionAnalyzerVF, l, (1, 10000), 32).
+vnfXUser(metadataExtractorVF, l, (1, 10000), 16).
+vnfXUser(secureArchiverVF, l, (1, 10000), 12).
+
+propertyExpectation(compReq, radiolysisAIIntent, compression, _, dicomIngesterVF, _).
+propertyExpectation(affReq1, radiolysisAIIntent, affinity, dedicated, hard, _, _, lesionAnalyzerVF).
+propertyExpectation(affReq2, radiolysisAIIntent, affinity, dedicated, hard, _, _, metadataExtractorVF).
+propertyExpectation(encReq, radiolysisAIIntent, encoding, _, _, secureArchiverVF).

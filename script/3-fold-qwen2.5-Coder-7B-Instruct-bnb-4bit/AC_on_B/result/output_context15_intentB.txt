@@ -1,0 +1,18 @@
+intent(digitalIdentityIntent, onlineBankOp, 10000, digitalIdentityService).
+
+propertyExpectation(encReq, digitalIdentityIntent, encoding, _, documentReceiverVF, _).
+propertyExpectation(secReq, digitalIdentityIntent, security, _, _, authenticityCheckerVF).
+propertyExpectation(privReq, digitalIdentityIntent, privacy, _, amlMatcherVF, _).
+propertyExpectation(compReq, digitalIdentityIntent, compression, _, _, profileCreatorVF).
+
+target(digitalIdentityService, [documentReceiverVF, authenticityCheckerVF, amlMatcherVF, profileCreatorVF]).
+
+vnf(documentReceiverVF, edge, 8).
+vnf(authenticityCheckerVF, cloud, 16).
+vnf(amlMatcherVF, cloud, 16).
+vnf(profileCreatorVF, cloud, 12).
+
+vnfXUser(documentReceiverVF, l, (1, 10000), 8).
+vnfXUser(authenticityCheckerVF, l, (1, 10000), 16).
+vnfXUser(amlMatcherVF, l, (1, 10000), 16).
+vnfXUser(profileCreatorVF, l, (1, 10000), 12).

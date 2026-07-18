@@ -1,0 +1,20 @@
+intent(droneControlIntent, aeroDeliveryOp, 5000, droneFleetControlService).
+
+
+propertyExpectation(latReq, droneControlIntent, latency, lower, hard, 10, ms, flightTelemetryIngesterVF, collisionAvoiderVF).
+propertyExpectation(bwReq, droneControlIntent, bandwidth, greater, soft, 2000, megabps, collisionAvoiderVF, routeDispatcherVF).
+propertyExpectation(hwReq, droneControlIntent, totChainHW, lower, soft, 200, gb, _, _).
+
+propertyExpectation(cachReq, droneControlIntent, caching, _, flightTelemetryIngesterVF, _).
+propertyExpectation(compReq, droneControlIntent, compression, _, collisionAvoiderVF, _).
+propertyExpectation(encReq, droneControlIntent, encoding, _, routeDispatcherVF, _).
+
+target(droneFleetControlService, [flightTelemetryIngesterVF, collisionAvoiderVF, routeDispatcherVF]).
+
+vnf(flightTelemetryIngesterVF, edge, 16).
+vnf(collisionAvoiderVF, cloud, 32).
+vnf(routeDispatcherVF, edge, 16).
+
+vnfXUser(flightTelemetryIngesterVF, l, (1, 5000), 16).
+vnfXUser(collisionAvoiderVF, l, (1, 5000), 32).
+vnfXUser(routeDispatcherVF, l, (1, 5000), 16).

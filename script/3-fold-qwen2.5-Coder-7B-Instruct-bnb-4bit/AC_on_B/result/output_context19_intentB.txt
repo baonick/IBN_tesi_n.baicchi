@@ -1,0 +1,26 @@
+intent(droneControlIntent, aeroDeliveryOp, 5000, droneFleetControlService).
+
+propertyExpectation(hwReq, droneControlIntent, totChainHW, lower, soft, 200, gb, _, _).
+propertyExpectation(latReq, droneControlIntent, latency, lower, hard, 10, ms, flightTelemetryIngesterVF, collisionAvoiderVF).
+propertyExpectation(bwReq, droneControlIntent, bandwidth, greater, soft, 2000, megabps, collisionAvoiderVF, routeDispatcherVF).
+
+vnf(flightTelemetryIngesterVF, edge, 8).
+vnf(collisionAvoiderVF, cloud, 16).
+vnf(commandPrioritizerVF, cloud, 12).
+vnf(routeDispatcherVF, edge, 12).
+
+vnfXUser(flightTelemetryIngesterVF, l, (1, 5000), 8).
+vnfXUser(collisionAvoiderVF, l, (1, 5000), 16).
+vnfXUser(commandPrioritizerVF, l, (1, 5000), 12).
+vnfXUser(routeDispatcherVF, l, (1, 5000), 12).
+
+cacheReq: caching is applied after flightTelemetryIngesterVF.
+propertyExpectation(cacheReq, droneControlIntent, caching, _, flightTelemetryIngesterVF, _).
+
+latReq: latency from flightTelemetryIngesterVF to collisionAvoiderVF is strictly required to be lower than 10 ms.
+propertyExpectation(latReq, droneControlIntent, latency, lower, hard, 10, ms, flightTelemetryIngesterVF, collisionAvoiderVF).
+
+bwReq: bandwidth from collisionAvoiderVF to routeDispatcherVF is ideally preferred to remain higher than 2000 mbps.
+propertyExpectation(bwReq, droneControlIntent, bandwidth, greater, soft, 2000, megabps, collisionAvoiderVF, routeDispatcherVF).
+
+target(droneFleetControlService, [flightTelemetryIngesterVF, collisionAvoiderVF, commandPrioritizerVF, routeDispatcherVF]).

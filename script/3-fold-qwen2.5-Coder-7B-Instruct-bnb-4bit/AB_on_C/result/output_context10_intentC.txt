@@ -1,0 +1,20 @@
+intent(cinemaRenderIntent, cinemaRenderOp, 5000, postProductionRenderingService).
+
+propertyExpectation(hwReq, cinemaRenderIntent, totChainHW, lower, soft, 800, gb, _, _).
+
+propertyExpectation(cachReq, cinemaRenderIntent, caching, _, _, colorGraderVF).
+propertyExpectation(compReq, cinemaRenderIntent, compression, _, sceneReceiverVF, _).
+
+target(postProductionRenderingService, [sceneReceiverVF, assetValidatorVF, renderDistributorVF, frameAssemblerVF, colorGraderVF]).
+
+vnf(sceneReceiverVF, edge, 16).
+vnf(assetValidatorVF, cloud, 8).
+vnf(renderDistributorVF, cloud, 32).
+vnf(frameAssemblerVF, cloud, 16).
+vnf(colorGraderVF, cloud, 12).
+
+vnfXUser(sceneReceiverVF, l, (1, 5000), 16).
+vnfXUser(assetValidatorVF, l, (1, 5000), 8).
+vnfXUser(renderDistributorVF, l, (1, 5000), 32).
+vnfXUser(frameAssemblerVF, l, (1, 5000), 16).
+vnfXUser(colorGraderVF, l, (1, 5000), 12).

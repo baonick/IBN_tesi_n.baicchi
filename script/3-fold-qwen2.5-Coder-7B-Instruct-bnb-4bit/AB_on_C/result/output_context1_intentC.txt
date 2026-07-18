@@ -1,0 +1,14 @@
+intent(corpWebSecurityIntent, corpITOp, 5000, corporateWebSecurityService).
+
+propertyExpectation(latReq, corpWebSecurityIntent, latency, lower, hard, 10, ms, webFilterVF, dlpEngineVF).
+propertyExpectation(bwReq, corpWebSecurityIntent, bandwidth, greater, soft, 500, megabps, webFilterVF, dlpEngineVF).
+
+target(corporateWebSecurityService, [webFilterVF, malwareScannerVF, dlpEngineVF]).
+
+vnf(webFilterVF, edge, 8).
+vnf(malwareScannerVF, cloud, 16).
+vnf(dlpEngineVF, cloud, 12).
+
+vnfXUser(webFilterVF, l, (1, 5000), 8).
+vnfXUser(malwareScannerVF, l, (1, 5000), 16).
+vnfXUser(dlpEngineVF, l, (1, 5000), 12).

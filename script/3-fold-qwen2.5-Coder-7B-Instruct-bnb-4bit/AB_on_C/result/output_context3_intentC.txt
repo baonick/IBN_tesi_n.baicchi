@@ -1,0 +1,19 @@
+intent(ddosMitigationIntent, ddosProtectionOp, 50000, ddosDefenseSystem).
+
+propertyExpectation(bwReq, ddosMitigationIntent, bandwidth, greater, hard, 500, megabps, networkTrafficAnalyzerVF, scrubbingFilterVF).
+propertyExpectation(latReq, ddosMitigationIntent, latency, lower, soft, 10, milliseconds, rateLimiterVF, webServerVF).
+
+propertyExpectation(secReq, ddosMitigationIntent, security, _, _, scrubbingFilterVF).
+propertyExpectation(logReq, ddosMitigationIntent, logging, _, rateLimiterVF, _).
+
+target(ddosDefenseSystem, [networkTrafficAnalyzerVF, scrubbingFilterVF, rateLimiterVF, webServerVF]).
+
+vnf(networkTrafficAnalyzerVF, edge, 8).
+vnf(scrubbingFilterVF, cloud, 32).
+vnf(rateLimiterVF, cloud, 16).
+vnf(webServerVF, cloud, 24).
+
+vnfXUser(networkTrafficAnalyzerVF, l, (1, 50000), 8).
+vnfXUser(scrubbingFilterVF, l, (1, 50000), 32).
+vnfXUser(rateLimiterVF, l, (1, 50000), 16).
+vnfXUser(webServerVF, l, (1, 50000), 24).

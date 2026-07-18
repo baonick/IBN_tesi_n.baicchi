@@ -1,0 +1,39 @@
+RISULTATI PER CONTEXT1
+File analizzato: output_context1_intentA.txt
+==================================================
+--- INTENTO TESTUALE ---
+The IT provider corpITOp requires a service to manage 5,000 office employees. This service must filter dangerous websites, 
+scan downloaded files for malware, and ensure that sensitive data does not leave the network. The service chain begins by connecting a webFilterVF 
+allocated at the edge to a malwareScannerVF located in the cloud; for this specific segment, it is mandatory that the latency remains below 10 milliseconds.
+Subsequently, the chain proceeds by connecting the malwareScannerVF to a dlpEngineVF located in the cloud, ensuring a bandwidth greater than 500 mbps 
+on this final link.
+==================================================
+Recall    (Omissioni)     : 0.8000
+Precision (Allucinazioni) : 0.8000
+Jaccard   (Globale)       : 0.6667
+F1-Score  (Equilibrio)    : 0.8000
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(corpITOp,5000)
+propertyExpectation(bandwidth,greater,hard,500,megabps,malwareScannerVF,dlpEngineVF)
+propertyExpectation(latency,lower,hard,100,ms,webFilterVF,malwareScannerVF)
+target([webFilterVF,malwareScannerVF,dlpEngineVF])
+vnf(dlpEngineVF,cloud,8)
+vnf(malwareScannerVF,cloud,16)
+vnf(webFilterVF,edge,4)
+vnfXUser(dlpEngineVF,l,(1,5000),8)
+vnfXUser(malwareScannerVF,l,(1,5000),16)
+vnfXUser(webFilterVF,l,(1,5000),4)
+
+--- Fatti Estratti LLM ---
+intent(corpITOp,5000)
+propertyExpectation(bandwidth,greater,hard,500,megabps,malwareScannerVF,dlpEngineVF)
+propertyExpectation(latency,lower,hard,100,ms,webFilterVF,malwareScannerVF)
+target([webFilterVF,malwareScannerVF,dlpEngineVF])
+vnf(dlpEngineVF,cloud,12)
+vnf(malwareScannerVF,cloud,16)
+vnf(webFilterVF,edge,4)
+vnfXUser(dlpEngineVF,l,(1,5000),12)
+vnfXUser(malwareScannerVF,l,(1,5000),16)
+vnfXUser(webFilterVF,l,(1,5000),4)

@@ -1,0 +1,25 @@
+intent(virtualLabIntent, eduCloudOp, 10000, virtualStudentLabService).
+
+propertyExpectation(hwReq, virtualLabIntent, totChainHW, lower, soft, 120, gb, _, _).
+
+propertyExpecting(privReq, virtualLabIntent, privacy, _, _, sessionIngesterVF).
+propertyExpectation(latReq, virtualLabIntent, latency, lower, hard, 40, ms, sessionIngesterVF, activityMonitorVF).
+propertyExpectation(bwReq, virtualLabIntent, bandwidth, greater, hard, 500, megabps, sessionIngesterVF, resourceAllocatorVF).
+propertyExpectation(logReq, virtualLabIntent, logging, _, _, activityMonitorVF).
+propertyExpectation(compReq, virtualLabIntent, compression, _, outputPackagerVF, _).
+
+target(virtualStudentLabService, [sessionIngesterVF, resourceAllocatorVF, activityMonitorVF, userPrivacyEnforcerVF, auditLoggerVF, outputPackagerVF]).
+
+vnf(sessionIngesterVF, edge, 8).
+vnf(resourceAllocatorVF, cloud, 16).
+vnf(activityMonitorVF, cloud, 12).
+vnf(userPrivacyEnforcerVF, cloud, 16).
+vnf(auditLoggerVF, cloud, 8).
+vnf(outputPackagerVF, cloud, 12).
+
+vnfXUser(sessionIngesterVF, l, (1, 10000), 8).
+vnfXUser(resourceAllocatorVF, l, (1, 10000), 16).
+vnfXUser(activityMonitorVF, l, (1, 10000), 12).
+vnfXUser(userPrivacyEnforcerVF, l, (1, 10000), 16).
+vnfXUser(auditLoggerVF, l, (1, 10000), 8).
+vnfXUser(outputPackagerVF, l, (1, 10000), 12).

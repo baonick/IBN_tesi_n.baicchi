@@ -1,0 +1,62 @@
+RISULTATI PER CONTEXT26
+File analizzato: output_context26_intentA.txt
+==================================================
+--- INTENTO TESTUALE ---
+The educational provider eduCloudOp requires a virtual student lab platform to support 10,000 concurrent students. This system provides temporary programming 
+environments, manages resource allocation for each student, and monitors the workspaces to prevent improper use. The service chain begins with a sessionIngesterVF allocated at the edge, data privacy mechanisms are applied after it. The system then connects to a resourceAllocatorVF located in the cloud, ensuring that the network capacity between the sessionIngesterVF and this resourceAllocatorVF supports more than 500 mbps. 
+The pipeline continues to an activityMonitorVF located in the cloud, ensuring that security are executed before it, and that the latency time 
+from the sessionIngesterVF to this activityMonitorVF is kept under 40 ms. The next blocks are a userPrivacyEnforcerVF located in the cloud and an auditLoggerVF 
+located in the cloud, where logging are executed before the auditLoggerVF. Finally, the system routes the results to an outputPackagerVF located in the cloud, 
+specifying that compression is applied after it. For the whole deployment, the provider prefers that the aggregate infrastructure footprint stays below 120 gb.
+==================================================
+Recall    (Omissioni)     : 0.7619
+Precision (Allucinazioni) : 0.7619
+Jaccard   (Globale)       : 0.6154
+F1-Score  (Equilibrio)    : 0.7619
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(eduCloudOp,10000)
+propertyExpectation(bandwidth,greater,soft,500,megabps,sessionIngesterVF,resourceAllocatorVF)
+propertyExpectation(compression,_,outputPackagerVF,_)
+propertyExpectation(latency,lower,hard,40,ms,sessionIngesterVF,activityMonitorVF)
+propertyExpectation(logging,_,_,auditLoggerVF)
+propertyExpectation(privacy,_,sessionIngesterVF,_)
+propertyExpectation(security,_,_,activityMonitorVF)
+propertyExpectation(totChainHW,lower,soft,120,gb,_,_)
+target([sessionIngesterVF,resourceAllocatorVF,activityMonitorVF,userPrivacyEnforcerVF,auditLoggerVF,outputPackagerVF])
+vnf(activityMonitorVF,cloud,24)
+vnf(auditLoggerVF,cloud,12)
+vnf(outputPackagerVF,cloud,16)
+vnf(resourceAllocatorVF,cloud,16)
+vnf(sessionIngesterVF,edge,8)
+vnf(userPrivacyEnforcerVF,cloud,12)
+vnfXUser(activityMonitorVF,l,(1,10000),24)
+vnfXUser(auditLoggerVF,l,(1,10000),12)
+vnfXUser(outputPackagerVF,l,(1,10000),16)
+vnfXUser(resourceAllocatorVF,l,(1,10000),16)
+vnfXUser(sessionIngesterVF,l,(1,10000),8)
+vnfXUser(userPrivacyEnforcerVF,l,(1,10000),12)
+
+--- Fatti Estratti LLM ---
+intent(eduCloudOp,10000)
+propertyExpectation(bandwidth,greater,soft,500,megabps,sessionIngesterVF,resourceAllocatorVF)
+propertyExpectation(compression,_,outputPackagerVF,_)
+propertyExpectation(latency,lower,hard,40,ms,sessionIngesterVF,resourceAllocatorVF)
+propertyExpectation(logging,_,_,auditLoggerVF)
+propertyExpectation(privacy,_,sessionIngesterVF,_)
+propertyExpectation(security,_,_,activityMonitorVF)
+propertyExpectation(totChainHW,lower,soft,120,gb,_,_)
+target([sessionIngesterVF,resourceAllocatorVF,activityMonitorVF,userPrivacyEnforcerVF,auditLoggerVF,outputPackagerVF])
+vnf(activityMonitorVF,cloud,16)
+vnf(auditLoggerVF,cloud,12)
+vnf(outputPackagerVF,cloud,16)
+vnf(resourceAllocatorVF,cloud,24)
+vnf(sessionIngesterVF,edge,8)
+vnf(userPrivacyEnforcerVF,cloud,12)
+vnfXUser(activityMonitorVF,l,(1,10000),16)
+vnfXUser(auditLoggerVF,l,(1,10000),12)
+vnfXUser(outputPackagerVF,l,(1,10000),16)
+vnfXUser(resourceAllocatorVF,l,(1,10000),24)
+vnfXUser(sessionIngesterVF,l,(1,10000),8)
+vnfXUser(userPrivacyEnforcerVF,l,(1,10000),12)

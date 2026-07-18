@@ -1,0 +1,49 @@
+RISULTATI PER CONTEXT25
+File analizzato: output_context25_intentA.txt
+==================================================
+--- INTENTO TESTUALE ---
+The digital provider govDataOp requires an open data portal service to manage 30,000 dataset downloads per day. This system extracts datasets from public databases, 
+normalizes them into open formats, adds search metadata, and makes them available for public download. The service chain begins with a dataExtractorVF 
+allocated at the edge. The chain then connects to a formatNormalizerVF located in the cloud, specifying that data caching is applied after it. 
+The next component is a metadataEnricherVF located in the cloud; it is mandatory that this formatNormalizerVF and the metadataEnricherVF are hosted 
+together on the exact same physical server, while preferring that the network bandwidth between them remains higher than 1000 mbps. Finally, 
+the system routes the files to a downloadProviderVF located in the cloud, ensuring that the total latency from the initial dataExtractorVF to 
+this final downloadProviderVF is strictly required to remain below 200 ms.
+==================================================
+Recall    (Omissioni)     : 0.4286
+Precision (Allucinazioni) : 0.4286
+Jaccard   (Globale)       : 0.2727
+F1-Score  (Equilibrio)    : 0.4286
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(govDataOp,30000)
+propertyExpectation(affinity,same,hard,_,_,formatNormalizerVF,metadataEnricherVF)
+propertyExpectation(bandwidth,greater,soft,1000,megabps,formatNormalizerVF,metadataEnricherVF)
+propertyExpectation(caching,_,formatNormalizerVF,_)
+propertyExpectation(latency,lower,hard,200,ms,dataExtractorVF,downloadProviderVF)
+target([dataExtractorVF,formatNormalizerVF,metadataEnricherVF,downloadProviderVF])
+vnf(dataExtractorVF,edge,8)
+vnf(downloadProviderVF,cloud,16)
+vnf(formatNormalizerVF,cloud,16)
+vnf(metadataEnricherVF,cloud,12)
+vnfXUser(dataExtractorVF,l,(1,30000),16)
+vnfXUser(downloadProviderVF,l,(1,30000),16)
+vnfXUser(formatNormalizerVF,l,(1,30000),16)
+vnfXUser(metadataEnricherVF,l,(1,30000),12)
+
+--- Fatti Estratti LLM ---
+intent(govDataOp,30000)
+propertyExpectation(affinity,same,hard,_,_,formatNormalizerVF,metadataEnricherVF)
+propertyExpectation(bandwidth,greater,soft,1000,megabps,formatNormalizerVF,metadataEnricherVF)
+propertyExpectation(caching,_,formatNormalizerVF,_)
+propertyExpectation(latency,lower,hard,200,ms,adataExtractorVF,downloadProviderVF)
+target([adataExtractorVF,formatNormalizerVF,metadataEnricherVF,downloadProviderVF])
+vnf(adataExtractorVF,edge,12)
+vnf(downloadProviderVF,cloud,16)
+vnf(formatNormalizerVF,cloud,24)
+vnf(metadataEnricherVF,cloud,16)
+vnfXUser(adataExtractorVF,l,(1,30000),12)
+vnfXUser(downloadProviderVF,l,(1,30000),16)
+vnfXUser(formatNormalizerVF,l,(1,30000),24)
+vnfXUser(metadataEnricherVF,l,(1,30000),16)

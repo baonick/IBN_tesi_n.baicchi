@@ -1,0 +1,19 @@
+intent(multiCamStreamingIntent, mediaBroadcastOp, 30000, liveStreamService).
+
+propertyExpectation(bwReq, multiCamStreamingIntent, bandwidth, greater, soft, 5000, megabps, graphicInjectorVF, streamDistributorVF).
+propertyExpectation(hwReq, multiCamStreamingIntent, totChainHW, lower, soft, 150, gb, _, _).
+
+propertyExpectation(compReq, multiCamStreamingIntent, compression, _, streamIngesterVF, _).
+propertyExpectation(cachReq, multiCamStreamingIntent, caching, _, _, streamDistributorVF).
+
+target(liveStreamService, [streamIngesterVF, cloudStudioVF, graphicInjectorVF, streamDistributorVF]).
+
+vnf(streamIngesterVF, edge, 16).
+vnf(cloudStudioVF, cloud, 32).
+vnf(graphicInjectorVF, cloud, 12).
+vnf(streamDistributorVF, cloud, 24).
+
+vnfXUser(streamIngesterVF, l, (1, 30000), 16).
+vnfXUser(cloudStudioVF, l, (1, 30000), 32).
+vnfXUser(graphicInjectorVF, l, (1, 30000), 12).
+vnfXUser(streamDistributorVF, l, (1, 30000), 24).

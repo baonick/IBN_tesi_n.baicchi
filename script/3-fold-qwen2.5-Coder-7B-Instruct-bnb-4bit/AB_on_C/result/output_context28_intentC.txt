@@ -1,0 +1,20 @@
+intent(augmentedRealityIntent, factoryCloudOp, 500, augmentedRealityService).
+
+propertyExpectation(latReq, augmentedRealityIntent, latency, lower, hard, 12, ms, arStreamReceiverVF, arStreamDispatcherVF).
+propertyExpectation(bwReq, augmentedRealityIntent, bandwidth, greater, soft, 200, megabps, arStreamReceiverVF, arPoseEstimatorVF).
+propertyExpectation(hwReq, augmentedRealityIntent, totChainHW, lower, soft, 90, gb, _, _).
+propertyExpectation(affReq, augmentedRealityIntent, affinity, dedicated, hard, _, _, arPoseEstimatorVF, dataOverlayEngineVF).
+propertyExpectation(affReq, augmentedRealityIntent, affinity, dedicated, hard, _, _, dataOverlayEngineVF, arStreamDispatcherVF).
+
+
+target(augmentedRealityService, [arStreamReceiverVF, arPoseEstimatorVF, dataOverlayEngineVF, arStreamDispatcherVF]).
+
+vnf(arStreamReceiverVF, edge, 8).
+vnf(arPoseEstimatorVF, cloud, 16).
+vnf(dataOverlayEngineVF, cloud, 24).
+vnf(arStreamDispatcherVF, cloud, 12).
+
+vnfXUser(arStreamReceiverVF, l, (1, 500), 8).
+vnfXUser(arPoseEstimatorVF, l, (1, 500), 16).
+vnfXUser(dataOverlayEngineVF, l, (1, 500), 24).
+vnfXUser(arStreamDispatcherVF, l, (1, 500), 12).

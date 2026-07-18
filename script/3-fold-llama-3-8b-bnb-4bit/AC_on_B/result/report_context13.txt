@@ -1,0 +1,54 @@
+RISULTATI PER CONTEXT13
+File analizzato: output_context13_intentB.txt
+==================================================
+--- INTENTO TESTUALE ---
+The financial provider fraudSafeOp requires an antifraud analysis service to manage 200,000 transactions per hour. This system intercepts every digital payment 
+request, compares it with habitual user spending patterns via machine learning, and authorizes the transaction in a few milliseconds. 
+The service chain begins with a <requestInterceptorVF, 8> allocated at the edge. For this component, security is applied after it. It is mandatory that this <requestInterceptorVF, 8> and the next component, a <profileMatcherVF, 16>, operate on the same node at the edge. The chain then connects to an <mlAnalyzerVF, 32> located in the cloud, 
+ensuring that privacy is executed before it. The chain then proceeds to a <policyEnforcerVF, 12> located in the cloud; it is ideally preferred that the bandwidth from 
+the <mlAnalyzerVF, 32> to this <policyEnforcerVF, 12> remains higher than 1000 mbps. Finally, the system routes to a <responseEmitterVF, 8> located in the cloud, with a preference 
+that the total chain hardware remains lower than 120 gb.
+==================================================
+Recall    (Omissioni)     : 0.8235
+Precision (Allucinazioni) : 0.8235
+Jaccard   (Globale)       : 0.7000
+F1-Score  (Equilibrio)    : 0.8235
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(fraudSafeOp,200000)
+propertyExpectation(affinity,same,hard,_,_,requestInterceptorVF,profileMatcherVF)
+propertyExpectation(bandwidth,greater,soft,1000,megabps,mlAnalyzerVF,policyEnforcerVF)
+propertyExpectation(privacy,_,_,mlAnalyzerVF)
+propertyExpectation(security,_,requestInterceptorVF,_)
+propertyExpectation(totChainHW,lower,soft,120,gb,_,_)
+target([requestInterceptorVF,profileMatcherVF,mlAnalyzerVF,policyEnforcerVF,responseEmitterVF])
+vnf(mlAnalyzerVF,cloud,32)
+vnf(policyEnforcerVF,cloud,12)
+vnf(profileMatcherVF,edge,16)
+vnf(requestInterceptorVF,edge,8)
+vnf(responseEmitterVF,cloud,8)
+vnfXUser(mlAnalyzerVF,l,(1,200000),32)
+vnfXUser(policyEnforcerVF,l,(1,200000),12)
+vnfXUser(profileMatcherVF,l,(1,200000),16)
+vnfXUser(requestInterceptorVF,l,(1,200000),8)
+vnfXUser(responseEmitterVF,l,(1,200000),8)
+
+--- Fatti Estratti LLM ---
+intent(fraudSafeOp,200000)
+propertyExpectation(affinity,same,soft,_,_,requestInterceptorVF,profileMatcherVF)
+propertyExpectation(bandwidth,greater,soft,1000,megabps,mlAnalyzerVF,policyEnforcerVF)
+propertyExpectation(privacy,_,_,mlAnalyzerVF)
+propertyExpectation(security,_,requestInterceptorVF,_)
+propertyExpectation(totChainHW,lower,soft,120,gb,_,_)
+target([requestInterceptorVF,profileMatcherVF,mlAnalyzerVF,policyEnforcerVF,responseEmitterVF])
+vnf(mlAnalyzerVF,cloud,24)
+vnf(policyEnforcerVF,cloud,12)
+vnf(profileMatcherVF,edge,16)
+vnf(requestInterceptorVF,edge,8)
+vnf(responseEmitterVF,cloud,8)
+vnfXUser(mlAnalyzerVF,l,(1,200000),24)
+vnfXUser(policyEnforcerVF,l,(1,200000),12)
+vnfXUser(profileMatcherVF,l,(1,200000),16)
+vnfXUser(requestInterceptorVF,l,(1,200000),8)
+vnfXUser(responseEmitterVF,l,(1,200000),8)

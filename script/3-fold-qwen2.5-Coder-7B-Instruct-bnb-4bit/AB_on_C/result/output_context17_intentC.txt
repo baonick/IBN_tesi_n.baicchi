@@ -1,0 +1,19 @@
+intent(routeOptimizationIntent, deliveryLogisticsOp, 15000, routingService).
+
+propertyExpectation(latReq, routeOptimizationIntent, latency, lower, hard, 80, ms, gpsIngesterVF, terminalUpdaterVF).
+
+
+propertyExpectation(compReq, routeOptimizationIntent, compression, _, gpsIngesterVF, _).
+propertyExpectation(decReq, routeOptimizationIntent, decoding, _, _, terminalUpdaterVF).
+
+target(routingService, [gpsIngesterVF, trafficAnalyzerVF, routeOptimizerVF, terminalUpdaterVF]).
+
+vnf(gpsIngesterVF, edge, 8).
+vnf(trafficAnalyzerVF, cloud, 16).
+vnf(routeOptimizerVF, cloud, 32).
+vnf(terminalUpdaterVF, edge, 12).
+
+vnfXUser(gpsIngesterVF, l, (1, 15000), 8).
+vnfXUser(trafficAnalyzerVF, l, (1, 15000), 16).
+vnfXUser(routeOptimizerVF, l, (1, 15000), 32).
+vnfXUser(terminalUpdaterVF, l, (1, 15000), 12).

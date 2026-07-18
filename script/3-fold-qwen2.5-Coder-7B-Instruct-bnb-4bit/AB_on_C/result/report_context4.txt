@@ -1,0 +1,42 @@
+RISULTATI PER CONTEXT4
+File analizzato: output_context4_intentC.txt
+==================================================
+--- INTENTO TESTUALE ---
+The compliance provider gdprComplianceOp requires a GDPR verification service to manage 5,000 corporate database connections. This service scans corporate
+databases to identify unprotected personal data, applies automatic anonymization, and generates reports for regulators. The service chain begins with a 
+<dbScannerVF, 16> allocated at the edge. For this component, privacy must be applied after it. The <dbScannerVF, 16> connects to an <anonymizerVF, 24> located in the cloud, 
+and for this connection, it is ideally preferred that latency remains lower than 20 ms. The chain then proceeds to a <reportGeneratorVF, 8> located in the cloud; 
+between the <anonymizerVF, 24> and the <reportGeneratorVF, 8>, it is mandatory to have a bandwidth higher than 50 Mbps. Additionally, security must be enforced before the report <reportGeneratorVF, 8>.
+==================================================
+Recall    (Omissioni)     : 0.2500
+Precision (Allucinazioni) : 0.2727
+Jaccard   (Globale)       : 0.1500
+F1-Score  (Equilibrio)    : 0.2609
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(gdprComplianceOp,5000)
+propertyExpectation(bandwidth,greater,hard,50,megabps,anonymizerVF,reportGeneratorVF)
+propertyExpectation(latency,lower,soft,20,ms,dbScannerVF,anonymizerVF)
+propertyExpectation(privacy,_,dbScannerVF,_)
+propertyExpectation(security,_,_,reportGeneratorVF)
+target([dbScannerVF,anonymizerVF,reportGeneratorVF])
+vnf(anonymizerVF,cloud,24)
+vnf(dbScannerVF,edge,16)
+vnf(reportGeneratorVF,cloud,8)
+vnfXUser(anonymizerVF,l,(1,5000),24)
+vnfXUser(dbScannerVF,l,(1,5000),16)
+vnfXUser(reportGeneratorVF,l,(1,5000),8)
+
+--- Fatti Estratti LLM ---
+intent(gdprComplianceOp,5000)
+propertyExpectation(bandwidth,greater,hard,50,megabps,dbScannerVF,anonymizerVF)
+propertyExpectation(latency,lower,soft,20,ms,dbScannerVF,anonymizerVF)
+propertyExpectation(security,_,anonymizerVF,_)
+target([dbScannerVF,anonymizerVF,reportGeneratorVF])
+vnf(anonymizerVF,cloud,16)
+vnf(dbScannerVF,edge,8)
+vnf(reportGeneratorVF,cloud,12)
+vnfXUser(anonymizerVF,l,(1,5000),16)
+vnfXUser(dbScannerVF,l,(1,5000),8)
+vnfXUser(reportGeneratorVF,l,(1,5000),12)
