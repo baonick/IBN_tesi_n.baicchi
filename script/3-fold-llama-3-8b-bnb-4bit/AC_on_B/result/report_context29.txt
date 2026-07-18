@@ -10,9 +10,9 @@ is executed before it to catch failure triggers. Finally, the system routes the 
 is executed before it for secure document delivery.
 ==================================================
 Recall    (Omissioni)     : 0.8571
-Precision (Allucinazioni) : 0.7059
-Jaccard   (Globale)       : 0.6316
-F1-Score  (Equilibrio)    : 0.7742
+Precision (Allucinazioni) : 0.8000
+Jaccard   (Globale)       : 0.7059
+F1-Score  (Equilibrio)    : 0.8276
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -33,19 +33,17 @@ vnfXUser(subscriptionIngesterVF,l,(1,50000),12)
 
 --- Fatti Estratti LLM ---
 intent(subscriptionOp,50000)
-propertyExpectation(bandwidth,greater,soft,100,megabps,subscriptionIngesterVF,billingCycleProcessorVF)
-propertyExpectation(decoding,_,_,billingCycleProcessorVF)
+propertyExpectation(affinity,same,hard,_,node,node)
+propertyExpectation(decoding,_,_,invoiceGeneratorVF)
 propertyExpectation(encoding,_,_,invoiceGeneratorVF)
-propertyExpectation(latency,lower,hard,100,ms,subscriptionIngesterVF,billingCycleProcessorVF)
-propertyExpectation(logging,_,_,dunningManagerVF)
+propertyExpectation(logging,_,dunningManagerVF,_)
 propertyExpectation(privacy,_,subscriptionIngesterVF,_)
-propertyExpectation(totChainHW,greater,soft,80,gb,_,_)
 target([subscriptionIngesterVF,billingCycleProcessorVF,dunningManagerVF,invoiceGeneratorVF])
 vnf(billingCycleProcessorVF,cloud,24)
 vnf(dunningManagerVF,cloud,16)
 vnf(invoiceGeneratorVF,cloud,16)
-vnf(subscriptionIngesterVF,edge,8)
+vnf(subscriptionIngesterVF,edge,12)
 vnfXUser(billingCycleProcessorVF,l,(1,50000),24)
 vnfXUser(dunningManagerVF,l,(1,50000),16)
 vnfXUser(invoiceGeneratorVF,l,(1,50000),16)
-vnfXUser(subscriptionIngesterVF,l,(1,50000),8)
+vnfXUser(subscriptionIngesterVF,l,(1,50000),12)

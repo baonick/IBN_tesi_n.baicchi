@@ -10,10 +10,10 @@ while ensuring that the network bandwidth between the initial <arStreamReceiverV
 routes the processed graphics to an <arStreamDispatcherVF, 16> located in the cloud, ensuring it is strictly required that the latency from the <arStreamReceiverVF, 12> 
 to this <arStreamDispatcherVF, 16> remains below 12 ms. For the overall infrastructure, it is ideally preferred that the total chain hardware remains lower than 90 gb.
 ==================================================
-Recall    (Omissioni)     : 0.4000
-Precision (Allucinazioni) : 0.4615
-Jaccard   (Globale)       : 0.2727
-F1-Score  (Equilibrio)    : 0.4286
+Recall    (Omissioni)     : 0.9333
+Precision (Allucinazioni) : 0.9333
+Jaccard   (Globale)       : 0.8750
+F1-Score  (Equilibrio)    : 0.9333
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -35,15 +35,17 @@ vnfXUser(dataOverlayEngineVF,l,(1,500),32)
 
 --- Fatti Estratti LLM ---
 intent(factoryCloudOp,500)
+propertyExpectation(affinity,dedicated,hard,_,_,arPoseEstimatorVF,_)
+propertyExpectation(affinity,dedicated,hard,_,_,dataOverlayEngineVF,_)
 propertyExpectation(bandwidth,greater,hard,200,megabps,arStreamReceiverVF,arPoseEstimatorVF)
 propertyExpectation(latency,lower,hard,12,ms,arStreamReceiverVF,arStreamDispatcherVF)
 propertyExpectation(totChainHW,lower,soft,90,gb,_,_)
 target([arStreamReceiverVF,arPoseEstimatorVF,dataOverlayEngineVF,arStreamDispatcherVF])
-vnf(arPoseEstimatorVF,cloud,32)
+vnf(arPoseEstimatorVF,cloud,24)
 vnf(arStreamDispatcherVF,cloud,16)
-vnf(arStreamReceiverVF,edge,8)
-vnf(dataOverlayEngineVF,cloud,24)
-vnfXUser(arPoseEstimatorVF,l,(1,500),32)
+vnf(arStreamReceiverVF,edge,12)
+vnf(dataOverlayEngineVF,cloud,32)
+vnfXUser(arPoseEstimatorVF,l,(1,500),24)
 vnfXUser(arStreamDispatcherVF,l,(1,500),16)
-vnfXUser(arStreamReceiverVF,l,(1,500),8)
-vnfXUser(dataOverlayEngineVF,l,(1,500),24)
+vnfXUser(arStreamReceiverVF,l,(1,500),12)
+vnfXUser(dataOverlayEngineVF,l,(1,500),32)

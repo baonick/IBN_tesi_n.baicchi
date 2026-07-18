@@ -4,9 +4,9 @@ File analizzato: output_context4_intentA.txt
 --- INTENTO TESTUALE ---
 The compliance provider gdprComplianceOp requires a GDPR verification service to manage 5,000 corporate database connections. This service scans corporate
 databases to identify unprotected personal data, applies automatic anonymization, and generates reports for regulators. The service chain begins with a 
-dbScannerVF allocated at the edge. For this component, privacy must be applied after it. The dbScannerVF connects to an anonymizerVF located in the cloud, 
-and for this connection, it is ideally preferred that latency remains lower than 20 ms. The chain then proceeds to a reportGeneratorVF located in the cloud; 
-between the anonymizerVF and the reportGeneratorVF, it is mandatory to have a bandwidth higher than 50 Mbps. Additionally, security must be enforced before the report reportGeneratorVF.
+<dbScannerVF, 16> allocated at the edge. For this component, privacy must be applied after it. The <dbScannerVF, 16> connects to an <anonymizerVF, 24> located in the cloud, 
+and for this connection, it is ideally preferred that latency remains lower than 20 ms. The chain then proceeds to a <reportGeneratorVF, 8> located in the cloud; 
+between the <anonymizerVF, 24> and the <reportGeneratorVF, 8>, it is mandatory to have a bandwidth higher than 50 Mbps. Additionally, security must be enforced before the report <reportGeneratorVF, 8>.
 ==================================================
 Recall    (Omissioni)     : 0.8333
 Precision (Allucinazioni) : 0.9091

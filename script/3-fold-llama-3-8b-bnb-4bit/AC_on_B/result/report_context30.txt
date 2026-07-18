@@ -8,10 +8,10 @@ data caching is applied after it. The pipeline continues to a <sandboxSimulatorV
 runtime performance. Finally, the system routes the generated insights to a <developersReportGeneratorVF, 16> located in the cloud, specifying that data compression is applied after it. 
 For the whole cluster deployment, it is ideally preferred that the total chain hardware remains lower than 110 gb.
 ==================================================
-Recall    (Omissioni)     : 1.0000
-Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 1.0000
-F1-Score  (Equilibrio)    : 1.0000
+Recall    (Omissioni)     : 0.8667
+Precision (Allucinazioni) : 0.8667
+Jaccard   (Globale)       : 0.7647
+F1-Score  (Equilibrio)    : 0.8667
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -33,8 +33,8 @@ vnfXUser(syntaxValidatorVF,l,(1,20000),12)
 
 --- Fatti Estratti LLM ---
 intent(devToolsOp,20000)
-propertyExpectation(caching,_,syntaxValidatorVF,_)
-propertyExpectation(compression,_,developersReportGeneratorVF,_)
+propertyExpectation(caching,_,syntaxValidatorVF,_,_,_,_)
+propertyExpectation(compression,_,developersReportGeneratorVF,_,_,_,_)
 propertyExpectation(totChainHW,lower,soft,110,gb,_,_)
 target([codeReceiverVF,syntaxValidatorVF,sandboxSimulatorVF,optimizationEngineVF,developersReportGeneratorVF])
 vnf(codeReceiverVF,edge,8)

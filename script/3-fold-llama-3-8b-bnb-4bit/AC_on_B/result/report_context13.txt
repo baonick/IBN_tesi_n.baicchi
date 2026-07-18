@@ -9,10 +9,10 @@ ensuring that privacy is executed before it. The chain then proceeds to a <polic
 the <mlAnalyzerVF, 32> to this <policyEnforcerVF, 12> remains higher than 1000 mbps. Finally, the system routes to a <responseEmitterVF, 8> located in the cloud, with a preference 
 that the total chain hardware remains lower than 120 gb.
 ==================================================
-Recall    (Omissioni)     : 0.8235
-Precision (Allucinazioni) : 0.8235
-Jaccard   (Globale)       : 0.7000
-F1-Score  (Equilibrio)    : 0.8235
+Recall    (Omissioni)     : 0.7059
+Precision (Allucinazioni) : 0.7059
+Jaccard   (Globale)       : 0.5455
+F1-Score  (Equilibrio)    : 0.7059
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -36,19 +36,19 @@ vnfXUser(responseEmitterVF,l,(1,200000),8)
 
 --- Fatti Estratti LLM ---
 intent(fraudSafeOp,200000)
-propertyExpectation(affinity,same,soft,_,_,requestInterceptorVF,profileMatcherVF)
+propertyExpectation(affinity,same,hard,_,_,requestInterceptorVF,profileMatcherVF)
 propertyExpectation(bandwidth,greater,soft,1000,megabps,mlAnalyzerVF,policyEnforcerVF)
 propertyExpectation(privacy,_,_,mlAnalyzerVF)
 propertyExpectation(security,_,requestInterceptorVF,_)
 propertyExpectation(totChainHW,lower,soft,120,gb,_,_)
 target([requestInterceptorVF,profileMatcherVF,mlAnalyzerVF,policyEnforcerVF,responseEmitterVF])
-vnf(mlAnalyzerVF,cloud,24)
+vnf(mlAnalyzerVF,cloud,32)
 vnf(policyEnforcerVF,cloud,12)
 vnf(profileMatcherVF,edge,16)
 vnf(requestInterceptorVF,edge,8)
 vnf(responseEmitterVF,cloud,8)
-vnfXUser(mlAnalyzerVF,l,(1,200000),24)
-vnfXUser(policyEnforcerVF,l,(1,200000),12)
-vnfXUser(profileMatcherVF,l,(1,200000),16)
-vnfXUser(requestInterceptorVF,l,(1,200000),8)
-vnfXUser(responseEmitterVF,l,(1,200000),8)
+vnfXUser(mlAnalyzerVF,l,(200000,1000000),32)
+vnfXUser(policyEnforcerVF,l,(200000,1000000),12)
+vnfXUser(profileMatcherVF,l,(200000,1000000),16)
+vnfXUser(requestInterceptorVF,l,(200000,1000000),8)
+vnfXUser(responseEmitterVF,l,(200000,1000000),8)

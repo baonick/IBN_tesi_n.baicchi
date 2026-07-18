@@ -3,9 +3,9 @@ File analizzato: output_context20_intentA.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The infrastructure provider serverMonOp requires a telemetry monitoring service to manage 50,000 virtual machines. This service collects temperature, 
-CPU load, and memory usage data, aggregating them to identify anomalies before failure occurs. The service chain begins with a telemetryCollectorVF at the edge. 
-It is mandatory that this telemetryCollectorVF and the next component, a dataAggregatorVF located in the edge, are deployed on the same hosting node. 
-The chain then connects to ananomalyDetectorVF located in the cloud, and subsequently to an alertDispatcherVF located in the cloud. Regarding constraints, 
+CPU load, and memory usage data, aggregating them to identify anomalies before failure occurs. The service chain begins with a <telemetryCollectorVF, 8> at the edge. 
+It is mandatory that this <telemetryCollectorVF, 8> and the next component, a <dataAggregatorVF, 16> located in the edge, are deployed on the same hosting node. 
+The chain then connects to ananomalyDetectorVF located in the cloud, and subsequently to an <alertDispatcherVF, 8> located in the cloud. Regarding constraints, 
 it is strictly required that the latency from the begin to the end of the chain remains below 100 ms, and the provider ideally prefers that the bandwidth 
 from the begin to the end of the chain remains higher than 2000 mbps.
 ==================================================

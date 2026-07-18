@@ -1,5 +1,5 @@
 RISULTATI MEDI SU 30 TEST
-Recall: 0.7964
-Precision: 0.7847
-Jaccard: 0.6922
-F1-Score: 0.7900
+Recall: 0.9408
+Precision: 0.9336
+Jaccard: 0.8915
+F1-Score: 0.9369

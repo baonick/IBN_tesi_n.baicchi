@@ -9,10 +9,10 @@ from the <marketFeedVF, 16> to this <tradingAlgoVF, 32> to remain below 50 ms. T
 bandwidth from the <tradingAlgoVF, 32> to this <riskCheckerVF, 16> remains higher than 5000 mbps. Finally, the system routes to an <orderDispatcherVF, 8> allocated at the edge, 
 with a preference that the latency from the <riskCheckerVF, 16> to this <orderDispatcherVF, 8> remains below 5 ms, and ensuring that logging is executed before it.
 ==================================================
-Recall    (Omissioni)     : 0.8667
-Precision (Allucinazioni) : 0.8667
-Jaccard   (Globale)       : 0.7647
-F1-Score  (Equilibrio)    : 0.8667
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -41,10 +41,10 @@ propertyExpectation(latency,lower,soft,5,ms,riskCheckerVF,orderDispatcherVF)
 propertyExpectation(logging,_,_,orderDispatcherVF)
 target([marketFeedVF,tradingAlgoVF,riskCheckerVF,orderDispatcherVF])
 vnf(marketFeedVF,edge,16)
-vnf(orderDispatcherVF,edge,16)
+vnf(orderDispatcherVF,edge,8)
 vnf(riskCheckerVF,cloud,16)
 vnf(tradingAlgoVF,edge,32)
 vnfXUser(marketFeedVF,l,(1,500000),16)
-vnfXUser(orderDispatcherVF,l,(1,500000),16)
+vnfXUser(orderDispatcherVF,l,(1,500000),8)
 vnfXUser(riskCheckerVF,l,(1,500000),16)
 vnfXUser(tradingAlgoVF,l,(1,500000),32)

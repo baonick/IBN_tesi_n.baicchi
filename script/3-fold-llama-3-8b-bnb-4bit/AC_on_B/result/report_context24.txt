@@ -9,10 +9,10 @@ to an <anonymizerVoteVF, 16> located in the cloud, ensuring that the network ban
 The system then routes the data to a <voteCounterVF, 16> located in the cloud. Finally, the processed data flows to an <electoralAuditLoggerVF, 12> located in the cloud, ensuring 
 that logging is executed before it.
 ==================================================
-Recall    (Omissioni)     : 0.5000
-Precision (Allucinazioni) : 0.4706
-Jaccard   (Globale)       : 0.3200
-F1-Score  (Equilibrio)    : 0.4849
+Recall    (Omissioni)     : 0.7500
+Precision (Allucinazioni) : 0.7500
+Jaccard   (Globale)       : 0.6000
+F1-Score  (Equilibrio)    : 0.7500
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -36,18 +36,17 @@ vnfXUser(voteCounterVF,l,(1,200000),16)
 --- Fatti Estratti LLM ---
 intent(secureVoteOp,200000)
 propertyExpectation(bandwidth,greater,hard,100,megabps,ballotIngesterVF,anonymizerVoteVF)
-propertyExpectation(latency,lower,soft,50,ms,_,_)
-propertyExpectation(logging,_,_,_)
+propertyExpectation(latency,lower,soft,100,ms,ballotIngesterVF,anonymizerVoteVF)
 propertyExpectation(privacy,_,_,_)
 propertyExpectation(security,_,_,_)
 target([ballotIngesterVF,anonymizerVoteVF,integrityEnforcerVF,voteCounterVF,electoralAuditLoggerVF])
-vnf(anonymizerVoteVF,cloud,24)
+vnf(anonymizerVoteVF,cloud,16)
 vnf(ballotIngesterVF,edge,12)
 vnf(electoralAuditLoggerVF,cloud,12)
-vnf(integrityEnforcerVF,cloud,16)
+vnf(integrityEnforcerVF,cloud,24)
 vnf(voteCounterVF,cloud,16)
-vnfXUser(anonymizerVoteVF,l,(1,200000),24)
+vnfXUser(anonymizerVoteVF,l,(1,200000),16)
 vnfXUser(ballotIngesterVF,l,(1,200000),12)
 vnfXUser(electoralAuditLoggerVF,l,(1,200000),12)
-vnfXUser(integrityEnforcerVF,l,(1,200000),16)
+vnfXUser(integrityEnforcerVF,l,(1,200000),24)
 vnfXUser(voteCounterVF,l,(1,200000),16)

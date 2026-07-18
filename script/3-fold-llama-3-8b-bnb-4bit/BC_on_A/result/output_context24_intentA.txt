@@ -8,14 +8,14 @@ propertyExpectation(logReq, eVotingIntent, logging, _, _, electoralAuditLoggerVF
 
 target(certifiedVotingService, [ballotIngesterVF, anonymizerVoteVF, integrityEnforcerVF, voteCounterVF, electoralAuditLoggerVF]).
 
-vnf(ballotIngesterVF, edge, 8).
+vnf(ballotIngesterVF, edge, 12).
 vnf(anonymizerVoteVF, cloud, 16).
-vnf(integrityEnforcerVF, cloud, 12).
+vnf(integrityEnforcerVF, cloud, 24).
 vnf(voteCounterVF, cloud, 16).
 vnf(electoralAuditLoggerVF, cloud, 12).
 
-vnfXUser(ballotIngesterVF, l, (1, 200000), 8).
+vnfXUser(ballotIngesterVF, l, (1, 200000), 12).
 vnfXUser(anonymizerVoteVF, l, (1, 200000), 16).
-vnfXUser(integrityEnforcerVF, l, (1, 200000), 12).
+vnfXUser(integrityEnforcerVF, l, (1, 200000), 24).
 vnfXUser(voteCounterVF, l, (1, 200000), 16).
 vnfXUser(electoralAuditLoggerVF, l, (1, 200000), 12).

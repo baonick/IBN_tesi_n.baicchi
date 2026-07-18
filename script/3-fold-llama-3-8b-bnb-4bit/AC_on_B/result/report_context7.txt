@@ -8,10 +8,10 @@ streams the video to the user, ensuring very low latency to prevent the game fro
 The chain then connects to a <streamPackerVF, 16> hosted in the cloud; this component is also preferred to run on a dedicated node. Finally, 
 the traffic is routed to a <deliveryOptimizerVF, 8> hosted at the edge, ensuring that the latency from the <streamPackerVF, 16> to this <deliveryOptimizerVF, 8> remains less than 30 ms.
 ==================================================
-Recall    (Omissioni)     : 0.6667
-Precision (Allucinazioni) : 0.6667
-Jaccard   (Globale)       : 0.5000
-F1-Score  (Equilibrio)    : 0.6667
+Recall    (Omissioni)     : 0.8333
+Precision (Allucinazioni) : 0.9091
+Jaccard   (Globale)       : 0.7692
+F1-Score  (Equilibrio)    : 0.8696
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -31,13 +31,12 @@ vnfXUser(streamPackerVF,l,(1,40000),16)
 --- Fatti Estratti LLM ---
 intent(cloudGamingOp,40000)
 propertyExpectation(affinity,dedicated,soft,_,_,gameExecutorVF,_)
-propertyExpectation(affinity,dedicated,soft,_,_,streamPackerVF,_)
-propertyExpectation(encoding,_,gameExecutorVF,_)
+propertyExpectation(bandwidth,greater,soft,100,megabps,gameExecutorVF,streamPackerVF)
 propertyExpectation(latency,lower,hard,30,ms,streamPackerVF,deliveryOptimizerVF)
 target([gameExecutorVF,streamPackerVF,deliveryOptimizerVF])
-vnf(deliveryOptimizerVF,edge,12)
-vnf(gameExecutorVF,cloud,24)
+vnf(deliveryOptimizerVF,edge,8)
+vnf(gameExecutorVF,cloud,32)
 vnf(streamPackerVF,cloud,16)
-vnfXUser(deliveryOptimizerVF,l,(1,40000),12)
-vnfXUser(gameExecutorVF,l,(1,40000),24)
+vnfXUser(deliveryOptimizerVF,l,(1,40000),8)
+vnfXUser(gameExecutorVF,l,(1,40000),32)
 vnfXUser(streamPackerVF,l,(1,40000),16)

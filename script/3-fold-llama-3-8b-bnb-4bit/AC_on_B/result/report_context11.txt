@@ -9,10 +9,10 @@ connects to a <speechToTextVF, 32> located in the cloud followed by a <multiTran
 it is ideally preferred that the total chain hardware remains lower than 100 gb. Finally, the text is routed to a <subtitleInjectorVF, 12> allocated 
 at the edge, ensuring that the latency from the <speechToTextVF, 32> to this <subtitleInjectorVF, 12> must remain below 20 ms.
 ==================================================
-Recall    (Omissioni)     : 0.6154
-Precision (Allucinazioni) : 0.6154
-Jaccard   (Globale)       : 0.4444
-F1-Score  (Equilibrio)    : 0.6154
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 0.9286
+Jaccard   (Globale)       : 0.9286
+F1-Score  (Equilibrio)    : 0.9630
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -32,15 +32,16 @@ vnfXUser(subtitleInjectorVF,l,(1,10000),12)
 
 --- Fatti Estratti LLM ---
 intent(liveSubsOp,10000)
-propertyExpectation(caching,_,_,_)
+propertyExpectation(caching,_,audioExtractorVF,_)
 propertyExpectation(latency,lower,hard,20,ms,speechToTextVF,subtitleInjectorVF)
 propertyExpectation(totChainHW,lower,soft,100,gb,_,_)
+propertyExpectation(translation,_,_,multiTranslatorVF)
 target([audioExtractorVF,speechToTextVF,multiTranslatorVF,subtitleInjectorVF])
 vnf(audioExtractorVF,edge,8)
-vnf(multiTranslatorVF,cloud,32)
-vnf(speechToTextVF,cloud,24)
+vnf(multiTranslatorVF,cloud,24)
+vnf(speechToTextVF,cloud,32)
 vnf(subtitleInjectorVF,edge,12)
 vnfXUser(audioExtractorVF,l,(1,10000),8)
-vnfXUser(multiTranslatorVF,l,(1,10000),32)
-vnfXUser(speechToTextVF,l,(1,10000),24)
+vnfXUser(multiTranslatorVF,l,(1,10000),24)
+vnfXUser(speechToTextVF,l,(1,10000),32)
 vnfXUser(subtitleInjectorVF,l,(1,10000),12)

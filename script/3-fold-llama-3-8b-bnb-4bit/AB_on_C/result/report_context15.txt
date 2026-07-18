@@ -1,0 +1,51 @@
+RISULTATI PER CONTEXT15
+File analizzato: output_context15_intentC.txt
+==================================================
+--- INTENTO TESTUALE ---
+The financial provider onlineBankOp requires a digital identity verification service to manage 10,000 daily uploads. 
+This service processes photos of documents uploaded by users, verifies their authenticity, and compares the data with international blacklists to prevent 
+money laundering. The service chain begins with a <documentReceiverVF, 12> allocated at the edge. For this component, encoding is applied after it. The chain then 
+connects to an <authenticityCheckerVF, 24> located in the cloud, ensuring that security is executed before it. The chain proceeds to an <amlMatcherVF, 16> located in the cloud; 
+for this component, privacy is applied after it. Finally, the processed data is routed to a <profileCreatorVF, 16> located in the cloud, ensuring that compression 
+is executed before it.
+==================================================
+Recall    (Omissioni)     : 0.9286
+Precision (Allucinazioni) : 0.7647
+Jaccard   (Globale)       : 0.7222
+F1-Score  (Equilibrio)    : 0.8387
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(onlineBankOp,10000)
+propertyExpectation(compression,_,_,profileCreatorVF)
+propertyExpectation(encoding,_,documentReceiverVF,_)
+propertyExpectation(privacy,_,amlMatcherVF,_)
+propertyExpectation(security,_,_,authenticityCheckerVF)
+target([documentReceiverVF,authenticityCheckerVF,amlMatcherVF,profileCreatorVF])
+vnf(amlMatcherVF,cloud,16)
+vnf(authenticityCheckerVF,cloud,24)
+vnf(documentReceiverVF,edge,12)
+vnf(profileCreatorVF,cloud,16)
+vnfXUser(amlMatcherVF,l,(1,10000),16)
+vnfXUser(authenticityCheckerVF,l,(1,10000),24)
+vnfXUser(documentReceiverVF,l,(1,10000),12)
+vnfXUser(profileCreatorVF,l,(1,10000),16)
+
+--- Fatti Estratti LLM ---
+intent(onlineBankOp,10000)
+propertyExpectation(bandwidth,greater,hard,100,megabps,documentReceiverVF,authenticityCheckerVF)
+propertyExpectation(compression,_,_,profileCreatorVF)
+propertyExpectation(encoding,_,documentReceiverVF,_)
+propertyExpectation(latency,lower,soft,500,ms,documentReceiverVF,_)
+propertyExpectation(privacy,_,authenticityCheckerVF,_)
+propertyExpectation(security,_,_,authenticityCheckerVF)
+propertyExpectation(totChainHW,greater,hard,80,gb,_,_)
+target([documentReceiverVF,authenticityCheckerVF,amlMatcherVF,profileCreatorVF])
+vnf(amlMatcherVF,cloud,16)
+vnf(authenticityCheckerVF,cloud,24)
+vnf(documentReceiverVF,edge,12)
+vnf(profileCreatorVF,cloud,16)
+vnfXUser(amlMatcherVF,l,(1,10000),16)
+vnfXUser(authenticityCheckerVF,l,(1,10000),24)
+vnfXUser(documentReceiverVF,l,(1,10000),12)
+vnfXUser(profileCreatorVF,l,(1,10000),16)

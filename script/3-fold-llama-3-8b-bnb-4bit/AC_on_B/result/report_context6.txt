@@ -9,10 +9,10 @@ the cloud. It is strictly required that this <sigVerifierVF, 16> and the next co
 on the same hosting node. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 100 gb. Finally, 
 the messages are routed to a <legalVaultVF, 32> located in the cloud, ensuring that compression is executed before it.
 ==================================================
-Recall    (Omissioni)     : 0.8571
-Precision (Allucinazioni) : 0.8571
-Jaccard   (Globale)       : 0.7500
-F1-Score  (Equilibrio)    : 0.8571
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -39,10 +39,10 @@ propertyExpectation(compression,_,_,legalVaultVF)
 propertyExpectation(totChainHW,lower,soft,100,gb,_,_)
 target([msgReceiverVF,sigVerifierVF,integrityCheckerVF,legalVaultVF])
 vnf(integrityCheckerVF,cloud,12)
-vnf(legalVaultVF,cloud,24)
+vnf(legalVaultVF,cloud,32)
 vnf(msgReceiverVF,edge,8)
 vnf(sigVerifierVF,cloud,16)
 vnfXUser(integrityCheckerVF,l,(1,50000),12)
-vnfXUser(legalVaultVF,l,(1,50000),24)
+vnfXUser(legalVaultVF,l,(1,50000),32)
 vnfXUser(msgReceiverVF,l,(1,50000),8)
 vnfXUser(sigVerifierVF,l,(1,50000),16)

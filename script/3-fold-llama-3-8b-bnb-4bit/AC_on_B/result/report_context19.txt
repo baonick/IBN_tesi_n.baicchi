@@ -8,10 +8,10 @@ For this component, caching is applied after it. The chain then connects to a <c
 latency from the <flightTelemetryIngesterVF, 12> ingester to this <collisionAvoiderVF, 32> to remain below 10 ms. The chain proceeds to a <commandPrioritizerVF, 16> located in the cloud. 
 Finally, the system routes to a <routeDispatcherVF, 12> allocated at the edge; it is ideally preferred that the bandwidth from the <collisionAvoiderVF, 32> to this <routeDispatcherVF, 12> remains higher than 2000 mbps. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 200 gb.
 ==================================================
-Recall    (Omissioni)     : 0.5714
-Precision (Allucinazioni) : 0.5714
-Jaccard   (Globale)       : 0.4000
-F1-Score  (Equilibrio)    : 0.5714
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -38,10 +38,10 @@ propertyExpectation(latency,lower,hard,10,ms,flightTelemetryIngesterVF,collision
 propertyExpectation(totChainHW,lower,soft,200,gb,_,_)
 target([flightTelemetryIngesterVF,collisionAvoiderVF,commandPrioritizerVF,routeDispatcherVF])
 vnf(collisionAvoiderVF,cloud,32)
-vnf(commandPrioritizerVF,cloud,24)
-vnf(flightTelemetryIngesterVF,edge,16)
-vnf(routeDispatcherVF,edge,16)
+vnf(commandPrioritizerVF,cloud,16)
+vnf(flightTelemetryIngesterVF,edge,12)
+vnf(routeDispatcherVF,edge,12)
 vnfXUser(collisionAvoiderVF,l,(1,5000),32)
-vnfXUser(commandPrioritizerVF,l,(1,5000),24)
-vnfXUser(flightTelemetryIngesterVF,l,(1,5000),16)
-vnfXUser(routeDispatcherVF,l,(1,5000),16)
+vnfXUser(commandPrioritizerVF,l,(1,5000),16)
+vnfXUser(flightTelemetryIngesterVF,l,(1,5000),12)
+vnfXUser(routeDispatcherVF,l,(1,5000),12)

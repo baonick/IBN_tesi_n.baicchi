@@ -10,10 +10,10 @@ together on the exact same physical server, while preferring that the network ba
 the system routes the files to a <downloadProviderVF, 16> located in the cloud, ensuring that the total latency from the initial <dataExtractorVF, 8> to 
 this final <downloadProviderVF, 16> is strictly required to remain below 200 ms.
 ==================================================
-Recall    (Omissioni)     : 0.5714
-Precision (Allucinazioni) : 0.5714
-Jaccard   (Globale)       : 0.4000
-F1-Score  (Equilibrio)    : 0.5714
+Recall    (Omissioni)     : 0.9286
+Precision (Allucinazioni) : 0.9286
+Jaccard   (Globale)       : 0.8667
+F1-Score  (Equilibrio)    : 0.9286
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -39,11 +39,11 @@ propertyExpectation(bandwidth,greater,soft,1000,megabps,formatNormalizerVF,metad
 propertyExpectation(caching,_,formatNormalizerVF,_)
 propertyExpectation(latency,lower,hard,200,ms,dataExtractorVF,downloadProviderVF)
 target([dataExtractorVF,formatNormalizerVF,metadataEnricherVF,downloadProviderVF])
-vnf(dataExtractorVF,edge,12)
+vnf(dataExtractorVF,edge,8)
 vnf(downloadProviderVF,cloud,16)
-vnf(formatNormalizerVF,cloud,24)
-vnf(metadataEnricherVF,cloud,16)
-vnfXUser(dataExtractorVF,l,(1,30000),12)
+vnf(formatNormalizerVF,cloud,16)
+vnf(metadataEnricherVF,cloud,12)
+vnfXUser(dataExtractorVF,l,(1,30000),8)
 vnfXUser(downloadProviderVF,l,(1,30000),16)
-vnfXUser(formatNormalizerVF,l,(1,30000),24)
-vnfXUser(metadataEnricherVF,l,(1,30000),16)
+vnfXUser(formatNormalizerVF,l,(1,30000),16)
+vnfXUser(metadataEnricherVF,l,(1,30000),12)

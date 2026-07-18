@@ -1,21 +1,21 @@
-intent(kycVerificationIntent, onlineBankOp, 10000, digitalIdentityService).
+intent(kycVerificationIntent, onlineBankOp, 10000, digitalIdentityVerificationService).
 
-propertyExpectation(latReq, kycVerificationIntent, latency, lower, hard, 200, ms, documentReceiverVF, authenticityCheckerVF).
+propertyExpectation(latReq, kycVerificationIntent, latency, lower, hard, 50, ms, documentReceiverVF, authenticityCheckerVF).
 propertyExpectation(bwReq, kycVerificationIntent, bandwidth, greater, soft, 100, megabps, documentReceiverVF, authenticityCheckerVF).
 
-propertyExpectation(secReq, kycVerificationIntent, security, _, authenticityCheckerVF, _).
-propertyExpectation(encReq, kycVerificationIntent, encoding, _, _, documentReceiverVF).
-propertyExpectation(privReq, kycVerificationIntent, privacy, _, amlMatcherVF, _).
+propertyExpectation(secReq, kycVerificationIntent, security, _, _, authenticityCheckerVF).
+propertyExpectation(encReq, kycVerificationIntent, encoding, _, documentReceiverVF, _).
+propertyExpectation(privReq, kycVerificationIntent, privacy, _, _, amlMatcherVF).
 propertyExpectation(compReq, kycVerificationIntent, compression, _, _, profileCreatorVF).
 
-target(digitalIdentityService, [documentReceiverVF, authenticityCheckerVF, amlMatcherVF, profileCreatorVF]).
+target(digitalIdentityVerificationService, [documentReceiverVF, authenticityCheckerVF, amlMatcherVF, profileCreatorVF]).
 
-vnf(documentReceiverVF, edge, 8).
-vnf(authenticityCheckerVF, cloud, 16).
-vnf(amlMatcherVF, cloud, 12).
-vnf(profileCreatorVF, cloud, 12).
+vnf(documentReceiverVF, edge, 12).
+vnf(authenticityCheckerVF, cloud, 24).
+vnf(amlMatcherVF, cloud, 16).
+vnf(profileCreatorVF, cloud, 16).
 
-vnfXUser(documentReceiverVF, l, (1, 10000), 8).
-vnfXUser(authenticityCheckerVF, l, (1, 10000), 16).
-vnfXUser(amlMatcherVF, l, (1, 10000), 12).
-vnfXUser(profileCreatorVF, l, (1, 10000), 12).
+vnfXUser(documentReceiverVF, l, (1, 10000), 12).
+vnfXUser(authenticityCheckerVF, l, (1, 10000), 24).
+vnfXUser(amlMatcherVF, l, (1, 10000), 16).
+vnfXUser(profileCreatorVF, l, (1, 10000), 16).

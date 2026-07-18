@@ -1,10 +1,10 @@
 intent(multiCamIntent, mediaBroadcastOp, 30000, liveStreamingService).
 
-propertyExpectation(latReq, multiCamIntent, bandwidth, greater, hard, 5000, megabps, graphicInjectorVF, streamDistributorVF).
+propertyExpectation(latReq, multiCamIntent, latency, greater, hard, 100, ms, graphicInjectorVF, streamDistributorVF).
 propertyExpectation(hwReq, multiCamIntent, totChainHW, lower, soft, 150, gb, _, _).
+propertyExpectation(bwReq, multiCamIntent, bandwidth, greater, hard, 5000, megabps, graphicInjectorVF, streamDistributorVF).
 
 propertyExpectation(compReq, multiCamIntent, compression, _, streamIngesterVF, _).
-propertyExpectation(cachReq, multiCamIntent, caching, _, _, streamDistributorVF).
 
 target(liveStreamingService, [streamIngesterVF, cloudStudioVF, graphicInjectorVF, streamDistributorVF]).
 

@@ -4,7 +4,7 @@ propertyExpectation(latReq, teleMonitoringIntent, latency, lower, hard, 100, ms,
 propertyExpectation(hwReq, teleMonitoringIntent, totChainHW, lower, soft, 80, gb, _, _).
 
 propertyExpectation(privReq, teleMonitoringIntent, privacy, _, patientDataReceiverVF, _).
-propertyExpectation(logReq, teleMonitoringIntent, logging, _, _, medicalAlertLoggerVF).
+propertyExpectation(logReq, teleMonitoringIntent, logging, _, _, doctorNotifierVF).
 
 target(postOperativeTeleMonitoringService, [patientDataReceiverVF, cardiacAnomalyAnalyzerVF, medicalAlertLoggerVF, doctorNotifierVF]).
 

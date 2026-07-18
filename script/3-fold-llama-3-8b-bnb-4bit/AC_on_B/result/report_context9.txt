@@ -10,10 +10,10 @@ are deployed on the same hosting node. The chain then proceeds to a <cachingNode
 this <cachingNodeVF, 12> node, it is strictly required to maintain a bandwidth higher than 10000 mbps. Additionally, decoding must be executed 
 before the <cachingNodeVF, 12> node.
 ==================================================
-Recall    (Omissioni)     : 0.6667
-Precision (Allucinazioni) : 0.6667
-Jaccard   (Globale)       : 0.5000
-F1-Score  (Equilibrio)    : 0.6667
+Recall    (Omissioni)     : 0.9167
+Precision (Allucinazioni) : 0.9167
+Jaccard   (Globale)       : 0.8462
+F1-Score  (Equilibrio)    : 0.9167
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -34,12 +34,12 @@ vnfXUser(transcoderVF,l,(1,80000),32)
 intent(vodStreamOp,80000)
 propertyExpectation(affinity,same,preferred,_,_,drmEncryptorVF,transcoderVF)
 propertyExpectation(bandwidth,greater,hard,10000,megabps,transcoderVF,cachingNodeVF)
-propertyExpectation(compression,_,drmEncryptorVF,_)
 propertyExpectation(decoding,_,_,cachingNodeVF)
+propertyExpectation(encoding,_,drmEncryptorVF,_)
 target([drmEncryptorVF,transcoderVF,cachingNodeVF])
 vnf(cachingNodeVF,edge,12)
 vnf(drmEncryptorVF,cloud,16)
-vnf(transcoderVF,cloud,24)
+vnf(transcoderVF,cloud,32)
 vnfXUser(cachingNodeVF,l,(1,80000),12)
 vnfXUser(drmEncryptorVF,l,(1,80000),16)
-vnfXUser(transcoderVF,l,(1,80000),24)
+vnfXUser(transcoderVF,l,(1,80000),32)

@@ -1,11 +1,11 @@
-intent(devToolsOptIntent, devToolsOp, 20000, codeEfficiencyAnalyzerService).
+intent(codeAnalyzerIntent, devToolsOp, 20000, codeOptimizationService).
 
-propertyExpectation(hwReq, devToolsOptIntent, totChainHW, lower, soft, 110, gb, _, _).
+propertyExpectation(hwReq, codeAnalyzerIntent, totChainHW, lower, soft, 110, gb, _, _).
 
-propertyExpectation(cachReq, devToolsOptIntent, caching, _, syntaxValidatorVF, _).
-propertyExpectation(compReq, devToolsOptIntent, compression, _, developersReportGeneratorVF, _).
+propertyExpectation(cachReq, codeAnalyzerIntent, caching, _, syntaxValidatorVF, _, _, _, _).
+propertyExpectation(compReq, codeAnalyzerIntent, compression, _, developersReportGeneratorVF, _, _, _, _).
 
-target(codeEfficiencyAnalyzerService, [codeReceiverVF, syntaxValidatorVF, sandboxSimulatorVF, optimizationEngineVF, developersReportGeneratorVF]).
+target(codeOptimizationService, [codeReceiverVF, syntaxValidatorVF, sandboxSimulatorVF, optimizationEngineVF, developersReportGeneratorVF]).
 
 vnf(codeReceiverVF, edge, 8).
 vnf(syntaxValidatorVF, cloud, 12).

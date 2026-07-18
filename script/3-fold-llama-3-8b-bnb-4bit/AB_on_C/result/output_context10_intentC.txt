@@ -11,10 +11,10 @@ vnf(sceneReceiverVF, edge, 16).
 vnf(assetValidatorVF, cloud, 12).
 vnf(renderDistributorVF, cloud, 32).
 vnf(frameAssemblerVF, cloud, 24).
-vnf(colorGraderVF, cloud, 16).
+vnf(colorGraderVF, cloud, 20).
 
 vnfXUser(sceneReceiverVF, l, (1, 5000), 16).
 vnfXUser(assetValidatorVF, l, (1, 5000), 12).
 vnfXUser(renderDistributorVF, l, (1, 5000), 32).
 vnfXUser(frameAssemblerVF, l, (1, 5000), 24).
-vnfXUser(colorGraderVF, l, (1, 5000), 16).
+vnfXUser(colorGraderVF, l, (1, 5000), 20).

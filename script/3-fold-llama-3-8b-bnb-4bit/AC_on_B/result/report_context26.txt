@@ -9,10 +9,10 @@ from the <sessionIngesterVF, 8> to this <activityMonitorVF, 24> is kept under 40
 located in the cloud, where logging are executed before the <auditLoggerVF, 12>. Finally, the system routes the results to an <outputPackagerVF, 16> located in the cloud, 
 specifying that compression is applied after it. For the whole deployment, the provider prefers that the aggregate infrastructure footprint stays below 120 gb.
 ==================================================
-Recall    (Omissioni)     : 0.7619
-Precision (Allucinazioni) : 0.7619
-Jaccard   (Globale)       : 0.6154
-F1-Score  (Equilibrio)    : 0.7619
+Recall    (Omissioni)     : 0.9524
+Precision (Allucinazioni) : 0.9524
+Jaccard   (Globale)       : 0.9091
+F1-Score  (Equilibrio)    : 0.9524
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -49,14 +49,14 @@ propertyExpectation(security,_,_,activityMonitorVF)
 propertyExpectation(totChainHW,lower,hard,120,gb,_,_)
 target([sessionIngesterVF,resourceAllocatorVF,activityMonitorVF,userPrivacyEnforcerVF,auditLoggerVF,outputPackagerVF])
 vnf(activityMonitorVF,cloud,24)
-vnf(auditLoggerVF,cloud,8)
-vnf(outputPackagerVF,cloud,12)
+vnf(auditLoggerVF,cloud,12)
+vnf(outputPackagerVF,cloud,16)
 vnf(resourceAllocatorVF,cloud,16)
 vnf(sessionIngesterVF,edge,8)
 vnf(userPrivacyEnforcerVF,cloud,12)
 vnfXUser(activityMonitorVF,l,(1,10000),24)
-vnfXUser(auditLoggerVF,l,(1,10000),8)
-vnfXUser(outputPackagerVF,l,(1,10000),12)
+vnfXUser(auditLoggerVF,l,(1,10000),12)
+vnfXUser(outputPackagerVF,l,(1,10000),16)
 vnfXUser(resourceAllocatorVF,l,(1,10000),16)
 vnfXUser(sessionIngesterVF,l,(1,10000),8)
 vnfXUser(userPrivacyEnforcerVF,l,(1,10000),12)

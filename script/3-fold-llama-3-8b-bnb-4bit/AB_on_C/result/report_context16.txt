@@ -1,0 +1,45 @@
+RISULTATI PER CONTEXT16
+File analizzato: output_context16_intentC.txt
+==================================================
+--- INTENTO TESTUALE ---
+The service provider eInvoiceOp requires a digital invoicing service to manage 50,000 invoices per day. This system transforms sales data into certified XML files, 
+applies the digital signature, and automatically sends them to governmental systems for fiscal validation. The service chain begins with a <saleDataCollectorVF, 8> 
+allocated at the edge. For the entire deployment, it is mandatory that the total chain hardware remains lower than 150 gb. The chain then connects to an <xmlConverterVF, 16> located in the cloud. It is strictly required that the latency from this <xmlConverterVF, 16> to the next component, a <digitalSignerVF, 12> located in the cloud, 
+remains below 30 ms. Finally, the files are routed to ataxAuthorityTransmitterVF located in the cloud, and it is ideally preferred that the bandwidth from the 
+<digitalSignerVF, 12> to this <taxAuthorityTransmitterVF, 8> remains higher than 100 mbps.
+==================================================
+Recall    (Omissioni)     : 0.8462
+Precision (Allucinazioni) : 0.8462
+Jaccard   (Globale)       : 0.7333
+F1-Score  (Equilibrio)    : 0.8462
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(eInvoiceOp,50000)
+propertyExpectation(bandwidth,greater,soft,100,megabps,digitalSignerVF,taxAuthorityTransmitterVF)
+propertyExpectation(latency,lower,hard,30,ms,xmlConverterVF,digitalSignerVF)
+propertyExpectation(totChainHW,lower,hard,150,gb,_,_)
+target([saleDataCollectorVF,xmlConverterVF,digitalSignerVF,taxAuthorityTransmitterVF])
+vnf(digitalSignerVF,cloud,12)
+vnf(saleDataCollectorVF,edge,8)
+vnf(taxAuthorityTransmitterVF,cloud,8)
+vnf(xmlConverterVF,cloud,16)
+vnfXUser(digitalSignerVF,l,(1,50000),12)
+vnfXUser(saleDataCollectorVF,l,(1,50000),8)
+vnfXUser(taxAuthorityTransmitterVF,l,(1,50000),8)
+vnfXUser(xmlConverterVF,l,(1,50000),16)
+
+--- Fatti Estratti LLM ---
+intent(eInvoiceOp,50000)
+propertyExpectation(bandwidth,greater,soft,100,megabps,digitalSignerVF,_)
+propertyExpectation(latency,lower,hard,30,ms,xmlConverterVF,digitalSignerVF)
+propertyExpectation(totChainHW,lower,hard,150,gb,_,_)
+target([saleDataCollectorVF,xmlConverterVF,digitalSignerVF,digitalSignerVF,taxAuthorityTransmitterVF])
+vnf(digitalSignerVF,cloud,12)
+vnf(saleDataCollectorVF,edge,8)
+vnf(taxAuthorityTransmitterVF,cloud,8)
+vnf(xmlConverterVF,cloud,16)
+vnfXUser(digitalSignerVF,l,(1,50000),12)
+vnfXUser(saleDataCollectorVF,l,(1,50000),8)
+vnfXUser(taxAuthorityTransmitterVF,l,(1,50000),8)
+vnfXUser(xmlConverterVF,l,(1,50000),16)

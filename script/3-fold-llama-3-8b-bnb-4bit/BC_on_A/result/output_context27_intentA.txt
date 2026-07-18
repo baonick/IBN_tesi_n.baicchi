@@ -3,16 +3,15 @@ intent(sentimentAnalysisIntent, sentimentOp, 100000, sentimentAnalysisService).
 propertyExpectation(privReq, sentimentAnalysisIntent, privacy, _, socialDataReceiverVF, _).
 propertyExpectation(secReq, sentimentAnalysisIntent, security, _, _, sentimentAnalyzerVF).
 
-propertyExpectation(codReq, sentimentAnalysisIntent, compression, _, sentimentAnalyzerVF, reportDispatcherVF).
-propertyExpectation(latReq, sentimentAnalysisIntent, latency, lower, sentimentAnalyzerVF, reportDispatcherVF).
-propertyExpectation(bwReq, sentimentAnalysisIntent, bandwidth, higher, socialDataReceiverVF, sentimentAnalyzerVF).
+propertyExpectation(latReq1, sentimentAnalysisIntent, latency, lower, hard, 50, ms, socialDataReceiverVF, sentimentAnalyzerVF).
+propertyExpectation(latReq2, sentimentAnalysisIntent, latency, lower, soft, 20, ms, sentimentAnalyzerVF, reportDispatcherVF).
 
 target(sentimentAnalysisService, [socialDataReceiverVF, sentimentAnalyzerVF, reportDispatcherVF]).
 
 vnf(socialDataReceiverVF, edge, 16).
 vnf(sentimentAnalyzerVF, cloud, 32).
-vnf(reportDispatcherVF, cloud, 12).
+vnf(reportDispatcherVF, cloud, 16).
 
 vnfXUser(socialDataReceiverVF, l, (1, 100000), 16).
 vnfXUser(sentimentAnalyzerVF, l, (1, 100000), 32).
-vnfXUser(reportDispatcherVF, l, (1, 100000), 12).
+vnfXUser(reportDispatcherVF, l, (1, 100000), 16).

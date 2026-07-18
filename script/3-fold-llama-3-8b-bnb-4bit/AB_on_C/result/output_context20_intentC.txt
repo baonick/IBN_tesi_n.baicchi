@@ -7,18 +7,11 @@ propertyExpectation(bwReq, telemetryMonitoringIntent, bandwidth, greater, soft, 
 target(telemetryMonitoringService, [telemetryCollectorVF, dataAggregatorVF, anomalyDetectorVF, alertDispatcherVF]).
 
 vnf(telemetryCollectorVF, edge, 8).
-vnf(dataAggregatorVF, edge, 16).
+vnf(dataAggregatorVF, edge, 8).
 vnf(anomalyDetectorVF, cloud, 24).
-vnf(alertDispatcherVF, cloud, 12).
+vnf(alertDispatcherVF, cloud, 8).
 
 vnfXUser(telemetryCollectorVF, l, (1, 50000), 8).
-vnfXUser(dataAggregatorVF, l, (1, 50000), 16).
+vnfXUser(dataAggregatorVF, l, (1, 50000), 8).
 vnfXUser(anomalyDetectorVF, l, (1, 50000), 24).
-vnfXUser(alertDispatcherVF, l, (1, 50000), 12).
-
-propertyExpectation(secReq, telemetryMonitoringIntent, security, _, telemetryCollectorVF, _).
-propertyExpectation(decReq, telemetryMonitoringIntent, decoding, _, telemetryCollectorVF, _).
-propertyExpectation(logReq, telemetryMonitoringIntent, logging, _, dataAggregatorVF, _).
-propertyExpectation(secReq, telemetryMonitoringIntent, security, _, anomalyDetectorVF, _).
-propertyExpectation(decReq, telemetryMonitoringIntent, decoding, _, anomalyDetectorVF, _).
-propertyExpectation(logReq, telemetryMonitoringIntent, logging, _, alertDispatcherVF, _).
+vnfXUser(alertDispatcherVF, l, (1, 50000), 8).

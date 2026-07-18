@@ -2,7 +2,7 @@ intent(fraudDetectionIntent, fraudSafeOp, 200000, fraudAnalysisService).
 
 propertyExpectation(affReq, fraudDetectionIntent, affinity, same, hard, _, _, requestInterceptorVF, profileMatcherVF).
 propertyExpectation(bwReq, fraudDetectionIntent, bandwidth, greater, soft, 1000, megabps, mlAnalyzerVF, policyEnforcerVF).
-propertyExpectation(hwReq, fraudDetectionIntent, totChainHW, lower, soft, 120, gb, _, _).
+propertyExpectation(hwReq, fraudDetectionIntent, totChainHW, lower, hard, 120, gb, _, _).
 
 propertyExpectation(secReq, fraudDetectionIntent, security, _, requestInterceptorVF, _).
 propertyExpectation(privReq, fraudDetectionIntent, privacy, _, _, mlAnalyzerVF).

@@ -1,6 +1,6 @@
 intent(corpWebSecurityIntent, corpITOp, 5000, corpWebSecurityService).
 
-propertyExpectation(latReq1, corpWebSecurityIntent, latency, lower, hard, 10, ms, webFilterVF, malwareScannerVF).
+propertyExpectation(latReq, corpWebSecurityIntent, latency, lower, hard, 10, ms, malwareScannerVF, dlpEngineVF).
 propertyExpectation(bwReq, corpWebSecurityIntent, bandwidth, greater, soft, 500, megabps, malwareScannerVF, dlpEngineVF).
 
 target(corpWebSecurityService, [webFilterVF, malwareScannerVF, dlpEngineVF]).

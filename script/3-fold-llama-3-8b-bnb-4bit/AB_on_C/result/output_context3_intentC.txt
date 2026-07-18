@@ -2,9 +2,10 @@ intent(antiDdosIntent, ddosProtectionOp, 50000, ddosMitigationService).
 
 propertyExpectation(bwReq, antiDdosIntent, bandwidth, greater, hard, 500, megabps, networkTrafficAnalyzerVF, scrubbingFilterVF).
 
-propertyExpectation(latReq, antiDdosIntent, latency, lower, soft, 10, ms, rateLimiterVF, webServerVF).
+propertyExpectation(latReq, antiDdosIntent, latency, lower, soft, 10, ms, rateLimiterVF, _).
+propertyExpectation(latReq, antiDdosIntent, latency, lower, soft, 10, ms, _, webServerVF).
 
-propertyExpectation(secReq, antiDdosIntent, security, _, _, scrubbingFilterVF).
+propertyExpectation(secReq, antiDdosIntent, security, _, _, scrubbingFilterVF, _, _).
 propertyExpectation(logReq, antiDdosIntent, logging, _, rateLimiterVF, _).
 
 target(ddosMitigationService, [networkTrafficAnalyzerVF, scrubbingFilterVF, rateLimiterVF, webServerVF]).

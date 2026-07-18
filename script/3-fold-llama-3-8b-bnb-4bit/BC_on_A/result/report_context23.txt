@@ -4,14 +4,14 @@ File analizzato: output_context23_intentA.txt
 --- INTENTO TESTUALE ---
 The healthcare provider medDiagnosticOp requires a radiology AI diagnostics service to manage 10,000 daily scans. 
 This pipeline receives high-resolution medical images, processes them with computer vision algorithms to highlight suspicious lesions, and stores them securely. 
-The service chain begins with a dicomIngesterVF allocated at the edge, specifying compression is applied after it. The chain then connects to a lesionAnalyzerVF located in the cloud and a metadataExtractorVF located in the cloud; for these two components, it is mandatory that they are isolated on dedicated hardware 
-nodes, while ensuring the bandwidth from the dicomIngesterVF to the lesionAnalyzerVF remains higher than 500 mbps. Finally, the system routes the data to a secure 
-secureArchiverVF in the cloud, ensuring that data encoding is executed before it.
+The service chain begins with a <dicomIngesterVF, 16> allocated at the edge, specifying compression is applied after it. The chain then connects to a <lesionAnalyzerVF, 32> located in the cloud and a <metadataExtractorVF, 12> located in the cloud; for these two components, it is mandatory that they are isolated on dedicated hardware 
+nodes, while ensuring the bandwidth from the <dicomIngesterVF, 16> to the <lesionAnalyzerVF, 32> remains higher than 500 mbps. Finally, the system routes the data to a secure 
+<secureArchiverVF, 24> in the cloud, ensuring that data encoding is executed before it.
 ==================================================
-Recall    (Omissioni)     : 0.9333
-Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 0.9333
-F1-Score  (Equilibrio)    : 0.9655
+Recall    (Omissioni)     : 0.8667
+Precision (Allucinazioni) : 0.8667
+Jaccard   (Globale)       : 0.7647
+F1-Score  (Equilibrio)    : 0.8667
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -33,10 +33,11 @@ vnfXUser(secureArchiverVF,l,(1,10000),24)
 
 --- Fatti Estratti LLM ---
 intent(medDiagnosticOp,10000)
-propertyExpectation(affinity,dedicated,hard,_,_,lesionAnalyzerVF,metadataExtractorVF)
+propertyExpectation(affinity,isolated,hard,_,_,lesionAnalyzerVF,metadataExtractorVF)
 propertyExpectation(bandwidth,greater,soft,500,megabps,dicomIngesterVF,lesionAnalyzerVF)
 propertyExpectation(compression,_,dicomIngesterVF,_)
 propertyExpectation(encoding,_,_,secureArchiverVF)
+propertyExpectation(latency,greater,hard,100,ms,dicomIngesterVF,lesionAnalyzerVF)
 target([dicomIngesterVF,lesionAnalyzerVF,metadataExtractorVF,secureArchiverVF])
 vnf(dicomIngesterVF,edge,16)
 vnf(lesionAnalyzerVF,cloud,32)

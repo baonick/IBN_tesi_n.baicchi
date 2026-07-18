@@ -3,9 +3,9 @@ File analizzato: output_context21_intentA.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The industrial provider autoWarehouseOp requires a remote control system for autonomous machines to manage 500 warehouse robots. 
-This software receives sensor data, calculates paths to avoid collisions, and sends steering and braking commands. The service chain begins with a sensorDataDecoderVF allocated at the edge. For this component, decoding is applied after it. The chain then connects to a collisionPathSolverVF located in the cloud. 
-Finally, the system routes to a commandEncoderVF allocated at the edge, ensuring that encoding is executed before it. For the entire deployment, it is strictly 
-required that the latency from the sensorDataDecoderVF to this commandEncoderVF remains below 500 ms.
+This software receives sensor data, calculates paths to avoid collisions, and sends steering and braking commands. The service chain begins with a <sensorDataDecoderVF, 16> allocated at the edge. For this component, decoding is applied after it. The chain then connects to a <collisionPathSolverVF, 32> located in the cloud. 
+Finally, the system routes to a <commandEncoderVF, 16> allocated at the edge, ensuring that encoding is executed before it. For the entire deployment, it is strictly 
+required that the latency from the <sensorDataDecoderVF, 16> to this <commandEncoderVF, 16> remains below 500 ms.
 ==================================================
 Recall    (Omissioni)     : 0.9091
 Precision (Allucinazioni) : 1.0000

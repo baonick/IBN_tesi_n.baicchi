@@ -10,8 +10,8 @@ target(gdprVerificationService, [dbScannerVF, anonymizerVF, reportGeneratorVF]).
 
 vnf(dbScannerVF, edge, 16).
 vnf(anonymizerVF, cloud, 24).
-vnf(reportGeneratorVF, cloud, 12).
+vnf(reportGeneratorVF, cloud, 8).
 
 vnfXUser(dbScannerVF, l, (1, 5000), 16).
 vnfXUser(anonymizerVF, l, (1, 5000), 24).
-vnfXUser(reportGeneratorVF, l, (1, 5000), 12).
+vnfXUser(reportGeneratorVF, l, (1, 5000), 8).

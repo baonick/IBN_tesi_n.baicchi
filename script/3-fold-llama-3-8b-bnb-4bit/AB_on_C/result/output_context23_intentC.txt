@@ -1,9 +1,9 @@
 intent(radiologyAIIntent, medDiagnosticOp, 10000, radiologyPipelineService).
 
-propertyExpectation(affReq, radiologyAIIntent, affinity, dedicated, hard, _, _, lesionAnalyzerVF, _).
-propertyExpectation(affReq, radiologyAIIntent, affinity, dedicated, hard, _, _, metadataExtractorVF, _).
-
+propertyExpectation(latReq, radiologyAIIntent, latency, lower, hard, 100, ms, dicomIngesterVF, lesionAnalyzerVF).
 propertyExpectation(bwReq, radiologyAIIntent, bandwidth, greater, soft, 500, megabps, dicomIngesterVF, lesionAnalyzerVF).
+propertyExpectation(affReq1, radiologyAIIntent, affinity, dedicated, hard, _, _, lesionAnalyzerVF, _).
+propertyExpectation(affReq2, radiologyAIIntent, affinity, dedicated, hard, _, _, metadataExtractorVF, _).
 
 propertyExpectation(compReq, radiologyAIIntent, compression, _, dicomIngesterVF, _).
 propertyExpectation(encReq, radiologyAIIntent, encoding, _, _, secureArchiverVF).
@@ -12,10 +12,10 @@ target(radiologyPipelineService, [dicomIngesterVF, lesionAnalyzerVF, metadataExt
 
 vnf(dicomIngesterVF, edge, 16).
 vnf(lesionAnalyzerVF, cloud, 32).
-vnf(metadataExtractorVF, cloud, 16).
-vnf(secureArchiverVF, cloud, 12).
+vnf(metadataExtractorVF, cloud, 12).
+vnf(secureArchiverVF, cloud, 24).
 
 vnfXUser(dicomIngesterVF, l, (1, 10000), 16).
 vnfXUser(lesionAnalyzerVF, l, (1, 10000), 32).
-vnfXUser(metadataExtractorVF, l, (1, 10000), 16).
-vnfXUser(secureArchiverVF, l, (1, 10000), 12).
+vnfXUser(metadataExtractorVF, l, (1, 10000), 12).
+vnfXUser(secureArchiverVF, l, (1, 10000), 24).

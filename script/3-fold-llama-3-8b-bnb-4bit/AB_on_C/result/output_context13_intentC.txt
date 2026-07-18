@@ -1,10 +1,11 @@
-intent(fraudDetectionIntent, fraudSafeOp, 200000, fraudAnalysisService).
+intent(antifraudIntent, fraudSafeOp, 200000, fraudAnalysisService).
 
-propertyExpectation(affReq, fraudDetectionIntent, affinity, same, hard, _, _, requestInterceptorVF, profileMatcherVF).
-propertyExpectation(secReq, fraudDetectionIntent, security, _, requestInterceptorVF, _).
-propertyExpectation(privReq, fraudDetectionIntent, privacy, _, _, mlAnalyzerVF).
-propertyExpectation(bwReq, fraudDetectionIntent, bandwidth, greater, soft, 1000, megabps, mlAnalyzerVF, policyEnforcerVF).
-propertyExpectation(hwReq, fraudDetectionIntent, totChainHW, lower, soft, 120, gb, _, _).
+propertyExpectation(affReq, antifraudIntent, affinity, same, hard, _, _, requestInterceptorVF, profileMatcherVF).
+propertyExpectation(bwReq, antifraudIntent, bandwidth, greater, soft, 1000, megabps, mlAnalyzerVF, policyEnforcerVF).
+propertyExpectation(hwReq, antifraudIntent, totChainHW, lower, soft, 120, gb, _, _).
+
+propertyExpectation(secReq, antifraudIntent, security, _, requestInterceptorVF, _).
+propertyExpectation(privReq, antifraudIntent, privacy, _, _, mlAnalyzerVF).
 
 target(fraudAnalysisService, [requestInterceptorVF, profileMatcherVF, mlAnalyzerVF, policyEnforcerVF, responseEmitterVF]).
 
