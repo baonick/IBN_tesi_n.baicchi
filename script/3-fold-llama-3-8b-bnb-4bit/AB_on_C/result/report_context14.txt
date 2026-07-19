@@ -8,10 +8,10 @@ below 50 ms, the chain connects to a <tradingAlgoVF, 32> allocated at the edge. 
 higher than 5000 mbps, the chain incorporates a <riskCheckerVF, 16> located in the cloud. Preferring that the latency from the <riskCheckerVF, 16> to the final node remains below 5 ms, and ensuring that logging is executed before this final component, the system completes the pipeline with an <orderDispatcherVF, 8> allocated 
 at the edge.
 ==================================================
-Recall    (Omissioni)     : 0.8667
-Precision (Allucinazioni) : 0.8667
-Jaccard   (Globale)       : 0.7647
-F1-Score  (Equilibrio)    : 0.8667
+Recall    (Omissioni)     : 0.9333
+Precision (Allucinazioni) : 0.9333
+Jaccard   (Globale)       : 0.8750
+F1-Score  (Equilibrio)    : 0.9333
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -37,7 +37,7 @@ propertyExpectation(bandwidth,greater,soft,5000,megabps,tradingAlgoVF,riskChecke
 propertyExpectation(caching,_,_,_)
 propertyExpectation(latency,lower,hard,50,ms,marketFeedVF,tradingAlgoVF)
 propertyExpectation(latency,lower,soft,5,ms,riskCheckerVF,orderDispatcherVF)
-propertyExpectation(logging,_,riskCheckerVF,_)
+propertyExpectation(logging,_,_,orderDispatcherVF)
 target([marketFeedVF,tradingAlgoVF,riskCheckerVF,orderDispatcherVF])
 vnf(marketFeedVF,edge,16)
 vnf(orderDispatcherVF,edge,8)

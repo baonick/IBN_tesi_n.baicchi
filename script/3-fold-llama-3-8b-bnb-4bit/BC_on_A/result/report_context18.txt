@@ -9,10 +9,10 @@ a <paymentProcessorVF, 24> in the cloud, a <statusLoggerVF, 12> in the cloud, an
 Furthermore, it is mandatory that the <mapUpdaterVF, 16> and the <paymentProcessorVF, 24> are deployed on dedicated nodes. Finally, it is strictly 
 required that the latency from the <sensorDataCollectorVF, 8> to the <securityEnforcerVF, 16> remains below 30 ms.
 ==================================================
-Recall    (Omissioni)     : 0.9474
+Recall    (Omissioni)     : 1.0000
 Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 0.9474
-F1-Score  (Equilibrio)    : 0.9730
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -38,6 +38,7 @@ vnfXUser(statusLoggerVF,l,(1,100000),12)
 
 --- Fatti Estratti LLM ---
 intent(smartParkOp,100000)
+propertyExpectation(affinity,dedicated,hard,_,_,mapUpdaterVF,_)
 propertyExpectation(affinity,dedicated,hard,_,_,paymentProcessorVF,_)
 propertyExpectation(compression,_,sensorDataCollectorVF,_)
 propertyExpectation(encoding,_,_,paymentProcessorVF)

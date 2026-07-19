@@ -10,9 +10,9 @@ it is ideally preferred that the total chain hardware remains lower than 100 gb.
 at the edge, ensuring that the latency from the <speechToTextVF, 32> to this <subtitleInjectorVF, 12> must remain below 20 ms.
 ==================================================
 Recall    (Omissioni)     : 1.0000
-Precision (Allucinazioni) : 0.9286
-Jaccard   (Globale)       : 0.9286
-F1-Score  (Equilibrio)    : 0.9630
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -35,7 +35,6 @@ intent(liveSubsOp,10000)
 propertyExpectation(caching,_,audioExtractorVF,_)
 propertyExpectation(latency,lower,hard,20,ms,speechToTextVF,subtitleInjectorVF)
 propertyExpectation(totChainHW,lower,soft,100,gb,_,_)
-propertyExpectation(translation,_,_,multiTranslatorVF)
 target([audioExtractorVF,speechToTextVF,multiTranslatorVF,subtitleInjectorVF])
 vnf(audioExtractorVF,edge,8)
 vnf(multiTranslatorVF,cloud,24)

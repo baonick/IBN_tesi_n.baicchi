@@ -1,11 +1,11 @@
 intent(eVotingIntent, secureVoteOp, 200000, certifiedVotingService).
 
-
 propertyExpectation(bwReq, eVotingIntent, bandwidth, greater, soft, 100, megabps, ballotIngesterVF, anonymizerVoteVF).
 
 propertyExpectation(privReq, eVotingIntent, privacy, _, anonymizerVoteVF, _).
 propertyExpectation(secReq, eVotingIntent, security, _, _, integrityEnforcerVF).
-propertyExpectation(logReq, eVotingIntent, logging, _, _, _).
+
+propertyExpectation(logReq, eVotingIntent, logging, _, _, electoralAuditLoggerVF).
 
 target(certifiedVotingService, [ballotIngesterVF, anonymizerVoteVF, integrityEnforcerVF, voteCounterVF, electoralAuditLoggerVF]).
 

@@ -10,10 +10,10 @@ the upcoming <graphicInjectorVF, 16> and the final destination, the chain incorp
 Preferring that the total chain hardware is lower than 150 gb, and ensuring that caching is executed before the final <streamDistributorVF, 24>, 
 the system completes the pipeline with a <streamDistributorVF, 24> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.6429
-Precision (Allucinazioni) : 0.6429
-Jaccard   (Globale)       : 0.4737
-F1-Score  (Equilibrio)    : 0.6429
+Recall    (Omissioni)     : 0.5714
+Precision (Allucinazioni) : 0.5714
+Jaccard   (Globale)       : 0.4000
+F1-Score  (Equilibrio)    : 0.5714
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -34,9 +34,9 @@ vnfXUser(streamIngesterVF,l,(1,30000),12)
 
 --- Fatti Estratti LLM ---
 intent(mediaBroadcastOp,30000)
-propertyExpectation(bandwidth,greater,hard,5000,megabps,graphicInjectorVF,_)
+propertyExpectation(bandwidth,greater,hard,5000,megabps,graphicInjectorVF,finalDestination)
 propertyExpectation(caching,_,_,finalDistributionVF)
-propertyExpectation(compression,_,streamIngesterVF,_)
+propertyExpectation(latency,lower,soft,100,ms,streamIngesterVF,graphicInjectorVF)
 propertyExpectation(totChainHW,lower,soft,150,gb,_,_)
 target([streamIngesterVF,cloudStudioVF,graphicInjectorVF,finalDistributionVF])
 vnf(cloudStudioVF,cloud,32)

@@ -10,9 +10,9 @@ the chain incorporates both blocks at the cloud. Finally, ensuring encoding is e
 with a <secureArchiverVF, 24> located in the cloud.
 ==================================================
 Recall    (Omissioni)     : 1.0000
-Precision (Allucinazioni) : 0.9375
-Jaccard   (Globale)       : 0.9375
-F1-Score  (Equilibrio)    : 0.9677
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -39,7 +39,6 @@ propertyExpectation(affinity,dedicated,hard,_,_,metadataExtractorVF,_)
 propertyExpectation(bandwidth,greater,soft,500,megabps,dicomIngesterVF,lesionAnalyzerVF)
 propertyExpectation(compression,_,dicomIngesterVF,_)
 propertyExpectation(encoding,_,_,secureArchiverVF)
-propertyExpectation(latency,lower,hard,100,ms,dicomIngesterVF,lesionAnalyzerVF)
 target([dicomIngesterVF,lesionAnalyzerVF,metadataExtractorVF,secureArchiverVF])
 vnf(dicomIngesterVF,edge,16)
 vnf(lesionAnalyzerVF,cloud,32)

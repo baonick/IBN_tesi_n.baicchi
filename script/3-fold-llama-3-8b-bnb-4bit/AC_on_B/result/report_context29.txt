@@ -9,10 +9,10 @@ decoding is executed before it to parse incoming payment tokens. The next compon
 is executed before it to catch failure triggers. Finally, the system routes the billing results to an <invoiceGeneratorVF, 16> located in the cloud, where data encoding 
 is executed before it for secure document delivery.
 ==================================================
-Recall    (Omissioni)     : 0.8571
-Precision (Allucinazioni) : 0.8000
-Jaccard   (Globale)       : 0.7059
-F1-Score  (Equilibrio)    : 0.8276
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 0.8235
+Jaccard   (Globale)       : 0.8235
+F1-Score  (Equilibrio)    : 0.9032
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -33,10 +33,12 @@ vnfXUser(subscriptionIngesterVF,l,(1,50000),12)
 
 --- Fatti Estratti LLM ---
 intent(subscriptionOp,50000)
-propertyExpectation(affinity,same,hard,_,node,node)
-propertyExpectation(decoding,_,_,invoiceGeneratorVF)
+propertyExpectation(affinity,same,hard,[subscriptionIngesterVF,billingCycleProcessorVF])
+propertyExpectation(bandwidth,greater,soft,10000,megabps,[subscriptionIngesterVF,billingCycleProcessorVF])
+propertyExpectation(decoding,_,_,billingCycleProcessorVF)
 propertyExpectation(encoding,_,_,invoiceGeneratorVF)
-propertyExpectation(logging,_,dunningManagerVF,_)
+propertyExpectation(latency,lower,soft,50,ms,[subscriptionIngesterVF,billingCycleProcessorVF])
+propertyExpectation(logging,_,_,dunningManagerVF)
 propertyExpectation(privacy,_,subscriptionIngesterVF,_)
 target([subscriptionIngesterVF,billingCycleProcessorVF,dunningManagerVF,invoiceGeneratorVF])
 vnf(billingCycleProcessorVF,cloud,24)

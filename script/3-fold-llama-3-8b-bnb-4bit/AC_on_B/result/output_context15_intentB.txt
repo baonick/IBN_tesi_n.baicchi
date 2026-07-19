@@ -1,14 +1,11 @@
-intent(kycVerificationIntent, onlineBankOp, 10000, digitalIdentityVerificationService).
+intent(kycVerificationIntent, onlineBankOp, 10000, digitalIdentityService).
 
-propertyExpectation(latReq, kycVerificationIntent, latency, lower, hard, 50, ms, documentReceiverVF, authenticityCheckerVF).
-propertyExpectation(bwReq, kycVerificationIntent, bandwidth, greater, soft, 100, megabps, documentReceiverVF, authenticityCheckerVF).
-
-propertyExpectation(secReq, kycVerificationIntent, security, _, _, authenticityCheckerVF).
 propertyExpectation(encReq, kycVerificationIntent, encoding, _, documentReceiverVF, _).
-propertyExpectation(privReq, kycVerificationIntent, privacy, _, _, amlMatcherVF).
+propertyExpectation(secReq, kycVerificationIntent, security, _, _, authenticityCheckerVF).
+propertyExpectation(privReq, kycVerificationIntent, privacy, _, amlMatcherVF, _).
 propertyExpectation(compReq, kycVerificationIntent, compression, _, _, profileCreatorVF).
 
-target(digitalIdentityVerificationService, [documentReceiverVF, authenticityCheckerVF, amlMatcherVF, profileCreatorVF]).
+target(digitalIdentityService, [documentReceiverVF, authenticityCheckerVF, amlMatcherVF, profileCreatorVF]).
 
 vnf(documentReceiverVF, edge, 12).
 vnf(authenticityCheckerVF, cloud, 24).

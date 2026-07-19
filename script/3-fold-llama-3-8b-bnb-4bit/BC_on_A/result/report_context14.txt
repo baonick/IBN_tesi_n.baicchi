@@ -9,10 +9,10 @@ Regarding requirements, caching is applied after the <marketFeedVF, 16>. Further
 Additionally, it is desired that the latency from the <riskCheckerVF, 16> to the <orderDispatcherVF, 8> remains below 5 ms. Finally, logging is executed before 
 the <orderDispatcherVF, 8>.
 ==================================================
-Recall    (Omissioni)     : 1.0000
+Recall    (Omissioni)     : 0.9333
 Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 1.0000
-F1-Score  (Equilibrio)    : 1.0000
+Jaccard   (Globale)       : 0.9333
+F1-Score  (Equilibrio)    : 0.9655
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -38,7 +38,6 @@ propertyExpectation(bandwidth,greater,soft,5000,megabps,tradingAlgoVF,riskChecke
 propertyExpectation(caching,_,marketFeedVF,_)
 propertyExpectation(latency,lower,hard,50,ms,marketFeedVF,tradingAlgoVF)
 propertyExpectation(latency,lower,soft,5,ms,riskCheckerVF,orderDispatcherVF)
-propertyExpectation(logging,_,_,orderDispatcherVF)
 target([marketFeedVF,tradingAlgoVF,riskCheckerVF,orderDispatcherVF])
 vnf(marketFeedVF,edge,16)
 vnf(orderDispatcherVF,edge,8)

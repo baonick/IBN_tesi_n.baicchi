@@ -1,9 +1,13 @@
 intent(eVotingIntent, secureVoteOp, 200000, certifiedVotingService).
 
-propertyExpectation(bwReq, eVotingIntent, bandwidth, greater, hard, 100, megabps, ballotIngesterVF, anonymizerVoteVF).
-propertyExpectation(latReq, eVotingIntent, latency, lower, soft, 100, ms, ballotIngesterVF, anonymizerVoteVF).
-propertyExpectation(privReq, eVotingIntent, privacy, _, _, _).
-propertyExpectation(secReq, eVotingIntent, security, _, _, _).
+propertyExpectation(bwReq, eVotingIntent, bandwidth, greater, soft, 100, megabps, ballotIngesterVF, anonymizerVoteVF).
+propertyExpectation(latReq, eVotingIntent, latency, lower, soft, 50, ms, ballotIngesterVF, integrityEnforcerVF).
+propertyExpectation(latReq2, eVotingIntent, latency, lower, soft, 50, ms, integrityEnforcerVF, voteCounterVF).
+propertyExpectation(latReq3, eVotingIntent, latency, lower, soft, 50, ms, voteCounterVF, electoralAuditLoggerVF).
+
+propertyExpectation(privReq, eVotingIntent, privacy, _, ballotIngesterVF, _).
+propertyExpectation(secReq, eVotingIntent, security, _, _, integrityEnforcerVF).
+propertyExpectation(logReq, eVotingIntent, logging, _, _, electoralAuditLoggerVF).
 
 target(certifiedVotingService, [ballotIngesterVF, anonymizerVoteVF, integrityEnforcerVF, voteCounterVF, electoralAuditLoggerVF]).
 

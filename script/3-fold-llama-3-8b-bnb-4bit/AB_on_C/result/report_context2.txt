@@ -9,10 +9,10 @@ the <mailGatewayVF, 4> connects to a <phishingFilterVF, 8> located in the cloud.
 links to a <sandboxScannerVF, 16> located in the cloud. Applying strictly required logging before this node, the <sandboxScannerVF, 16> is integrated into 
 the chain. Finally, the service concludes by connecting the <sandboxScannerVF, 16> to a <safeDeliveryVF, 4> node located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.9286
-Precision (Allucinazioni) : 0.8667
-Jaccard   (Globale)       : 0.8125
-F1-Score  (Equilibrio)    : 0.8966
+Recall    (Omissioni)     : 0.8571
+Precision (Allucinazioni) : 0.9231
+Jaccard   (Globale)       : 0.8000
+F1-Score  (Equilibrio)    : 0.8889
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -33,9 +33,7 @@ vnfXUser(sandboxScannerVF,l,(1,10000),16)
 
 --- Fatti Estratti LLM ---
 intent(secureMailOp,10000)
-propertyExpectation(affinity,must,_,safeDeliveryVF,_)
 propertyExpectation(bandwidth,greater,hard,100,megabps,phishingFilterVF,sandboxScannerVF)
-propertyExpectation(decoding,_,mailGatewayVF,_)
 propertyExpectation(latency,lower,soft,50,ms,mailGatewayVF,phishingFilterVF)
 propertyExpectation(logging,_,_,sandboxScannerVF,_,_)
 target([mailGatewayVF,phishingFilterVF,sandboxScannerVF,safeDeliveryVF])

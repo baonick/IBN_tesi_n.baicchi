@@ -7,10 +7,10 @@ flight plans, avoids software collisions, and ensures that the command signal is
 a <flightTelemetryIngesterVF, 12> allocated at the edge, a <collisionAvoiderVF, 32> located in the cloud, a <commandPrioritizerVF, 16> located in the cloud, and a <routeDispatcherVF, 12> allocated at the edge. Regarding requirements, caching is applied after the <flightTelemetryIngesterVF, 12>. Furthermore, the provider prefers 
 that the total chain hardware remains lower than 200 gb. It is strictly required that the latency from the <flightTelemetryIngesterVF, 12> to the <collisionAvoiderVF, 32> remains below 10 ms. Finally, the provider prefers that the bandwidth from the <collisionAvoiderVF, 32> to the <routeDispatcherVF, 12> remains higher than 2000 mbps.
 ==================================================
-Recall    (Omissioni)     : 1.0000
-Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 1.0000
-F1-Score  (Equilibrio)    : 1.0000
+Recall    (Omissioni)     : 0.9286
+Precision (Allucinazioni) : 0.9286
+Jaccard   (Globale)       : 0.8667
+F1-Score  (Equilibrio)    : 0.9286
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -31,7 +31,7 @@ vnfXUser(routeDispatcherVF,l,(1,5000),12)
 
 --- Fatti Estratti LLM ---
 intent(aeroDeliveryOp,5000)
-propertyExpectation(bandwidth,greater,soft,2000,megabps,collisionAvoiderVF,routeDispatcherVF)
+propertyExpectation(bandwidth,greater,soft,200,megabps,collisionAvoiderVF,routeDispatcherVF)
 propertyExpectation(caching,_,flightTelemetryIngesterVF,_)
 propertyExpectation(latency,lower,hard,10,ms,flightTelemetryIngesterVF,collisionAvoiderVF)
 propertyExpectation(totChainHW,lower,soft,200,gb,_,_)

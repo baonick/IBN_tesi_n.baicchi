@@ -1,10 +1,10 @@
-intent(govDataIntent, govDataOp, 30000, openDataPortalService).
+intent(openDataIntent, govDataOp, 30000, openDataPortalService).
 
-propertyExpectation(affReq, govDataIntent, affinity, same, hard, _, _, formatNormalizerVF, metadataEnricherVF).
-propertyExpectation(bwReq, govDataIntent, bandwidth, greater, soft, 1000, megabps, formatNormalizerVF, metadataEnricherVF).
-propertyExpectation(latReq, govDataIntent, latency, lower, hard, 200, ms, dataExtractorVF, downloadProviderVF).
+propertyExpectation(affReq, openDataIntent, affinity, same, hard, _, _, formatNormalizerVF, metadataEnricherVF).
+propertyExpectation(bwReq, openDataIntent, bandwidth, greater, soft, 1000, megabps, formatNormalizerVF, metadataEnricherVF).
+propertyExpectation(latReq, openDataIntent, latency, lower, hard, 200, ms, dataExtractorVF, downloadProviderVF).
 
-propertyExpectation(cachReq, govDataIntent, caching, _, formatNormalizerVF, _).
+propertyExpectation(cachReq, openDataIntent, caching, _, formatNormalizerVF, _).
 
 target(openDataPortalService, [dataExtractorVF, formatNormalizerVF, metadataEnricherVF, downloadProviderVF]).
 

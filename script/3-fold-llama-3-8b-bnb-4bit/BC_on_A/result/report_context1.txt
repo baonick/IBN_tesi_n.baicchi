@@ -8,10 +8,10 @@ in order: a <webFilterVF, 4> allocated at the edge, a <malwareScannerVF, 16> loc
 Regarding requirements, it is a mandatory requirement that the latency from <webFilterVF, 4> to the <malwareScannerVF, 16> remains below 10 milliseconds. 
 Furthermore, the bandwidth between the <malwareScannerVF, 16> and the <dlpEngineVF, 8> must be greater than 500 mbps.
 ==================================================
-Recall    (Omissioni)     : 1.0000
+Recall    (Omissioni)     : 0.7000
 Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 1.0000
-F1-Score  (Equilibrio)    : 1.0000
+Jaccard   (Globale)       : 0.7000
+F1-Score  (Equilibrio)    : 0.8235
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -34,6 +34,3 @@ target([webFilterVF,malwareScannerVF,dlpEngineVF])
 vnf(dlpEngineVF,cloud,8)
 vnf(malwareScannerVF,cloud,16)
 vnf(webFilterVF,edge,4)
-vnfXUser(dlpEngineVF,l,(1,5000),8)
-vnfXUser(malwareScannerVF,l,(1,5000),16)
-vnfXUser(webFilterVF,l,(1,5000),4)

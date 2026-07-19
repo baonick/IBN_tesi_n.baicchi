@@ -9,10 +9,10 @@ Specifying that privacy is applied after the initial unit, the service begins wi
 located in the cloud. Finally, strictly requiring that the latency from the <patientDataReceiverVF, 8> to the final node remains below 100 ms, 
 and preferring that the total chain hardware remains lower than 80 gb, the system completes the pipeline with a <doctorNotifierVF, 8> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.9286
-Precision (Allucinazioni) : 0.9286
-Jaccard   (Globale)       : 0.8667
-F1-Score  (Equilibrio)    : 0.9286
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -34,7 +34,7 @@ vnfXUser(patientDataReceiverVF,l,(1,5000),8)
 --- Fatti Estratti LLM ---
 intent(healthCareOp,5000)
 propertyExpectation(latency,lower,hard,100,ms,patientDataReceiverVF,doctorNotifierVF)
-propertyExpectation(logging,_,_,doctorNotifierVF)
+propertyExpectation(logging,_,_,medicalAlertLoggerVF)
 propertyExpectation(privacy,_,patientDataReceiverVF,_)
 propertyExpectation(totChainHW,lower,soft,80,gb,_,_)
 target([patientDataReceiverVF,cardiacAnomalyAnalyzerVF,medicalAlertLoggerVF,doctorNotifierVF])

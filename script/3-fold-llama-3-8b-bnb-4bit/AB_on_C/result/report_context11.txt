@@ -9,10 +9,10 @@ connected to a <speechToTextVF, 32> located in the cloud and a <multiTranslatorV
 hardware is lower than 100 gb, and strictly requiring that the latency from the <speechToTextVF, 32> to the final node remains 
 below 20 ms, the system completes the pipeline with a <subtitleInjectorVF, 12> allocated at the edge.
 ==================================================
-Recall    (Omissioni)     : 0.7692
-Precision (Allucinazioni) : 0.9091
-Jaccard   (Globale)       : 0.7143
-F1-Score  (Equilibrio)    : 0.8333
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -32,7 +32,7 @@ vnfXUser(subtitleInjectorVF,l,(1,10000),12)
 
 --- Fatti Estratti LLM ---
 intent(liveSubsOp,10000)
-propertyExpectation(caching,_,speechToTextVF,_)
+propertyExpectation(caching,_,audioExtractorVF,_)
 propertyExpectation(latency,lower,hard,20,ms,speechToTextVF,subtitleInjectorVF)
 propertyExpectation(totChainHW,lower,soft,100,gb,_,_)
 target([audioExtractorVF,speechToTextVF,multiTranslatorVF,subtitleInjectorVF])
@@ -40,5 +40,7 @@ vnf(audioExtractorVF,edge,8)
 vnf(multiTranslatorVF,cloud,24)
 vnf(speechToTextVF,cloud,32)
 vnf(subtitleInjectorVF,edge,12)
+vnfXUser(audioExtractorVF,l,(1,10000),8)
 vnfXUser(multiTranslatorVF,l,(1,10000),24)
 vnfXUser(speechToTextVF,l,(1,10000),32)
+vnfXUser(subtitleInjectorVF,l,(1,10000),12)

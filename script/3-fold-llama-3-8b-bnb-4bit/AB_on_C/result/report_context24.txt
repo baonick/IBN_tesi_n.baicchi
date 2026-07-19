@@ -9,10 +9,10 @@ applied after this <anonymizerVoteVF, 16> process, and ensuring that security is
 located in the cloud. The pipeline proceeds to a <voteCounterVF, 16> located in the cloud. Finally, ensuring that logging is executed before the last
 unit, the system completes the pipeline with an <electoralAuditLoggerVF, 12> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.9375
-Precision (Allucinazioni) : 0.9375
-Jaccard   (Globale)       : 0.8824
-F1-Score  (Equilibrio)    : 0.9375
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -36,7 +36,7 @@ vnfXUser(voteCounterVF,l,(1,200000),16)
 --- Fatti Estratti LLM ---
 intent(secureVoteOp,200000)
 propertyExpectation(bandwidth,greater,soft,100,megabps,ballotIngesterVF,anonymizerVoteVF)
-propertyExpectation(logging,_,_,_)
+propertyExpectation(logging,_,_,electoralAuditLoggerVF)
 propertyExpectation(privacy,_,anonymizerVoteVF,_)
 propertyExpectation(security,_,_,integrityEnforcerVF)
 target([ballotIngesterVF,anonymizerVoteVF,integrityEnforcerVF,voteCounterVF,electoralAuditLoggerVF])

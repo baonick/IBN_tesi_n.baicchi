@@ -9,10 +9,10 @@ located in the cloud. Regarding operational requirements compression is applied 
 from this initial <dicomIngesterVF, 16> to the <lesionAnalyzerVF, 32> remains higher than 500 mbps. To guarantee maximum computing performance, it is mandatory that the 
 <lesionAnalyzerVF, 32> and the <metadataExtractorVF, 12> are hosted on completely separate, dedicated physical servers. Finally, data encoding is executed before the <secureArchiverVF, 24> for permanent storage.
 ==================================================
-Recall    (Omissioni)     : 0.8667
-Precision (Allucinazioni) : 0.8667
-Jaccard   (Globale)       : 0.7647
-F1-Score  (Equilibrio)    : 0.8667
+Recall    (Omissioni)     : 0.8000
+Precision (Allucinazioni) : 0.8571
+Jaccard   (Globale)       : 0.7059
+F1-Score  (Equilibrio)    : 0.8276
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -34,11 +34,10 @@ vnfXUser(secureArchiverVF,l,(1,10000),24)
 
 --- Fatti Estratti LLM ---
 intent(medDiagnosticOp,10000)
-propertyExpectation(affinity,isolated,hard,_,_,lesionAnalyzerVF,metadataExtractorVF)
-propertyExpectation(bandwidth,greater,soft,500,megabps,dicomIngesterVF,lesionAnalyzerVF)
+propertyExpectation(affinity,dedicated,hard,_,_,lesionAnalyzerVF,metadataExtractorVF)
+propertyExpectation(bandwidth,greater,hard,500,megabps,dicomIngesterVF,lesionAnalyzerVF)
 propertyExpectation(compression,_,dicomIngesterVF,_)
 propertyExpectation(encoding,_,_,secureArchiverVF)
-propertyExpectation(latency,greater,hard,100,ms,dicomIngesterVF,lesionAnalyzerVF)
 target([dicomIngesterVF,lesionAnalyzerVF,metadataExtractorVF,secureArchiverVF])
 vnf(dicomIngesterVF,edge,16)
 vnf(lesionAnalyzerVF,cloud,32)

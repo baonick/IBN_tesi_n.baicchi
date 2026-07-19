@@ -1,6 +1,6 @@
 intent(vodDistributionIntent, vodStreamOp, 80000, vodDistributionService).
 
-propertyExpectation(affReq, vodDistributionIntent, affinity, same, preferred, _, _, drmEncryptorVF, transcoderVF).
+propertyExpectation(affReq, vodDistributionIntent, affinity, same, soft, _, _, drmEncryptorVF, transcoderVF).
 propertyExpectation(bwReq, vodDistributionIntent, bandwidth, greater, hard, 10000, megabps, transcoderVF, cachingNodeVF).
 
 propertyExpectation(encReq, vodDistributionIntent, encoding, _, drmEncryptorVF, _).

@@ -4,7 +4,7 @@ propertyExpectation(affReq, encryptedTrafficIntent, affinity, same, hard, _, _, 
 propertyExpectation(hwReq, encryptedTrafficIntent, totChainHW, lower, soft, 80, gb, _, _).
 
 propertyExpectation(decReq, encryptedTrafficIntent, decoding, _, trafficSplitterVF, _).
-propertyExpectation(secReq, encryptedTrafficIntent, security, _, _, policyEnforcerVF).
+propertyExpectation(secReq, encryptedTrafficIntent, security, _, policyEnforcerVF, _).
 
 target(cryptoAnalysisService, [trafficSplitterVF, featureExtractorVF, aiClassifierVF, alertManagerVF, policyEnforcerVF]).
 

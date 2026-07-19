@@ -1,9 +1,5 @@
 intent(kycVerificationIntent, onlineBankOp, 10000, digitalIdentityService).
 
-propertyExpectation(latReq, kycVerificationIntent, latency, lower, soft, 500, ms, documentReceiverVF, _).
-propertyExpectation(bwReq, kycVerificationIntent, bandwidth, greater, hard, 100, megabps, documentReceiverVF, authenticityCheckerVF).
-propertyExpectation(hwReq, kycVerificationIntent, totChainHW, greater, hard, 80, gb, _, _).
-
 propertyExpectation(encReq, kycVerificationIntent, encoding, _, documentReceiverVF, _).
 propertyExpectation(secReq, kycVerificationIntent, security, _, _, authenticityCheckerVF).
 propertyExpectation(privReq, kycVerificationIntent, privacy, _, authenticityCheckerVF, _).

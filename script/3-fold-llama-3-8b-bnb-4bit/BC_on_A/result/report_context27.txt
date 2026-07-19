@@ -30,8 +30,8 @@ vnfXUser(socialDataReceiverVF,l,(1,100000),16)
 
 --- Fatti Estratti LLM ---
 intent(sentimentOp,100000)
-propertyExpectation(latency,lower,hard,50,ms,socialDataReceiverVF,sentimentAnalyzerVF)
-propertyExpectation(latency,lower,soft,20,ms,sentimentAnalyzerVF,reportDispatcherVF)
+propertyExpectation(bandwidth,greater,hard,10000,megabps,sentimentAnalyzerVF,reportDispatcherVF)
+propertyExpectation(latency,lower,hard,50,ms,sentimentAnalyzerVF,reportDispatcherVF)
 propertyExpectation(privacy,_,socialDataReceiverVF,_)
 propertyExpectation(security,_,_,sentimentAnalyzerVF)
 target([socialDataReceiverVF,sentimentAnalyzerVF,reportDispatcherVF])

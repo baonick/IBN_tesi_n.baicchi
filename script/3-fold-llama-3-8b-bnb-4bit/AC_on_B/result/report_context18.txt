@@ -10,9 +10,9 @@ that logging is executed before it. Finally, the chain includes a <securityEnfor
 For the entire segment, it is strictly required that the latency from the <sensorDataCollectorVF, 8> to this <securityEnforcerVF, 16> remains below 30 ms.
 ==================================================
 Recall    (Omissioni)     : 0.9474
-Precision (Allucinazioni) : 0.9000
-Jaccard   (Globale)       : 0.8571
-F1-Score  (Equilibrio)    : 0.9231
+Precision (Allucinazioni) : 0.9474
+Jaccard   (Globale)       : 0.9000
+F1-Score  (Equilibrio)    : 0.9474
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -40,7 +40,6 @@ vnfXUser(statusLoggerVF,l,(1,100000),12)
 intent(smartParkOp,100000)
 propertyExpectation(affinity,dedicated,hard,_,_,mapUpdaterVF,_)
 propertyExpectation(affinity,dedicated,hard,_,_,paymentProcessorVF,_)
-propertyExpectation(bandwidth,greater,soft,100,megabps,sensorDataCollectorVF,securityEnforcerVF)
 propertyExpectation(compression,_,sensorDataCollectorVF,_)
 propertyExpectation(encoding,_,_,paymentProcessorVF)
 propertyExpectation(latency,lower,hard,30,ms,sensorDataCollectorVF,securityEnforcerVF)

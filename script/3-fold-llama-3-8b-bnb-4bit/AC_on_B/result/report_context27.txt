@@ -8,9 +8,9 @@ ensuring that security is executed before this component. Finally, the pipeline 
 <reportDispatcherVF, 16> and the previous <sentimentAnalyzerVF, 32> are hosted together on the same physical infrastructure.
 ==================================================
 Recall    (Omissioni)     : 1.0000
-Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 1.0000
-F1-Score  (Equilibrio)    : 1.0000
+Precision (Allucinazioni) : 0.9167
+Jaccard   (Globale)       : 0.9167
+F1-Score  (Equilibrio)    : 0.9565
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -31,6 +31,7 @@ intent(sentimentOp,100000)
 propertyExpectation(affinity,same,hard,_,_,sentimentAnalyzerVF,reportDispatcherVF)
 propertyExpectation(privacy,_,socialDataReceiverVF,_)
 propertyExpectation(security,_,_,sentimentAnalyzerVF)
+propertyExpectation(security,_,sentimentAnalyzerVF,_)
 target([socialDataReceiverVF,sentimentAnalyzerVF,reportDispatcherVF])
 vnf(reportDispatcherVF,cloud,16)
 vnf(sentimentAnalyzerVF,cloud,32)

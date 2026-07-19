@@ -9,10 +9,10 @@ The chain then connects to ananomalyDetectorVF located in the cloud, and subsequ
 it is strictly required that the latency from the begin to the end of the chain remains below 100 ms, and the provider ideally prefers that the bandwidth 
 from the begin to the end of the chain remains higher than 2000 mbps.
 ==================================================
-Recall    (Omissioni)     : 1.0000
-Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 1.0000
-F1-Score  (Equilibrio)    : 1.0000
+Recall    (Omissioni)     : 0.8462
+Precision (Allucinazioni) : 0.8462
+Jaccard   (Globale)       : 0.7333
+F1-Score  (Equilibrio)    : 0.8462
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -37,10 +37,10 @@ propertyExpectation(bandwidth,greater,soft,2000,megabps,telemetryCollectorVF,ale
 propertyExpectation(latency,lower,hard,100,ms,telemetryCollectorVF,alertDispatcherVF)
 target([telemetryCollectorVF,dataAggregatorVF,anomalyDetectorVF,alertDispatcherVF])
 vnf(alertDispatcherVF,cloud,8)
-vnf(anomalyDetectorVF,cloud,24)
+vnf(anomalyDetectorVF,cloud,32)
 vnf(dataAggregatorVF,edge,16)
 vnf(telemetryCollectorVF,edge,8)
 vnfXUser(alertDispatcherVF,l,(1,50000),8)
-vnfXUser(anomalyDetectorVF,l,(1,50000),24)
+vnfXUser(anomalyDetectorVF,l,(1,50000),32)
 vnfXUser(dataAggregatorVF,l,(1,50000),16)
 vnfXUser(telemetryCollectorVF,l,(1,50000),8)

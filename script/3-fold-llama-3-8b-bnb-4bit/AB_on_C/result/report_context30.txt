@@ -34,8 +34,8 @@ vnfXUser(syntaxValidatorVF,l,(1,20000),12)
 
 --- Fatti Estratti LLM ---
 intent(devToolsOp,20000)
-propertyExpectation(dataCompression,_,_,_,_,finalLayer,_)
-propertyExpectation(dataCompression,_,finalLayer,_)
+propertyExpectation(caching,_,second,_)
+propertyExpectation(compression,_,final,_)
 propertyExpectation(totChainHW,lower,soft,110,gb,_,_)
 target([codeReceiverVF,syntaxValidatorVF,sandboxSimulatorVF,optimizationEngineVF,developersReportGeneratorVF])
 vnf(codeReceiverVF,edge,8)

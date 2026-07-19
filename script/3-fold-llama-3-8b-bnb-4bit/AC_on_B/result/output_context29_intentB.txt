@@ -1,10 +1,13 @@
-intent(saasBillingIntent, subscriptionOp, 50000, saasSubscriptionService).
+intent(saasSubscriptionIntent, subscriptionOp, 50000, saasSubscriptionService).
 
-propertyExpectation(affReq, saasBillingIntent, affinity, same, hard, _, node, node).
-propertyExpectation(privReq, saasBillingIntent, privacy, _, subscriptionIngesterVF, _).
-propertyExpectation(decReq, saasBillingIntent, decoding, _, _, invoiceGeneratorVF).
-propertyExpectation(encReq, saasBillingIntent, encoding, _, _, invoiceGeneratorVF).
-propertyExpectation(logReq, saasBillingIntent, logging, _, dunningManagerVF, _).
+propertyExpectation(affReq, saasSubscriptionIntent, affinity, same, hard, [subscriptionIngesterVF, billingCycleProcessorVF]).
+propertyExpectation(bwReq, saasSubscriptionIntent, bandwidth, greater, soft, 10000, megabps, [subscriptionIngesterVF, billingCycleProcessorVF]).
+propertyExpectation(latReq, saasSubscriptionIntent, latency, lower, soft, 50, ms, [subscriptionIngesterVF, billingCycleProcessorVF]).
+
+propertyExpectation(privReq, saasSubscriptionIntent, privacy, _, subscriptionIngesterVF, _).
+propertyExpectation(decReq, saasSubscriptionIntent, decoding, _, _, billingCycleProcessorVF).
+propertyExpectation(logReq, saasSubscriptionIntent, logging, _, _, dunningManagerVF).
+propertyExpectation(encReq, saasSubscriptionIntent, encoding, _, _, invoiceGeneratorVF).
 
 target(saasSubscriptionService, [subscriptionIngesterVF, billingCycleProcessorVF, dunningManagerVF, invoiceGeneratorVF]).
 

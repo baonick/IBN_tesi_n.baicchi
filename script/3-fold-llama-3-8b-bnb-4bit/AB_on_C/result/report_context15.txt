@@ -10,9 +10,9 @@ executed before the second phase, the chain connects to an <authenticityCheckerV
 node, the system completes the pipeline with a <profileCreatorVF, 16> located in the cloud.
 ==================================================
 Recall    (Omissioni)     : 0.9286
-Precision (Allucinazioni) : 0.7647
-Jaccard   (Globale)       : 0.7222
-F1-Score  (Equilibrio)    : 0.8387
+Precision (Allucinazioni) : 0.9286
+Jaccard   (Globale)       : 0.8667
+F1-Score  (Equilibrio)    : 0.9286
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -33,13 +33,10 @@ vnfXUser(profileCreatorVF,l,(1,10000),16)
 
 --- Fatti Estratti LLM ---
 intent(onlineBankOp,10000)
-propertyExpectation(bandwidth,greater,hard,100,megabps,documentReceiverVF,authenticityCheckerVF)
 propertyExpectation(compression,_,_,profileCreatorVF)
 propertyExpectation(encoding,_,documentReceiverVF,_)
-propertyExpectation(latency,lower,soft,500,ms,documentReceiverVF,_)
 propertyExpectation(privacy,_,authenticityCheckerVF,_)
 propertyExpectation(security,_,_,authenticityCheckerVF)
-propertyExpectation(totChainHW,greater,hard,80,gb,_,_)
 target([documentReceiverVF,authenticityCheckerVF,amlMatcherVF,profileCreatorVF])
 vnf(amlMatcherVF,cloud,16)
 vnf(authenticityCheckerVF,cloud,24)

@@ -1,11 +1,9 @@
 intent(secureMailIntent, secureMailOp, 10000, emailSanitizationService).
 
-propertyExpectation(bwReq, secureMailIntent, bandwidth, greater, hard, 100, megabps, phishingFilterVF, sandboxScannerVF).
 propertyExpectation(latReq, secureMailIntent, latency, lower, soft, 50, ms, mailGatewayVF, phishingFilterVF).
-propertyExpectation(logReq, secureMailIntent, logging, _, _, sandboxScannerVF, _, _).
+propertyExpectation(bwReq, secureMailIntent, bandwidth, greater, hard, 100, megabps, phishingFilterVF, sandboxScannerVF).
 
-propertyExpectation(decReq, secureMailIntent, decoding, _, mailGatewayVF, _).
-propertyExpectation(affReq, secureMailIntent, affinity, must, _, safeDeliveryVF, _).
+propertyExpectation(logReq, secureMailIntent, logging, _, _, sandboxScannerVF, _, _).
 
 target(emailSanitizationService, [mailGatewayVF, phishingFilterVF, sandboxScannerVF, safeDeliveryVF]).
 

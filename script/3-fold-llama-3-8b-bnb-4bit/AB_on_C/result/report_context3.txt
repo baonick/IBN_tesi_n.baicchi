@@ -8,10 +8,10 @@ with a <networkTrafficAnalyzerVF, 8> located at the edge linked to a <scrubbingF
 the chain then proceeds to a <rateLimiterVF, 16> located in the cloud. Finally, specifying that logging should ideally be performed after the <rateLimiterVF, 16>, and preferring 
 a latency lower than 10 ms, the system connects to the final <webServerVF, 12> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.8571
-Precision (Allucinazioni) : 0.8000
-Jaccard   (Globale)       : 0.7059
-F1-Score  (Equilibrio)    : 0.8276
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -33,10 +33,9 @@ vnfXUser(webServerVF,l,(1,50000),12)
 --- Fatti Estratti LLM ---
 intent(ddosProtectionOp,50000)
 propertyExpectation(bandwidth,greater,hard,500,megabps,networkTrafficAnalyzerVF,scrubbingFilterVF)
-propertyExpectation(latency,lower,soft,10,ms,_,webServerVF)
-propertyExpectation(latency,lower,soft,10,ms,rateLimiterVF,_)
+propertyExpectation(latency,lower,soft,10,ms,rateLimiterVF,webServerVF)
 propertyExpectation(logging,_,rateLimiterVF,_)
-propertyExpectation(security,_,_,scrubbingFilterVF,_,_)
+propertyExpectation(security,_,_,scrubbingFilterVF)
 target([networkTrafficAnalyzerVF,scrubbingFilterVF,rateLimiterVF,webServerVF])
 vnf(networkTrafficAnalyzerVF,edge,8)
 vnf(rateLimiterVF,cloud,16)

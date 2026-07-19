@@ -30,8 +30,8 @@ vnfXUser(gameExecutorVF,l,(1,40000),32)
 vnfXUser(streamPackerVF,l,(1,40000),16)
 
 --- Fatti Estratti LLM ---
-affinityReq(cloudGamingIntent,dedicated,deliveryOptimizerVF)
-affinityReq(cloudGamingIntent,dedicated,streamPackerVF)
+affinityExpectation(affReq1,cloudGamingIntent,dedicated,streamPackerVF)
+affinityExpectation(affReq2,cloudGamingIntent,dedicated,deliveryOptimizerVF)
 intent(cloudGamingOp,40000)
 propertyExpectation(encoding,_,gameExecutorVF,_)
 propertyExpectation(latency,lower,hard,30,ms,streamPackerVF,deliveryOptimizerVF)

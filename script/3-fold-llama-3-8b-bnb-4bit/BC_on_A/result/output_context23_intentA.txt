@@ -1,8 +1,7 @@
 intent(radiologyAIIntent, medDiagnosticOp, 10000, radiologyPipelineService).
 
-propertyExpectation(latReq, radiologyAIIntent, latency, greater, hard, 100, ms, dicomIngesterVF, lesionAnalyzerVF).
-propertyExpectation(bwReq, radiologyAIIntent, bandwidth, greater, soft, 500, megabps, dicomIngesterVF, lesionAnalyzerVF).
-propertyExpectation(affReq, radiologyAIIntent, affinity, isolated, hard, _, _, lesionAnalyzerVF, metadataExtractorVF).
+propertyExpectation(bwReq, radiologyAIIntent, bandwidth, greater, hard, 500, megabps, dicomIngesterVF, lesionAnalyzerVF).
+propertyExpectation(affReq, radiologyAIIntent, affinity, dedicated, hard, _, _, lesionAnalyzerVF, metadataExtractorVF).
 
 propertyExpectation(compReq, radiologyAIIntent, compression, _, dicomIngesterVF, _).
 propertyExpectation(encReq, radiologyAIIntent, encoding, _, _, secureArchiverVF).

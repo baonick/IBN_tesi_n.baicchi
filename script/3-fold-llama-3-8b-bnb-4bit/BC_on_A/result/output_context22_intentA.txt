@@ -1,4 +1,4 @@
-intent(teleMonitoringIntent, healthCareOp, 5000, postOpTeleMonitoringService).
+intent(teleMonitoringIntent, healthCareOp, 5000, postOperativeTeleMonitoringService).
 
 propertyExpectation(latReq, teleMonitoringIntent, latency, lower, hard, 100, ms, patientDataReceiverVF, doctorNotifierVF).
 propertyExpectation(hwReq, teleMonitoringIntent, totChainHW, lower, soft, 80, gb, _, _).
@@ -6,7 +6,7 @@ propertyExpectation(hwReq, teleMonitoringIntent, totChainHW, lower, soft, 80, gb
 propertyExpectation(privReq, teleMonitoringIntent, privacy, _, patientDataReceiverVF, _).
 propertyExpectation(logReq, teleMonitoringIntent, logging, _, _, medicalAlertLoggerVF).
 
-target(postOpTeleMonitoringService, [patientDataReceiverVF, cardiacAnomalyAnalyzerVF, medicalAlertLoggerVF, doctorNotifierVF]).
+target(postOperativeTeleMonitoringService, [patientDataReceiverVF, cardiacAnomalyAnalyzerVF, medicalAlertLoggerVF, doctorNotifierVF]).
 
 vnf(patientDataReceiverVF, edge, 8).
 vnf(cardiacAnomalyAnalyzerVF, cloud, 24).

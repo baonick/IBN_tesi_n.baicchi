@@ -1,4 +1,4 @@
-intent(docClassificationIntent, corpDocOp, 50000, docClassificationEngine).
+intent(docClassificationIntent, corpDocOp, 50000, documentClassificationEngine).
 
 propertyExpectation(affReq, docClassificationIntent, affinity, same, hard, _, _, ocrScannerVF, textExtractorVF).
 propertyExpectation(latReq, docClassificationIntent, latency, lower, hard, 50, ms, textExtractorVF, aiDocumentClassifierVF).
@@ -7,7 +7,7 @@ propertyExpectation(bwReq, docClassificationIntent, bandwidth, greater, soft, 50
 propertyExpectation(secReq, docClassificationIntent, security, _, ocrScannerVF, _).
 propertyExpectation(privReq, docClassificationIntent, privacy, _, _, dataRedactorVF).
 
-target(docClassificationEngine, [ocrScannerVF, textExtractorVF, aiDocumentClassifierVF, dataRedactorVF, documentRouterVF]).
+target(documentClassificationEngine, [ocrScannerVF, textExtractorVF, aiDocumentClassifierVF, dataRedactorVF, documentRouterVF]).
 
 vnf(ocrScannerVF, edge, 16).
 vnf(textExtractorVF, edge, 12).

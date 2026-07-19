@@ -1,11 +1,8 @@
 intent(cloudGamingIntent, cloudGamingOp, 40000, cloudGamingService).
 
+propertyExpectation(latReq, cloudGamingIntent, latency, lower, hard, 30, ms, streamPackerVF, deliveryOptimizerVF).
 propertyExpectation(affReq1, cloudGamingIntent, affinity, dedicated, soft, _, _, gameExecutorVF, _).
-propertyExpectation(latReq, cloudGamingIntent, latency, lower, hard, 30, ms, streamPackerVF, deliveryOptimizerVF).
-
-propertyExpectation(latReq, cloudGamingIntent, latency, lower, hard, 30, ms, streamPackerVF, deliveryOptimizerVF).
-
-propertyExpectation(bwReq, cloudGamingIntent, bandwidth, greater, soft, 100, megabps, gameExecutorVF, streamPackerVF).
+propertyExpectation(affReq2, cloudGamingIntent, affinity, dedicated, soft, _, _, streamPackerVF, _).
 
 target(cloudGamingService, [gameExecutorVF, streamPackerVF, deliveryOptimizerVF]).
 

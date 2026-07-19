@@ -5,7 +5,6 @@ propertyExpectation(bwReq, hftIntent, bandwidth, greater, soft, 5000, megabps, t
 propertyExpectation(latReq2, hftIntent, latency, lower, soft, 5, ms, riskCheckerVF, orderDispatcherVF).
 
 propertyExpectation(cachReq, hftIntent, caching, _, marketFeedVF, _).
-propertyExpectation(logReq, hftIntent, logging, _, _, orderDispatcherVF).
 
 target(highFrequencyTradingService, [marketFeedVF, tradingAlgoVF, riskCheckerVF, orderDispatcherVF]).
 

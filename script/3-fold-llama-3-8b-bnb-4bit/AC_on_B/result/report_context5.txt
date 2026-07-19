@@ -9,10 +9,10 @@ hosting node. The chain then proceeds to an <aiClassifierVF, 32> located in the 
 ideally preferred that the total chain hardware remains lower than 80 gigabytes. Finally, the traffic is routed to a <policyEnforcerVF, 12> located in the cloud, ensuring 
 that security is executed before the <policyEnforcerVF, 12>.
 ==================================================
-Recall    (Omissioni)     : 1.0000
-Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 1.0000
-F1-Score  (Equilibrio)    : 1.0000
+Recall    (Omissioni)     : 0.9375
+Precision (Allucinazioni) : 0.9375
+Jaccard   (Globale)       : 0.8824
+F1-Score  (Equilibrio)    : 0.9375
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -37,7 +37,7 @@ vnfXUser(trafficSplitterVF,l,(1,25000),8)
 intent(secureCryptoOp,25000)
 propertyExpectation(affinity,same,hard,_,_,trafficSplitterVF,featureExtractorVF)
 propertyExpectation(decoding,_,trafficSplitterVF,_)
-propertyExpectation(security,_,_,policyEnforcerVF)
+propertyExpectation(security,_,policyEnforcerVF,_)
 propertyExpectation(totChainHW,lower,soft,80,gb,_,_)
 target([trafficSplitterVF,featureExtractorVF,aiClassifierVF,alertManagerVF,policyEnforcerVF])
 vnf(aiClassifierVF,cloud,32)

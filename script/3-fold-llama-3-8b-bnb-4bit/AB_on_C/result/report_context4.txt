@@ -8,9 +8,9 @@ located in the cloud. Specifying a strictly required bandwidth higher than 50 Mb
 located in the cloud. Finally, enforcing that security must be executed before the <reportGeneratorVF, 8>, the system completes the compliance pipeline.
 ==================================================
 Recall    (Omissioni)     : 0.9167
-Precision (Allucinazioni) : 0.9167
-Jaccard   (Globale)       : 0.8462
-F1-Score  (Equilibrio)    : 0.9167
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 0.9167
+F1-Score  (Equilibrio)    : 0.9565
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -29,9 +29,8 @@ vnfXUser(reportGeneratorVF,l,(1,5000),8)
 
 --- Fatti Estratti LLM ---
 intent(gdprComplianceOp,5000)
-propertyExpectation(bandwidth,greater,hard,50,megabps,anonymizerVF,_)
+propertyExpectation(bandwidth,greater,hard,50,megabps,anonymizerVF,reportGeneratorVF)
 propertyExpectation(latency,lower,soft,20,ms,dbScannerVF,anonymizerVF)
-propertyExpectation(privacy,_,dbScannerVF,_)
 propertyExpectation(security,_,_,reportGeneratorVF)
 target([dbScannerVF,anonymizerVF,reportGeneratorVF])
 vnf(anonymizerVF,cloud,24)

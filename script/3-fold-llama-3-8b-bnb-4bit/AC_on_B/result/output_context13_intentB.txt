@@ -15,8 +15,8 @@ vnf(mlAnalyzerVF, cloud, 32).
 vnf(policyEnforcerVF, cloud, 12).
 vnf(responseEmitterVF, cloud, 8).
 
-vnfXUser(requestInterceptorVF, l, (200000, 1000000), 8).
-vnfXUser(profileMatcherVF, l, (200000, 1000000), 16).
-vnfXUser(mlAnalyzerVF, l, (200000, 1000000), 32).
-vnfXUser(policyEnforcerVF, l, (200000, 1000000), 12).
-vnfXUser(responseEmitterVF, l, (200000, 1000000), 8).
+vnfXUser(requestInterceptorVF, l, (1, 200000), 8).
+vnfXUser(profileMatcherVF, l, (1, 200000), 16).
+vnfXUser(mlAnalyzerVF, l, (1, 200000), 32).
+vnfXUser(policyEnforcerVF, l, (1, 200000), 12).
+vnfXUser(responseEmitterVF, l, (1, 200000), 8).

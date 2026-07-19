@@ -8,10 +8,10 @@ applied after the first function, the service begins with a <msgReceiverVF, 8> a
 an <integrityCheckerVF, 12> located in the cloud. Preferring that the total chain hardware is lower than 100 gb, and ensuring that compression is 
 executed before the final <legalVaultVF, 32>, the system completes the pipeline with a <legalVaultVF, 32> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.9286
-Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 0.9286
-F1-Score  (Equilibrio)    : 0.9630
+Recall    (Omissioni)     : 0.6429
+Precision (Allucinazioni) : 0.6429
+Jaccard   (Globale)       : 0.4737
+F1-Score  (Equilibrio)    : 0.6429
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -33,14 +33,15 @@ vnfXUser(sigVerifierVF,l,(1,50000),16)
 --- Fatti Estratti LLM ---
 intent(govMessagingOp,50000)
 propertyExpectation(affinity,same,hard,_,_,sigVerifierVF,integrityCheckerVF)
-propertyExpectation(compression,_,_,legalVaultVF)
+propertyExpectation(compression,_,_,finalLegalVaultVF)
+propertyExpectation(latency,lower,soft,100,ms,_,_)
 propertyExpectation(totChainHW,lower,soft,100,gb,_,_)
-target([msgReceiverVF,sigVerifierVF,integrityCheckerVF,legalVaultVF])
+target([msgReceiverVF,sigVerifierVF,integrityCheckerVF,finalLegalVaultVF])
+vnf(finalLegalVaultVF,cloud,32)
 vnf(integrityCheckerVF,cloud,12)
-vnf(legalVaultVF,cloud,32)
 vnf(msgReceiverVF,edge,8)
 vnf(sigVerifierVF,cloud,16)
+vnfXUser(finalLegalVaultVF,l,(1,50000),32)
 vnfXUser(integrityCheckerVF,l,(1,50000),12)
-vnfXUser(legalVaultVF,l,(1,50000),32)
 vnfXUser(msgReceiverVF,l,(1,50000),8)
 vnfXUser(sigVerifierVF,l,(1,50000),16)

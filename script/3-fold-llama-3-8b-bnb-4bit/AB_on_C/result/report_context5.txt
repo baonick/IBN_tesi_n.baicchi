@@ -9,10 +9,10 @@ the edge connected to a <featureExtractorVF, 16> located in the edge. Preferring
 an <aiClassifierVF, 32> located in the cloud followed by an <alertManagerVF, 4> located in the cloud. Finally, ensuring that security is executed before the final <policyEnforcerVF, 12> point, 
 the system completes the pipeline with a <policyEnforcerVF, 12> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.8125
-Precision (Allucinazioni) : 0.8125
-Jaccard   (Globale)       : 0.6842
-F1-Score  (Equilibrio)    : 0.8125
+Recall    (Omissioni)     : 0.9375
+Precision (Allucinazioni) : 0.9375
+Jaccard   (Globale)       : 0.8824
+F1-Score  (Equilibrio)    : 0.9375
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -36,9 +36,9 @@ vnfXUser(trafficSplitterVF,l,(1,25000),8)
 --- Fatti Estratti LLM ---
 intent(secureCryptoOp,25000)
 propertyExpectation(affinity,same,hard,_,_,trafficSplitterVF,featureExtractorVF)
-propertyExpectation(decoding,_,_,featureExtractorVF,_)
-propertyExpectation(security,_,_,policyEnforcerVF,_)
-propertyExpectation(totChainHW,lower,soft,80,megabytes,_,_)
+propertyExpectation(decoding,_,_,featureExtractorVF)
+propertyExpectation(security,_,_,policyEnforcerVF)
+propertyExpectation(totChainHW,lower,soft,80,gb,_,_)
 target([trafficSplitterVF,featureExtractorVF,aiClassifierVF,alertManagerVF,policyEnforcerVF])
 vnf(aiClassifierVF,cloud,32)
 vnf(alertManagerVF,cloud,4)

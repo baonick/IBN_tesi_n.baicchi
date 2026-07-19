@@ -9,10 +9,10 @@ below 10 ms, the chain connects to a <collisionAvoiderVF, 32> located in the clo
 incorporates a <commandPrioritizerVF, 16> located in the cloud. Finally, preferring that the bandwidth from the <collisionAvoiderVF, 32> to the final point remains 
 higher than 2000 mbps, the system completes the pipeline with a <routeDispatcherVF, 12> allocated at the edge.
 ==================================================
-Recall    (Omissioni)     : 1.0000
-Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 1.0000
-F1-Score  (Equilibrio)    : 1.0000
+Recall    (Omissioni)     : 0.8571
+Precision (Allucinazioni) : 0.8571
+Jaccard   (Globale)       : 0.7500
+F1-Score  (Equilibrio)    : 0.8571
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -34,8 +34,8 @@ vnfXUser(routeDispatcherVF,l,(1,5000),12)
 --- Fatti Estratti LLM ---
 intent(aeroDeliveryOp,5000)
 propertyExpectation(bandwidth,greater,soft,2000,megabps,collisionAvoiderVF,routeDispatcherVF)
-propertyExpectation(caching,_,flightTelemetryIngesterVF,_)
-propertyExpectation(latency,lower,hard,10,ms,flightTelemetryIngesterVF,collisionAvoiderVF)
+propertyExpectation(caching,_,initialFunction,_)
+propertyExpectation(latency,lower,soft,10,ms,flightTelemetryIngesterVF,collisionAvoiderVF)
 propertyExpectation(totChainHW,lower,soft,200,gb,_,_)
 target([flightTelemetryIngesterVF,collisionAvoiderVF,commandPrioritizerVF,routeDispatcherVF])
 vnf(collisionAvoiderVF,cloud,32)

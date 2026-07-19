@@ -1,8 +1,8 @@
-intent(autonomousControlIntent, autoWarehouseOp, 500, autonomousControlService).
+intent(autonomousWarehouseIntent, autoWarehouseOp, 500, autonomousControlService).
 
-propertyExpectation(latReq, autonomousControlIntent, latency, lower, hard, 500, ms, sensorDataDecoderVF, commandEncoderVF).
+propertyExpectation(latReq, autonomousWarehouseIntent, latency, lower, hard, 500, ms, sensorDataDecoderVF, commandEncoderVF).
 
-propertyExpectation(decReq, autonomousControlIntent, decoding, _, sensorDataDecoderVF, _).
+propertyExpectation(decReq, autonomousWarehouseIntent, decoding, _, sensorDataDecoderVF, _).
 
 target(autonomousControlService, [sensorDataDecoderVF, collisionPathSolverVF, commandEncoderVF]).
 

@@ -8,10 +8,10 @@ a <subscriptionIngesterVF, 12> allocated at the edge, a <billingCycleProcessorVF
 API payloads safely, decoding is executed before the <billingCycleProcessorVF, 24>. Furthermore, transaction logging is executed before the <dunningManagerVF, 16> to 
 keep historical track of payment failures. Finally, encoding is executed before the <invoiceGeneratorVF, 16> to protect sensitive financial records.
 ==================================================
-Recall    (Omissioni)     : 0.7857
-Precision (Allucinazioni) : 0.7857
-Jaccard   (Globale)       : 0.6471
-F1-Score  (Equilibrio)    : 0.7857
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -32,9 +32,9 @@ vnfXUser(subscriptionIngesterVF,l,(1,50000),12)
 
 --- Fatti Estratti LLM ---
 intent(subscriptionOp,50000)
-propertyExpectation(decoding,_,billingCycleProcessorVF,_)
-propertyExpectation(encoding,_,invoiceGeneratorVF,_)
-propertyExpectation(logging,_,dunningManagerVF,_)
+propertyExpectation(decoding,_,_,billingCycleProcessorVF)
+propertyExpectation(encoding,_,_,invoiceGeneratorVF)
+propertyExpectation(logging,_,_,dunningManagerVF)
 propertyExpectation(privacy,_,subscriptionIngesterVF,_)
 target([subscriptionIngesterVF,billingCycleProcessorVF,dunningManagerVF,invoiceGeneratorVF])
 vnf(billingCycleProcessorVF,cloud,24)

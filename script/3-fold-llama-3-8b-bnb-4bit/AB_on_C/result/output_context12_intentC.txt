@@ -1,20 +1,23 @@
 intent(docClassificationIntent, corpDocOp, 50000, documentClassificationEngine).
 
-propertyExpectation(affReq, docClassificationIntent, affinity, same, hard, _, _, initialPhaseVF, textExtractorVF).
-propertyExpectation(latReq, docClassificationIntent, latency, lower, hard, 50, ms, textExtractorVF, aiDocumentClassifierVF).
-propertyExpectation(privReq, docClassificationIntent, privacy, _, aiDocumentClassifierVF, _).
-propertyExpectation(bwReq, docClassificationIntent, bandwidth, greater, soft, 500, megabps, aiDocumentClassifierVF, finalDistributionPoint).
+propertyExpectation(latReq, docClassificationIntent, latency, lower, hard, 50, ms, aiDocumentClassifierVF, documentRouterVF).
+propertyExpectation(bwReq, docClassificationIntent, bandwidth, greater, soft, 500, megabps, aiDocumentClassifierVF, documentRouterVF).
 
-target(documentClassificationEngine, [initialPhaseVF, textExtractorVF, aiDocumentClassifierVF, dataRedactorVF, _documentRouterVF]).
+propertyExpectation(secReq, docClassificationIntent, security, _, _, _).  // 5th param: always a wildcard '_'.
+propertyExpectation(privReq, docClassificationIntent, privacy, _, _, _).
 
-vnf(initialPhaseVF, edge, 16).
+target(documentClassificationEngine, [ocrScannerVF, textExtractorVF, aiDocumentClassifierVF, dataRedactorVF, documentRouterVF]).
+
+vnf(ocrScannerVF, edge, 16).
 vnf(textExtractorVF, edge, 12).
 vnf(aiDocumentClassifierVF, cloud, 32).
 vnf(dataRedactorVF, cloud, 16).
-vnf(_documentRouterVF, cloud, 8).
+vnf(documentRouterVF, cloud, 8).
 
-vnfXUser(initialPhaseVF, l, (1, 50000), 16).
-vnfXUser(textExtractorVF, l, (1, 50000), 12).
-vnfXUser(aiDocumentClassifierVF, l, (1, 50000), 32).
-vnfXUser(dataRedactorVF, l, (1, 50000), 16).
-vnfXUser(_documentRouterVF, l, (1, 50000), 8).
+vnfXUser(ocrScannerVF, edge, (1, 50000), 16).
+vnfXUser(textExtractorVF, edge, (1, 50000), 12).
+vnfXUser(aiDocumentClassifierVF, cloud, (1, 50000), 32).
+vnfXUser(dataRedactorVF, cloud, (1, 50000), 16).
+vnfXUser(documentRouterVF, cloud, (1, 50000), 8).
+
+propertyExpectation(affReq, docClassificationIntent, affinity, same, hard, _, _, ocrScannerVF, textExtractorVF).

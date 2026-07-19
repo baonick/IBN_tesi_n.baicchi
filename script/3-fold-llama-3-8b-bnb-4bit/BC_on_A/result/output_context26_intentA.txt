@@ -1,8 +1,7 @@
 intent(virtualLabIntent, eduCloudOp, 10000, virtualLabService).
 
-propertyExpectation(latReq, virtualLabIntent, latency, lower, hard, 40, ms, sessionIngesterVF, resourceAllocatorVF).
+propertyExpectation(latReq, virtualLabIntent, latency, lower, hard, 40, ms, sessionIngesterVF, activityMonitorVF).
 propertyExpectation(bwReq, virtualLabIntent, bandwidth, greater, hard, 500, megabps, sessionIngesterVF, resourceAllocatorVF).
-propertyExpectation(hwReq, virtualLabIntent, totChainHW, lower, soft, 120, gb, _, _).
 
 propertyExpectation(privReq, virtualLabIntent, privacy, _, sessionIngesterVF, _).
 propertyExpectation(secReq, virtualLabIntent, security, _, _, activityMonitorVF).

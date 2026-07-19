@@ -11,9 +11,9 @@ before the <auditLoggerVF, 12>. Data compression is applied after the final <out
 the <sessionIngesterVF, 8> and the <resourceAllocatorVF, 16> supports more than 500 mbps. Finally, the provider prefers that the aggregate infrastructure footprint stays below 120 gb.
 ==================================================
 Recall    (Omissioni)     : 0.9048
-Precision (Allucinazioni) : 0.9048
-Jaccard   (Globale)       : 0.8261
-F1-Score  (Equilibrio)    : 0.9048
+Precision (Allucinazioni) : 0.9500
+Jaccard   (Globale)       : 0.8636
+F1-Score  (Equilibrio)    : 0.9268
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -43,11 +43,10 @@ vnfXUser(userPrivacyEnforcerVF,l,(1,10000),12)
 intent(eduCloudOp,10000)
 propertyExpectation(bandwidth,greater,hard,500,megabps,sessionIngesterVF,resourceAllocatorVF)
 propertyExpectation(compression,_,outputPackagerVF,_)
-propertyExpectation(latency,lower,hard,40,ms,sessionIngesterVF,resourceAllocatorVF)
+propertyExpectation(latency,lower,hard,40,ms,sessionIngesterVF,activityMonitorVF)
 propertyExpectation(logging,_,_,auditLoggerVF)
 propertyExpectation(privacy,_,sessionIngesterVF,_)
 propertyExpectation(security,_,_,activityMonitorVF)
-propertyExpectation(totChainHW,lower,soft,120,gb,_,_)
 target([sessionIngesterVF,resourceAllocatorVF,activityMonitorVF,userPrivacyEnforcerVF,auditLoggerVF,outputPackagerVF])
 vnf(activityMonitorVF,cloud,24)
 vnf(auditLoggerVF,cloud,12)

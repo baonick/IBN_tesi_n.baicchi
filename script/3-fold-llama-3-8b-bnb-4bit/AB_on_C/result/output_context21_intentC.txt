@@ -1,10 +1,10 @@
 intent(autonomousWarehouseIntent, autoWarehouseOp, 500, autonomousControlService).
 
 propertyExpectation(latReq, autonomousWarehouseIntent, latency, lower, hard, 500, ms, sensorDataDecoderVF, commandEncoderVF).
-propertyExpectation(affReq, autonomousWarehouseIntent, affinity, _, sensorDataDecoderVF, commandEncoderVF).
+propertyExpectation(affReq, autonomousWarehouseIntent, affinity, _, sensorDataDecoderVF, _).
+propertyExpectation(encReq, autonomousWarehouseIntent, encoding, _, _, commandEncoderVF).
 
-propertyExpectation(decReq, autonomousWarehouseIntent, decoding, _, _, _).
-propertyExpectation(encReq, autonomousWarehouseIntent, encoding, _, _, _).
+propertyExpectation(decReq, autonomousWarehouseIntent, decoding, _, _, sensorDataDecoderVF).
 
 target(autonomousControlService, [sensorDataDecoderVF, collisionPathSolverVF, commandEncoderVF]).
 

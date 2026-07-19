@@ -1,9 +1,9 @@
 intent(saasSubscriptionIntent, subscriptionOp, 50000, saasSubscriptionService).
 
 propertyExpectation(privReq, saasSubscriptionIntent, privacy, _, subscriptionIngesterVF, _).
-propertyExpectation(decReq, saasSubscriptionIntent, decoding, _, billingCycleProcessorVF, _).
-propertyExpectation(logReq, saasSubscriptionIntent, logging, _, dunningManagerVF, _).
-propertyExpectation(encReq, saasSubscriptionIntent, encoding, _, invoiceGeneratorVF, _).
+propertyExpectation(decReq, saasSubscriptionIntent, decoding, _, _, billingCycleProcessorVF).
+propertyExpectation(logReq, saasSubscriptionIntent, logging, _, _, dunningManagerVF).
+propertyExpectation(encReq, saasSubscriptionIntent, encoding, _, _, invoiceGeneratorVF).
 
 target(saasSubscriptionService, [subscriptionIngesterVF, billingCycleProcessorVF, dunningManagerVF, invoiceGeneratorVF]).
 

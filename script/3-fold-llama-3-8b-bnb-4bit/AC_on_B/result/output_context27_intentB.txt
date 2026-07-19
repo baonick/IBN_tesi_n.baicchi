@@ -3,6 +3,7 @@ intent(sentimentAnalysisIntent, sentimentOp, 100000, sentimentAnalysisService).
 propertyExpectation(affReq, sentimentAnalysisIntent, affinity, same, hard, _, _, sentimentAnalyzerVF, reportDispatcherVF).
 propertyExpectation(privReq, sentimentAnalysisIntent, privacy, _, socialDataReceiverVF, _).
 propertyExpectation(secReq, sentimentAnalysisIntent, security, _, _, sentimentAnalyzerVF).
+propertyExpectation(secReq, sentimentAnalysisIntent, security, _, sentimentAnalyzerVF, _).
 
 target(sentimentAnalysisService, [socialDataReceiverVF, sentimentAnalyzerVF, reportDispatcherVF]).
 

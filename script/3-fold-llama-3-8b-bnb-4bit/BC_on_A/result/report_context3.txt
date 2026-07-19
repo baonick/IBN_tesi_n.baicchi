@@ -9,10 +9,10 @@ applied before the <scrubbingFilterVF, 32>. Furthermore, it is strictly required
 than 500 megabps. Additionally, the provider prefers to enforce logging after the <rateLimiterVF, 16>. Finally, it is desired that the latency from the <rateLimiterVF, 16> 
 to the <webServerVF, 12> remains lower than 10 ms.
 ==================================================
-Recall    (Omissioni)     : 1.0000
+Recall    (Omissioni)     : 0.9286
 Precision (Allucinazioni) : 1.0000
-Jaccard   (Globale)       : 1.0000
-F1-Score  (Equilibrio)    : 1.0000
+Jaccard   (Globale)       : 0.9286
+F1-Score  (Equilibrio)    : 0.9630
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -35,7 +35,6 @@ vnfXUser(webServerVF,l,(1,50000),12)
 intent(ddosProtectionOp,50000)
 propertyExpectation(bandwidth,greater,hard,500,megabps,networkTrafficAnalyzerVF,scrubbingFilterVF)
 propertyExpectation(latency,lower,soft,10,ms,rateLimiterVF,webServerVF)
-propertyExpectation(logging,_,rateLimiterVF,_)
 propertyExpectation(security,_,_,scrubbingFilterVF)
 target([networkTrafficAnalyzerVF,scrubbingFilterVF,rateLimiterVF,webServerVF])
 vnf(networkTrafficAnalyzerVF,edge,8)

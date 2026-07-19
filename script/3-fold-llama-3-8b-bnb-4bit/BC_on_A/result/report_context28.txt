@@ -9,17 +9,17 @@ and an <arStreamDispatcherVF, 16> located in the cloud. Regarding system perform
 latency from the <arStreamReceiverVF, 12> to the final <arStreamDispatcherVF, 16> remains below 12 ms. To avoid computational interference, it is mandatory that <arPoseEstimatorVF, 24> and the <dataOverlayEngineVF, 32> are hosted on separate, completely dedicated physical servers. Finally, the provider prefers that the total chain 
 hardware remains lower than 90 gb to control operational costs.
 ==================================================
-Recall    (Omissioni)     : 0.8000
-Precision (Allucinazioni) : 0.8571
-Jaccard   (Globale)       : 0.7059
-F1-Score  (Equilibrio)    : 0.8276
+Recall    (Omissioni)     : 0.8667
+Precision (Allucinazioni) : 0.9286
+Jaccard   (Globale)       : 0.8125
+F1-Score  (Equilibrio)    : 0.8966
 ==================================================
 
 --- Fatti Estratti Ideale ---
 intent(factoryCloudOp,500)
 propertyExpectation(affinity,dedicated,hard,_,_,arPoseEstimatorVF,_)
 propertyExpectation(affinity,dedicated,hard,_,_,dataOverlayEngineVF,_)
-propertyExpectation(bandwidth,greater,soft,200,megabps,arStreamReceiverVF,arPoseEstimatorVF)
+propertyExpectation(bandwidth,greater,hard,200,megabps,arStreamReceiverVF,arPoseEstimatorVF)
 propertyExpectation(latency,lower,hard,12,ms,arStreamReceiverVF,arStreamDispatcherVF)
 propertyExpectation(totChainHW,lower,soft,90,gb,_,_)
 target([arStreamReceiverVF,arPoseEstimatorVF,dataOverlayEngineVF,arStreamDispatcherVF])

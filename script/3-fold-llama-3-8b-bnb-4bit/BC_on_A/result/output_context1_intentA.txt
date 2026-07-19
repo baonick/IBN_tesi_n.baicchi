@@ -9,6 +9,6 @@ vnf(webFilterVF, edge, 4).
 vnf(malwareScannerVF, cloud, 16).
 vnf(dlpEngineVF, cloud, 8).
 
-vnfXUser(webFilterVF, l, (1, 5000), 4).
-vnfXUser(malwareScannerVF, l, (1, 5000), 16).
-vnfXUser(dlpEngineVF, l, (1, 5000), 8).
+vnfXUser(webFilterVF, l, (1, 5000), 4.
+vnfXUser(malwareScannerVF, l, (1, 5000), 16.
+vnfXUser(dlpEngineVF, l, (1, 5000), 8.

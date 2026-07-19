@@ -9,10 +9,10 @@ begins with a <sceneReceiverVF, 16> allocated at the edge connected to an <asset
 cloud, and a <frameAssemblerVF, 24> located in the cloud. Ensuring that caching is executed before the final node, the system completes 
 the pipeline with a <colorGraderVF, 20> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.9333
-Precision (Allucinazioni) : 0.9333
-Jaccard   (Globale)       : 0.8750
-F1-Score  (Equilibrio)    : 0.9333
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -34,7 +34,7 @@ vnfXUser(sceneReceiverVF,l,(1,5000),16)
 
 --- Fatti Estratti LLM ---
 intent(cinemaRenderOp,5000)
-propertyExpectation(caching,_,_,frameAssemblerVF)
+propertyExpectation(caching,_,_,colorGraderVF)
 propertyExpectation(compression,_,sceneReceiverVF,_)
 propertyExpectation(totChainHW,lower,soft,800,gb,_,_)
 target([sceneReceiverVF,assetValidatorVF,renderDistributorVF,frameAssemblerVF,colorGraderVF])

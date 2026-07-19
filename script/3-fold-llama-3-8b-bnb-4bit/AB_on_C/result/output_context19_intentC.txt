@@ -1,10 +1,10 @@
 intent(droneControlIntent, aeroDeliveryOp, 5000, droneFleetControlService).
 
-propertyExpectation(latReq, droneControlIntent, latency, lower, hard, 10, ms, flightTelemetryIngesterVF, collisionAvoiderVF).
+propertyExpectation(latReq, droneControlIntent, latency, lower, soft, 10, ms, flightTelemetryIngesterVF, collisionAvoiderVF).
 propertyExpectation(hwReq, droneControlIntent, totChainHW, lower, soft, 200, gb, _, _).
 propertyExpectation(bwReq, droneControlIntent, bandwidth, greater, soft, 2000, megabps, collisionAvoiderVF, routeDispatcherVF).
 
-propertyExpectation(cachReq, droneControlIntent, caching, _, flightTelemetryIngesterVF, _).
+propertyExpectation(cachReq, droneControlIntent, caching, _, initialFunction, _).
 
 target(droneFleetControlService, [flightTelemetryIngesterVF, collisionAvoiderVF, commandPrioritizerVF, routeDispatcherVF]).
 

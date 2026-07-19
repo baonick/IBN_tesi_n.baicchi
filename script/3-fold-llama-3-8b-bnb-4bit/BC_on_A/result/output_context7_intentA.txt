@@ -1,12 +1,12 @@
-intent(gamingRenderingIntent, cloudGamingOp, 40000, renderingDistributionService).
+intent(gamingDistributionIntent, cloudGamingOp, 40000, gamingDistributionService).
 
-propertyExpectation(latReq, gamingRenderingIntent, latency, lower, hard, 30, ms, streamPackerVF, deliveryOptimizerVF).
-propertyExpectation(affReq1, gamingRenderingIntent, affinity, dedicated, soft, _, _, gameExecutorVF, _).
-propertyExpectation(affReq2, gamingRenderingIntent, affinity, dedicated, soft, _, _, streamPackerVF, _).
+propertyExpectation(latReq, gamingDistributionIntent, latency, lower, hard, 30, ms, streamPackerVF, deliveryOptimizerVF).
+propertyExpectation(encReq, gamingDistributionIntent, encoding, _, gameExecutorVF, _).
 
-propertyExpectation(encReq, gamingRenderingIntent, encoding, _, gameExecutorVF, _).
+propertyExpectation(affReq1, gamingDistributionIntent, affinity, dedicated, soft, _, _, gameExecutorVF, _).
+propertyExpectation(affReq2, gamingDistributionIntent, affinity, dedicated, soft, _, _, streamPackerVF, _).
 
-target(renderingDistributionService, [gameExecutorVF, streamPackerVF, deliveryOptimizerVF]).
+target(gamingDistributionService, [gameExecutorVF, streamPackerVF, deliveryOptimizerVF]).
 
 vnf(gameExecutorVF, cloud, 32).
 vnf(streamPackerVF, cloud, 16).

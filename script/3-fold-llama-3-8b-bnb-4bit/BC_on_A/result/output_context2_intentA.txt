@@ -1,11 +1,11 @@
-intent(secureMailIntent, secureMailOp, 10000, emailFilteringService).
+intent(secureMailIntent, secureMailOp, 10000, mailSanitizationService).
 
 propertyExpectation(latReq, secureMailIntent, latency, lower, soft, 50, ms, mailGatewayVF, phishingFilterVF).
 propertyExpectation(bwReq, secureMailIntent, bandwidth, greater, hard, 100, megabps, phishingFilterVF, sandboxScannerVF).
 
 propertyExpectation(decReq, secureMailIntent, decoding, _, mailGatewayVF, _).
 
-target(emailFilteringService, [mailGatewayVF, phishingFilterVF, sandboxScannerVF, safeDeliveryVF]).
+target(mailSanitizationService, [mailGatewayVF, phishingFilterVF, sandboxScannerVF, safeDeliveryVF]).
 
 vnf(mailGatewayVF, edge, 4).
 vnf(phishingFilterVF, cloud, 8).

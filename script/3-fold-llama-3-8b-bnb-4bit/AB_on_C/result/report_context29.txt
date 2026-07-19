@@ -8,10 +8,10 @@ initial point, the service begins with a <subscriptionIngesterVF, 12> allocated 
 the pipeline incorporates a <dunningManagerVF, 16> located in the cloud. Finally, ensuring encoding is executed before the <invoiceGeneratorVF, 16> stage, the system 
 completes the pipeline with an <invoiceGeneratorVF, 16> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.7143
-Precision (Allucinazioni) : 0.7143
-Jaccard   (Globale)       : 0.5556
-F1-Score  (Equilibrio)    : 0.7143
+Recall    (Omissioni)     : 0.9286
+Precision (Allucinazioni) : 0.9286
+Jaccard   (Globale)       : 0.8667
+F1-Score  (Equilibrio)    : 0.9286
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -32,9 +32,9 @@ vnfXUser(subscriptionIngesterVF,l,(1,50000),12)
 
 --- Fatti Estratti LLM ---
 intent(subscriptionOp,50000)
-propertyExpectation(decoding,_,_,billingCycleProcessorVF,_,_)
-propertyExpectation(encoding,_,_,invoiceGeneratorVF,_,_)
-propertyExpectation(logging,_,_,dunningManagerVF,_,_)
+propertyExpectation(decoding,_,_,billingCycleProcessorVF)
+propertyExpectation(encoding,_,_,invoiceGeneratorVF)
+propertyExpectation(logging,_,_,dunningManagerVF)
 propertyExpectation(privacy,_,initial,_)
 target([subscriptionIngesterVF,billingCycleProcessorVF,dunningManagerVF,invoiceGeneratorVF])
 vnf(billingCycleProcessorVF,cloud,24)

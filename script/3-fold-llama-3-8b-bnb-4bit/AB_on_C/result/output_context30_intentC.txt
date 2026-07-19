@@ -1,9 +1,10 @@
 intent(codeAnalyzerIntent, devToolsOp, 20000, codeOptimizationService).
 
 propertyExpectation(hwReq, codeAnalyzerIntent, totChainHW, lower, soft, 110, gb, _, _).
+propertyExpectation(compReq, codeAnalyzerIntent, compression, _, final, _).
 
-propertyExpectation(cachReq, codeAnalyzerIntent, dataCompression, _, _, _, _, finalLayer, _).
-propertyExpectation(compReq, codeAnalyzerIntent, dataCompression, _, finalLayer, _).
+propertyExpectation(cachReq, codeAnalyzerIntent, caching, _, second, _).
+propertyExpectation(compReq, codeAnalyzerIntent, compression, _, final, _).
 
 target(codeOptimizationService, [codeReceiverVF, syntaxValidatorVF, sandboxSimulatorVF, optimizationEngineVF, developersReportGeneratorVF]).
 

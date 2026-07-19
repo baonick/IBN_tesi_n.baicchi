@@ -7,10 +7,10 @@ This software receives sensor data, calculates paths to avoid collisions, and se
 is applied after the initial node, the service begins with a <sensorDataDecoderVF, 16> allocated at the edge connected to a <collisionPathSolverVF, 32> located in the cloud. Strictly requiring that the latency from the <sensorDataDecoderVF, 16> to <commandEncoderVF, 16> remains below 500 ms, and ensuring that encoding is executed 
 before the final instruction generator, the system completes the pipeline with a <commandEncoderVF, 16> allocated at the edge.
 ==================================================
-Recall    (Omissioni)     : 0.8182
-Precision (Allucinazioni) : 0.7500
-Jaccard   (Globale)       : 0.6429
-F1-Score  (Equilibrio)    : 0.7826
+Recall    (Omissioni)     : 0.9091
+Precision (Allucinazioni) : 0.8333
+Jaccard   (Globale)       : 0.7692
+F1-Score  (Equilibrio)    : 0.8696
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -28,9 +28,9 @@ vnfXUser(sensorDataDecoderVF,l,(1,500),16)
 
 --- Fatti Estratti LLM ---
 intent(autoWarehouseOp,500)
-propertyExpectation(affinity,_,sensorDataDecoderVF,commandEncoderVF)
-propertyExpectation(decoding,_,_,_)
-propertyExpectation(encoding,_,_,_)
+propertyExpectation(affinity,_,sensorDataDecoderVF,_)
+propertyExpectation(decoding,_,_,sensorDataDecoderVF)
+propertyExpectation(encoding,_,_,commandEncoderVF)
 propertyExpectation(latency,lower,hard,500,ms,sensorDataDecoderVF,commandEncoderVF)
 target([sensorDataDecoderVF,collisionPathSolverVF,commandEncoderVF])
 vnf(collisionPathSolverVF,cloud,32)

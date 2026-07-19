@@ -8,10 +8,10 @@ than 150 gb, the service begins with a <saleDataCollectorVF, 8> allocated at the
 latency from the <xmlConverterVF, 16> to the <digitalSignerVF, 12> remains below 30 ms, the chain incorporates a <digitalSignerVF, 12> located in the cloud. Finally, preferring 
 that the bandwidth from the <digitalSignerVF, 12> to the final point remains higher than 100 mbps, the system completes the pipeline with a <taxAuthorityTransmitterVF, 8> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.8462
-Precision (Allucinazioni) : 0.8462
-Jaccard   (Globale)       : 0.7333
-F1-Score  (Equilibrio)    : 0.8462
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -31,10 +31,10 @@ vnfXUser(xmlConverterVF,l,(1,50000),16)
 
 --- Fatti Estratti LLM ---
 intent(eInvoiceOp,50000)
-propertyExpectation(bandwidth,greater,soft,100,megabps,digitalSignerVF,_)
+propertyExpectation(bandwidth,greater,soft,100,megabps,digitalSignerVF,taxAuthorityTransmitterVF)
 propertyExpectation(latency,lower,hard,30,ms,xmlConverterVF,digitalSignerVF)
 propertyExpectation(totChainHW,lower,hard,150,gb,_,_)
-target([saleDataCollectorVF,xmlConverterVF,digitalSignerVF,digitalSignerVF,taxAuthorityTransmitterVF])
+target([saleDataCollectorVF,xmlConverterVF,digitalSignerVF,taxAuthorityTransmitterVF])
 vnf(digitalSignerVF,cloud,12)
 vnf(saleDataCollectorVF,edge,8)
 vnf(taxAuthorityTransmitterVF,cloud,8)

@@ -1,8 +1,8 @@
 intent(govDataIntent, govDataOp, 30000, openDataPortalService).
 
-propertyExpectation(latReq, govDataIntent, latency, lower, hard, 200, ms, dataExtractorVF, metadataEnricherVF).
-propertyExpectation(bwReq, govDataIntent, bandwidth, greater, soft, 1000, megabps, formatNormalizerVF, metadataEnricherVF).
 propertyExpectation(affReq, govDataIntent, affinity, same, hard, _, _, formatNormalizerVF, metadataEnricherVF).
+propertyExpectation(bwReq, govDataIntent, bandwidth, greater, soft, 1000, megabps, formatNormalizerVF, metadataEnricherVF).
+propertyExpectation(latReq, govDataIntent, latency, lower, hard, 200, ms, _, _).
 
 propertyExpectation(cachReq, govDataIntent, caching, _, formatNormalizerVF, _).
 
