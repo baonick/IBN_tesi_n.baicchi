@@ -3,16 +3,16 @@ File analizzato: output_context24_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The digital provider secureVoteOp requires a certified electronic voting service to manage 200,000 voters. This platform for public or corporate consultations 
-guarantees vote anonymity and prevents data manipulation. The service chain begins with a <ballotIngesterVF, 12> allocated at the edge. The chain then connects 
-to an <anonymizerVoteVF, 16> located in the cloud, ensuring that the network bandwidth from the <ballotIngesterVF, 12> to this <anonymizerVoteVF, 16> remains higher than 
-100 mbps, while privacy is applied after it. The pipeline continues to an <integrityEnforcerVF, 24> located in the cloud, ensuring that security is executed before it. 
-The system then routes the data to a <voteCounterVF, 16> located in the cloud. Finally, the processed data flows to an <electoralAuditLoggerVF, 12> located in the cloud, ensuring 
-that logging is executed before it.
+guarantees vote anonymity and prevents data manipulation. Preferring that the network bandwidth from the entry unit to the next phase remains higher than 
+100 mbps, the service begins with a <ballotIngesterVF, 12> allocated at the edge connected to an <anonymizerVoteVF, 16> located in the cloud. Specifying that user privacy is 
+applied after this <anonymizerVoteVF, 16> process, and ensuring that security is executed before the <integrityEnforcerVF, 24>, the chain incorporates an <integrityEnforcerVF, 24> 
+located in the cloud. The pipeline proceeds to a <voteCounterVF, 16> located in the cloud. Finally, ensuring that logging is executed before the last
+unit, the system completes the pipeline with an <electoralAuditLoggerVF, 12> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.6250
-Precision (Allucinazioni) : 0.6250
-Jaccard   (Globale)       : 0.4545
-F1-Score  (Equilibrio)    : 0.6250
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -41,12 +41,12 @@ propertyExpectation(privacy,_,anonymizerVoteVF,_)
 propertyExpectation(security,_,_,integrityEnforcerVF)
 target([ballotIngesterVF,anonymizerVoteVF,integrityEnforcerVF,voteCounterVF,electoralAuditLoggerVF])
 vnf(anonymizerVoteVF,cloud,16)
-vnf(ballotIngesterVF,edge,8)
-vnf(electoralAuditLoggerVF,cloud,8)
-vnf(integrityEnforcerVF,cloud,12)
+vnf(ballotIngesterVF,edge,12)
+vnf(electoralAuditLoggerVF,cloud,12)
+vnf(integrityEnforcerVF,cloud,24)
 vnf(voteCounterVF,cloud,16)
 vnfXUser(anonymizerVoteVF,l,(1,200000),16)
-vnfXUser(ballotIngesterVF,l,(1,200000),8)
-vnfXUser(electoralAuditLoggerVF,l,(1,200000),8)
-vnfXUser(integrityEnforcerVF,l,(1,200000),12)
+vnfXUser(ballotIngesterVF,l,(1,200000),12)
+vnfXUser(electoralAuditLoggerVF,l,(1,200000),12)
+vnfXUser(integrityEnforcerVF,l,(1,200000),24)
 vnfXUser(voteCounterVF,l,(1,200000),16)

@@ -2,10 +2,12 @@ RISULTATI PER CONTEXT27
 File analizzato: output_context27_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
-The marketing provider sentimentOp requires a customer sentiment analysis platform to manage 100,000 daily reviews and comments. This software scans social media 
-inputs, identifies prevailing emotions toward specific products, and sends weekly reports to the marketing department. The service chain begins with a <socialDataReceiverVF, 16> allocated at the edge, specifying that data privacy mechanisms are applied after it. The chain then connects to a <sentimentAnalyzerVF, 32> in the cloud, 
-ensuring that security is executed before this component. Finally, the pipeline routes to a <reportDispatcherVF, 16> located in the cloud, mandating that this 
-<reportDispatcherVF, 16> and the previous <sentimentAnalyzerVF, 32> are hosted together on the same physical infrastructure.
+The marketing provider sentimentOp requires a customer sentiment analysis platform to manage 100,000 daily reviews and comments. 
+This software scans social media inputs, identifies prevailing emotions toward specific products, and sends weekly reports to the marketing department. 
+Specifying that data privacy mechanisms are applied after the <socialDataReceiverVF, 16>, the service begins with a <socialDataReceiverVF, 16> allocated at the edge. 
+Ensuring that security is executed before the next node, the chain connects to a <sentimentAnalyzerVF, 32> located in the cloud. 
+Mandating that this <sentimentAnalyzerVF, 32> and the subsequent <reportDispatcherVF, 16> are strictly deployed together on the same physical server node, 
+the system completes the pipeline with a <reportDispatcherVF, 16> located in the cloud.
 ==================================================
 Recall    (Omissioni)     : 1.0000
 Precision (Allucinazioni) : 1.0000

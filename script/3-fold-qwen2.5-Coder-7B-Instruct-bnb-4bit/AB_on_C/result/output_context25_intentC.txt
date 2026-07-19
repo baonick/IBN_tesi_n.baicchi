@@ -1,10 +1,12 @@
-intent(govOpenDataIntent, govDataOp, 30000, govDataPortalService).
+intent(openDataIntent, govDataOp, 30000, openDataService).
 
-propertyExpectation(latReq, govOpenDataIntent, latency, lower, hard, 200, ms, dataExtractorVF, downloadProviderVF).
-propertyExpectation(bwReq, govOpenDataIntent, bandwidth, greater, soft, 1000, megabps, formatNormalizerVF, metadataEnricherVF).
-propertyExpectation(affReq, govOpenDataIntent, affinity, same, hard, _, _, formatNormalizerVF, metadataEnricherVF).
+propertyExpectation(latReq, openDataIntent, latency, lower, hard, 200, ms, dataExtractorVF, metadataEnricherVF).
 
-target(govDataPortalService, [dataExtractorVF, formatNormalizerVF, metadataEnricherVF, downloadProviderVF]).
+propertyExpectation(cachReq, openDataIntent, caching, _, formatNormalizerVF, _).
+propertyExpectation(sameAffReq, openDataIntent, affinity, same, hard, _, _, formatNormalizerVF, metadataEnricherVF).
+propertyExpectation(bwReq, openDataIntent, bandwidth, greater, soft, 1000, megabps, formatNormalizerVF, metadataEnricherVF).
+
+target(openDataService, [dataExtractorVF, formatNormalizerVF, metadataEnricherVF, downloadProviderVF]).
 
 vnf(dataExtractorVF, edge, 8).
 vnf(formatNormalizerVF, cloud, 16).
@@ -15,8 +17,3 @@ vnfXUser(dataExtractorVF, l, (1, 30000), 8).
 vnfXUser(formatNormalizerVF, l, (1, 30000), 16).
 vnfXUser(metadataEnricherVF, l, (1, 30000), 12).
 vnfXUser(downloadProviderVF, l, (1, 30000), 16).
-
-propertyExpectation(cachReq, govOpenDataIntent, caching, _, formatNormalizerVF, _).
-
-
-propertyExpectation(decReq, govOpenDataIntent, decoding, _, _, metadataEnricherVF).

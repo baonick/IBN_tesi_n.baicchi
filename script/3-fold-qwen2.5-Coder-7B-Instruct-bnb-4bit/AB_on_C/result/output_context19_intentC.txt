@@ -1,20 +1,19 @@
-intent(droneControlIntent, aeroDeliveryOp, 5000, droneFlightService).
+intent(droneControlIntent, aeroDeliveryOp, 5000, droneFleetControlService).
 
 propertyExpectation(latReq, droneControlIntent, latency, lower, hard, 10, ms, flightTelemetryIngesterVF, collisionAvoiderVF).
+propertyExpectation(hwReq, droneControlIntent, totChainHW, lower, soft, 200, gb, _, _)).
 propertyExpectation(bwReq, droneControlIntent, bandwidth, greater, soft, 2000, megabps, collisionAvoiderVF, routeDispatcherVF).
-propertyExpectation(hwReq, droneControlIntent, totChainHW, lower, soft, 200, gb, _, _).
 
-propertyExpectation(cachReq, droneControlIntent, caching, _, flightTelemetryIngesterVF, _).
+target(droneFleetControlService, [flightTelemetryIngesterVF, collisionAvoiderVF, commandPrioritizerVF, routeDispatcherVF]).
 
-
-target(droneFlightService, [flightTelemetryIngesterVF, collisionAvoiderVF, commandPrioritizerVF, routeDispatcherVF]).
-
-vnf(flightTelemetryIngesterVF, edge, 8).
-vnf(collisionAvoiderVF, cloud, 16).
-vnf(commandPrioritizerVF, cloud, 12).
+vnf(flightTelemetryIngesterVF, edge, 12).
+vnf(collisionAvoiderVF, cloud, 32).
+vnf(commandPrioritizerVF, cloud, 16).
 vnf(routeDispatcherVF, edge, 12).
 
-vnfXUser(flightTelemetryIngesterVF, l, (1, 5000), 8).
-vnfXUser(collisionAvoiderVF, l, (1, 5000), 16).
-vnfXUser(commandPrioritizerVF, l, (1, 5000), 12).
+vnfXUser(flightTelemetryIngesterVF, l, (1, 5000), 12).
+vnfXUser(collisionAvoiderVF, l, (1, 5000), 32).
+vnfXUser(commandPrioritizerVF, l, (1, 5000), 16).
 vnfXUser(routeDispatcherVF, l, (1, 5000), 12).
+
+propertyExpectation(cachReq, droneControlIntent, caching, _, flightTelemetryIngesterVF, _).

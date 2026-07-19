@@ -1,21 +1,17 @@
-intent(telemetryMonitoringIntent, serverMonOp, 50000, telemetryService).
+intent(telemetryMonitoringIntent, serverMonOp, 50000, telemetryMonitoringService).
 
 propertyExpectation(latReq, telemetryMonitoringIntent, latency, lower, hard, 100, ms, telemetryCollectorVF, anomalyDetectorVF).
 propertyExpectation(bwReq, telemetryMonitoringIntent, bandwidth, greater, soft, 2000, megabps, telemetryCollectorVF, alertDispatcherVF).
-propertyExpectation(affReq, telemetryMonitoringIntent, affinity, same, hard, _, _).
+propertyExpectation(affReq, telemetryMonitoringIntent, affinity, same, hard, _, _, telemetryCollectorVF, dataAggregatorVF).
 
-target(telemetryService, [telemetryCollectorVF, dataAggregatorVF, anomalyDetectorVF, alertDispatcherVF]).
+target(telemetryMonitoringService, [telemetryCollectorVF, dataAggregatorVF, anomalyDetectorVF, alertDispatcherVF]).
 
 vnf(telemetryCollectorVF, edge, 8).
 vnf(dataAggregatorVF, edge, 16).
-vnf(anomalyDetectorVF, cloud, 32).
-vnf(alertDispatcherVF, cloud, 12).
+vnf(anomalyDetectorVF, cloud, 24).
+vnf(alertDispatcherVF, cloud, 8).
 
 vnfXUser(telemetryCollectorVF, l, (1, 50000), 8).
 vnfXUser(dataAggregatorVF, l, (1, 50000), 16).
-vnfXUser(anomalyDetectorVF, l, (1, 50000), 32).
-vnfXUser(alertDispatcherVF, l, (1, 50000), 12).
-
-propertyExpectation(affReq, telemetryMonitoringIntent, affinity, same, hard, telemetryCollectorVF, dataAggregatorVF).
-propertyExpectation(affReq, telemetryMonitoringIntent, affinity, same, hard, dataAggregatorVF, anomalyDetectorVF).
-propertyExpectation(affReq, telemetryMonitoringIntent, affinity, same, hard, anomalyDetectorVF, alertDispatcherVF).
+vnfXUser(anomalyDetectorVF, l, (1, 50000), 24).
+vnfXUser(alertDispatcherVF, l, (1, 50000), 8).

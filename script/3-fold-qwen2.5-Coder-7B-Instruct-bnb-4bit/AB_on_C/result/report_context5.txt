@@ -3,16 +3,16 @@ File analizzato: output_context5_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The network security provider secureCryptoOp requires an encrypted traffic analysis service to support 25,000 corporate users. This service inspects HTTPS flows 
-without fully decrypting them, using AI to identify malware or botnet patterns. The service chain begins with a <trafficSplitterVF, 8> allocated at the edge. For this 
-component, decoding is applied after it. It is mandatory that this <trafficSplitterVF, 8> and the next <featureExtractorVF, 16>, located in the edge, are deployed on the same 
-hosting node. The chain then proceeds to an <aiClassifierVF, 32> located in the cloud, followed by an <alertManagerVF, 4> located in the cloud. For the entire deployment, it is 
-ideally preferred that the total chain hardware remains lower than 80 gigabytes. Finally, the traffic is routed to a <policyEnforcerVF, 12> located in the cloud, ensuring 
-that security is executed before the <policyEnforcerVF, 12>.
+without fully decrypting them, using AI to identify malware or botnet patterns. Specifying that decoding is applied after the first VNF, and mandating that 
+this initial component and the subsequent <featureExtractorVF, 16> service are deployed on the same hosting node, the service begins with a <trafficSplitterVF, 8> allocated at 
+the edge connected to a <featureExtractorVF, 16> located in the edge. Preferring that the total chain hardware is lower than 80 gigabytes, the chain incorporates 
+an <aiClassifierVF, 32> located in the cloud followed by an <alertManagerVF, 4> located in the cloud. Finally, ensuring that security is executed before the final <policyEnforcerVF, 12> point, 
+the system completes the pipeline with a <policyEnforcerVF, 12> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.6875
-Precision (Allucinazioni) : 0.6471
-Jaccard   (Globale)       : 0.5000
-F1-Score  (Equilibrio)    : 0.6667
+Recall    (Omissioni)     : 0.1250
+Precision (Allucinazioni) : 0.1250
+Jaccard   (Globale)       : 0.0667
+F1-Score  (Equilibrio)    : 0.1250
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -35,19 +35,18 @@ vnfXUser(trafficSplitterVF,l,(1,25000),8)
 
 --- Fatti Estratti LLM ---
 intent(secureCryptoOp,25000)
-propertyExpectation(affinity,same,hard,_,_,featureExtractorVF,aiClassifierVF)
-propertyExpectation(affinity,same,hard,_,_,featureExtractorVF,policyEnforcerVF)
-propertyExpectation(decoding,_,trafficSplitterVF,_)
-propertyExpectation(security,_,_,policyEnforcerVF)
+propertyExpectation(affinity,same,hard,_,_,feVF,aeVF)
+propertyExpectation(decoding,_,teVF,_)
+propertyExpectation(security,_,_,peVF)
 propertyExpectation(totChainHW,lower,soft,80,gb,_,_)
-target([trafficSplitterVF,featureExtractorVF,aiClassifierVF,alertManagerVF,policyEnforcerVF])
-vnf(aiClassifierVF,cloud,32)
-vnf(alertManagerVF,cloud,12)
-vnf(featureExtractorVF,edge,16)
-vnf(policyEnforcerVF,cloud,16)
-vnf(trafficSplitterVF,edge,8)
-vnfXUser(aiClassifierVF,l,(1,25000),32)
-vnfXUser(alertManagerVF,l,(1,25000),12)
-vnfXUser(featureExtractorVF,l,(1,25000),16)
-vnfXUser(policyEnforcerVF,l,(1,25000),16)
-vnfXUser(trafficSplitterVF,l,(1,25000),8)
+target([teVF,feVF,aiCVF,amVF,peVF])
+vnf(aiCVF,cloud,32)
+vnf(amVF,cloud,4)
+vnf(feVF,edge,16)
+vnf(peVF,cloud,12)
+vnf(teVF,edge,8)
+vnfXUser(aiCVF,l,(1,25000),32)
+vnfXUser(amVF,l,(1,25000),4)
+vnfXUser(feVF,l,(1,25000),16)
+vnfXUser(peVF,l,(1,25000),12)
+vnfXUser(teVF,l,(1,25000),8)

@@ -3,11 +3,11 @@ File analizzato: output_context14_intentA.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The financial provider hftGlobalOp requires a high frequency trading service to manage 500,000 orders. This infrastructure receives stock prices, 
-executes decision algorithms, and sends purchase orders seeking the fastest network path. The service chain begins with a <marketFeedVF, 16> allocated at the edge. 
-For this component, caching is applied after it. The chain then connects to a <tradingAlgoVF, 32> allocated at the edge, ensuring that it is mandatory for the latency 
-from the <marketFeedVF, 16> to this <tradingAlgoVF, 32> to remain below 50 ms. The chain proceeds to a <riskCheckerVF, 16> located in the cloud; it is ideally preferred that the 
-bandwidth from the <tradingAlgoVF, 32> to this <riskCheckerVF, 16> remains higher than 5000 mbps. Finally, the system routes to an <orderDispatcherVF, 8> allocated at the edge, 
-with a preference that the latency from the <riskCheckerVF, 16> to this <orderDispatcherVF, 8> remains below 5 ms, and ensuring that logging is executed before it.
+executes decision algorithms, and sends purchase orders seeking the fastest network path. The deployed service chain includes, in order: a <marketFeedVF, 16> allocated at the edge, a <tradingAlgoVF, 32> allocated at the edge, a <riskCheckerVF, 16> located in the cloud, and an <orderDispatcherVF, 8> allocated at the edge. 
+Regarding requirements, caching is applied after the <marketFeedVF, 16>. Furthermore, it is strictly required that the latency from the <marketFeedVF, 16> to the 
+<tradingAlgoVF, 32> remains below 50 ms. The provider prefers that the bandwidth from the <tradingAlgoVF, 32> to the <riskCheckerVF, 16> remains higher than 5000 mbps. 
+Additionally, it is desired that the latency from the <riskCheckerVF, 16> to the <orderDispatcherVF, 8> remains below 5 ms. Finally, logging is executed before 
+the <orderDispatcherVF, 8>.
 ==================================================
 Recall    (Omissioni)     : 1.0000
 Precision (Allucinazioni) : 1.0000

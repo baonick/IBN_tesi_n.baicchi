@@ -1,18 +1,23 @@
-intent(digitalIDIntent, onlineBankOp, 10000, digitalIdentityService).
+intent(digitalIdentityIntent, onlineBankOp, 10000, digitalIdentityService).
 
-propertyExpectation(encReq, digitalIDIntent, encoding, _, documentReceiverVF, _).
-propertyExpectation(secReq, digitalIDIntent, security, _, _, authenticityCheckerVF).
-propertyExpectation(privReq, digitalIDIntent, privacy, _, amlMatcherVF, _).
-propertyExpectation(compReq, digitalIDIntent, compression, _, _, profileCreatorVF).
+propertyExpectation(latReq, digitalIdentityIntent, latency, lower, soft, 20, ms, documentReceiverVF, authenticationCheckerVF).
+propertyExpectation(bwReq, digitalIdentityIntent, bandwidth, greater, soft, 100, mbps, authenticationCheckerVF, amlMatcherVF).
+propertyExpectation(bwReq, digitalIdentityIntent, bandwidth, greater, soft, 100, mbps, amlMatcherVF, profileCreatorVF).
 
-target(digitalIdentityService, [documentReceiverVF, authenticityCheckerVF, amlMatcherVF, profileCreatorVF]).
 
-vnf(documentReceiverVF, edge, 8).
-vnf(authenticityCheckerVF, cloud, 16).
-vnf(amlMatcherVF, cloud, 12).
+target(digitalIdentityService, [documentReceiverVF, authenticationCheckerVF, amlMatcherVF, profileCreatorVF]).
+
+vnf(documentReceiverVF, edge, 12).
+vnf(authenticationCheckerVF, cloud, 24).
+vnf(amlMatcherVF, cloud, 16).
 vnf(profileCreatorVF, cloud, 16).
 
-vnfXUser(documentReceiverVF, l, (1, 10000), 8).
-vnfXUser(authenticityCheckerVF, l, (1, 10000), 16).
-vnfXUser(amlMatcherVF, l, (1, 10000), 12).
+vnfXUser(documentReceiverVF, l, (1, 10000), 12).
+vnfXUser(authenticationCheckerVF, l, (1, 10000), 24).
+vnfXUser(amlMatcherVF, l, (1, 10000), 16).
 vnfXUser(profileCreatorVF, l, (1, 10000), 16).
+
+propertyExpectation(encReq, digitalIdentityIntent, encoding, _, documentReceiverVF, _).
+propertyExpectation(secReq, digitalIdentityIntent, security, _, _, authenticationCheckerVF).
+propertyExpectation(privReq, digitalIdentityIntent, privacy, _, amlMatcherVF, _).
+propertyExpectation(compReq, digitalIdentityIntent, compression, _, _, profileCreatorVF).

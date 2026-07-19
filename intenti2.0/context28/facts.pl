@@ -1,7 +1,7 @@
 intent(arBackendIntent, factoryCloudOp, 500, arRenderingService).
 
 propertyExpectation(latReq, arBackendIntent, latency, lower, hard, 12, ms, arStreamReceiverVF, arStreamDispatcherVF).
-propertyExpectation(bwReq, arBackendIntent, bandwidth, greater, soft, 200, megabps, arStreamReceiverVF, arPoseEstimatorVF).
+propertyExpectation(bwReq, arBackendIntent, bandwidth, greater, hard, 200, megabps, arStreamReceiverVF, arPoseEstimatorVF).
 propertyExpectation(hwReq, arBackendIntent, totChainHW, lower, soft, 90, gb, _, _).
 propertyExpectation(affReq, arBackendIntent, affinity, dedicated, hard, _, _, arPoseEstimatorVF, _).
 propertyExpectation(affReq, arBackendIntent, affinity, dedicated, hard, _, _, dataOverlayEngineVF, _).

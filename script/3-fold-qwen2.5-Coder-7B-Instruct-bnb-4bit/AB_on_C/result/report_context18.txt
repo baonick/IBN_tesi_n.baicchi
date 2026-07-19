@@ -3,16 +3,16 @@ File analizzato: output_context18_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The municipal provider smartParkOp requires a parking management backend to handle 100,000 active parking spots. This system receives occupancy alerts, 
-updates the city map, and processes automatic payments. The service chain begins with a <sensorDataCollectorVF, 8> at the edge. For this component, compression 
-is applied after it. The chain then connects to a <mapUpdaterVF, 16> in the cloud and a <paymentProcessorVF, 24> in the cloud; it is mandatory that these two VNF are deployed 
-on dedicated nodes. Encoding is executed before the <paymentProcessorVF, 24>. The chain then connects to a <statusLoggerVF, 12> in the cloud, ensuring 
-that logging is executed before it. Finally, the chain includes a <securityEnforcerVF, 16> in the cloud, with security applied after the <paymentProcessorVF, 24>. 
-For the entire segment, it is strictly required that the latency from the <sensorDataCollectorVF, 8> to this <securityEnforcerVF, 16> remains below 30 ms.
+updates the city map, and processes automatic payments. Specifying that compression is applied after the initial function, the service begins with 
+a <sensorDataCollectorVF, 8> at the edge. Mandating the next two components are 
+deployed on dedicated nodes, and ensuring encoding is applied before the <paymentProcessorVF, 24>, the chain connected to a <mapUpdaterVF, 16> in the cloud and a <paymentProcessorVF, 24> in the cloud. Ensuring that logging is executed before the <statusLoggerVF, 12> the chain continues to a <statusLoggerVF, 12> 
+in the cloud. The system includes a <securityEnforcerVF, 16> in the cloud. Applying security after the <paymentProcessorVF, 24>, and strictly requiring that the latency from the <sensorDataCollectorVF, 8> to the final <securityEnforcerVF, 16> remains below 30 ms, the system completes 
+the pipeline.
 ==================================================
-Recall    (Omissioni)     : 0.4737
-Precision (Allucinazioni) : 0.5294
-Jaccard   (Globale)       : 0.3333
-F1-Score  (Equilibrio)    : 0.5000
+Recall    (Omissioni)     : 0.8421
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 0.8421
+F1-Score  (Equilibrio)    : 0.9143
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -38,19 +38,18 @@ vnfXUser(statusLoggerVF,l,(1,100000),12)
 
 --- Fatti Estratti LLM ---
 intent(smartParkOp,100000)
-propertyExpectation(affinity,dedicated,soft,_,_,_)
+propertyExpectation(compression,_,sensorDataCollectorVF,_)
 propertyExpectation(encoding,_,_,paymentProcessorVF)
 propertyExpectation(latency,lower,hard,30,ms,sensorDataCollectorVF,securityEnforcerVF)
 propertyExpectation(logging,_,_,statusLoggerVF)
-propertyExpectation(security,_,paymentProcessorVF,_)
-target([sensorDataCollectorVF,mapUpdaterVF,paymentProcessorVF,securityEnforcerVF,statusLoggerVF])
+target([sensorDataCollectorVF,mapUpdaterVF,paymentProcessorVF,statusLoggerVF,securityEnforcerVF])
 vnf(mapUpdaterVF,cloud,16)
-vnf(paymentProcessorVF,cloud,32)
-vnf(securityEnforcerVF,cloud,12)
+vnf(paymentProcessorVF,cloud,24)
+vnf(securityEnforcerVF,cloud,16)
 vnf(sensorDataCollectorVF,edge,8)
-vnf(statusLoggerVF,cloud,8)
+vnf(statusLoggerVF,cloud,12)
 vnfXUser(mapUpdaterVF,l,(1,100000),16)
-vnfXUser(paymentProcessorVF,l,(1,100000),32)
-vnfXUser(securityEnforcerVF,l,(1,100000),12)
+vnfXUser(paymentProcessorVF,l,(1,100000),24)
+vnfXUser(securityEnforcerVF,l,(1,100000),16)
 vnfXUser(sensorDataCollectorVF,l,(1,100000),8)
-vnfXUser(statusLoggerVF,l,(1,100000),8)
+vnfXUser(statusLoggerVF,l,(1,100000),12)

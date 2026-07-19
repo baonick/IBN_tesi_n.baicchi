@@ -2,12 +2,13 @@ RISULTATI PER CONTEXT13
 File analizzato: output_context13_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
-The financial provider fraudSafeOp requires an antifraud analysis service to manage 200,000 transactions per hour. This system intercepts every digital payment 
-request, compares it with habitual user spending patterns via machine learning, and authorizes the transaction in a few milliseconds. 
-The service chain begins with a <requestInterceptorVF, 8> allocated at the edge. For this component, security is applied after it. It is mandatory that this <requestInterceptorVF, 8> and the next component, a <profileMatcherVF, 16>, operate on the same node at the edge. The chain then connects to an <mlAnalyzerVF, 32> located in the cloud, 
-ensuring that privacy is executed before it. The chain then proceeds to a <policyEnforcerVF, 12> located in the cloud; it is ideally preferred that the bandwidth from 
-the <mlAnalyzerVF, 32> to this <policyEnforcerVF, 12> remains higher than 1000 mbps. Finally, the system routes to a <responseEmitterVF, 8> located in the cloud, with a preference 
-that the total chain hardware remains lower than 120 gb.
+The financial provider fraudSafeOp requires an antifraud analysis service to manage 200,000 transactions per hour. This system intercepts every digital 
+payment request, compares it with habitual user spending patterns via machine learning, and authorizes the transaction in a few milliseconds. 
+Specifying that security is applied after the initial node, and mandating that the <requestInterceptorVF, 8> and the <profileMatcherVF, 16> are deployed 
+on the same edge node, the service begins with a <requestInterceptorVF, 8> allocated at the edge connected to a <profileMatcherVF, 16> at the edge. Ensuring that privacy 
+is executed before the <mlAnalyzerVF, 32>, the chain incorporates an <mlAnalyzerVF, 32> located in the cloud. Preferring that the bandwidth from the <mlAnalyzerVF, 32> to 
+the <policyEnforcerVF, 12> remains higher than 1000 mbps, the chain adds a <policyEnforcerVF, 12> located in the cloud. Finally, preferring that the total chain hardware 
+remains lower than 120 gb, the system completes the pipeline with a <responseEmitterVF, 8> located in the cloud.
 ==================================================
 Recall    (Omissioni)     : 1.0000
 Precision (Allucinazioni) : 1.0000

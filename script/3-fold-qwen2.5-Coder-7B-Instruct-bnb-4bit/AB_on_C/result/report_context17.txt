@@ -3,15 +3,15 @@ File analizzato: output_context17_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The logistics provider deliveryLogisticsOp requires a route optimization service to manage 15,000 couriers. This software receives the GPS positions of a fleet, 
-analyzes city traffic data, constantly recalculates the best route for each courier, and updates their terminals. The service chain begins with a <gpsIngesterVF, 8> 
-allocated at the edge. For this component, compression is applied after it. The chain then connects to a <trafficAnalyzerVF, 24> located in the cloud followed by a 
-<routeOptimizerVF, 32> located in the cloud. The updated routes are routed to a <terminalUpdaterVF, 12> allocated at the edge, ensuring that decoding is executed before it. 
-For the entire deployment, it is strictly required that the latency from the begin to the end of the chain must remain below 80 ms.
+analyzes city traffic data, constantly recalculates the best route for each courier, and updates their terminals. Specifying that compression is applied after the 
+initial node, the service begins with a <gpsIngesterVF, 8> allocated at the edge connected to a <trafficAnalyzerVF, 24> located in the cloud and a <routeOptimizerVF, 32> 
+located in the cloud. Ensuring that decoding is executed before the final node, the system incorporates a <terminalUpdaterVF, 12> allocated at the edge. 
+Finally, strictly requiring that the latency from the begin to the end of the chain remains below 80 ms, the system completes the optimization pipeline.
 ==================================================
-Recall    (Omissioni)     : 0.8462
-Precision (Allucinazioni) : 0.8462
-Jaccard   (Globale)       : 0.7333
-F1-Score  (Equilibrio)    : 0.8462
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -38,8 +38,8 @@ target([gpsIngesterVF,trafficAnalyzerVF,routeOptimizerVF,terminalUpdaterVF])
 vnf(gpsIngesterVF,edge,8)
 vnf(routeOptimizerVF,cloud,32)
 vnf(terminalUpdaterVF,edge,12)
-vnf(trafficAnalyzerVF,cloud,16)
+vnf(trafficAnalyzerVF,cloud,24)
 vnfXUser(gpsIngesterVF,l,(1,15000),8)
 vnfXUser(routeOptimizerVF,l,(1,15000),32)
 vnfXUser(terminalUpdaterVF,l,(1,15000),12)
-vnfXUser(trafficAnalyzerVF,l,(1,15000),16)
+vnfXUser(trafficAnalyzerVF,l,(1,15000),24)

@@ -1,19 +1,20 @@
-intent(postOpMonitoringIntent, healthCareOp, 5000, postOperativeTeleMonitoringService).
+intent(postOperativeMonitoringIntent, healthCareOp, 5000, postOperativeTeleMonitoringService).
 
-propertyExpectation(latReq, postOpMonitoringIntent, latency, lower, hard, 100, ms, patientDataReceiverVF, doctorNotifierVF).
-propertyExpectation(hwReq, postOpMonitoringIntent, totChainHW, lower, soft, 80, gb, _, _).
+propertyExpectation(latReq, postOperativeMonitoringIntent, latency, lower, hard, 100, ms, patientDataReceiverVF, doctorNotifierVF).
+propertyExpectation(hwReq, postOperativeMonitoringIntent, totChainHW, lower, soft, 80, gb, _, _).
 
-propertyExpectation(privReq, postOpMonitoringIntent, privacy, _, patientDataReceiverVF, _).
-propertyExpectation(logReq, postOpMonitoringIntent, logging, _, _, medicalAlertLoggerVF).
+propertyExpectation(privReq, postOperativeMonitoringIntent, privacy, _, patientDataReceiverVF, _).
+propertyExpectation(logReq, postOperativeMonitoringIntent, logging, _, _, medicalAlertLoggerVF).
+
 
 target(postOperativeTeleMonitoringService, [patientDataReceiverVF, cardiacAnomalyAnalyzerVF, medicalAlertLoggerVF, doctorNotifierVF]).
 
 vnf(patientDataReceiverVF, edge, 8).
-vnf(cardiacAnomalyAnalyzerVF, cloud, 16).
-vnf(medicalAlertLoggerVF, cloud, 4).
+vnf(cardiacAnomalyAnalyzerVF, cloud, 24).
+vnf(medicalAlertLoggerVF, cloud, 12).
 vnf(doctorNotifierVF, cloud, 8).
 
 vnfXUser(patientDataReceiverVF, l, (1, 5000), 8).
-vnfXUser(cardiacAnomalyAnalyzerVF, l, (1, 5000), 16).
-vnfXUser(medicalAlertLoggerVF, l, (1, 5000), 4).
+vnfXUser(cardiacAnomalyAnalyzerVF, l, (1, 5000), 24).
+vnfXUser(medicalAlertLoggerVF, l, (1, 5000), 12).
 vnfXUser(doctorNotifierVF, l, (1, 5000), 8).

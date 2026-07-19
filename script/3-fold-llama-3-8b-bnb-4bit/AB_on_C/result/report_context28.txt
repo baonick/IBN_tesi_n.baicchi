@@ -3,24 +3,24 @@ File analizzato: output_context28_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The industrial provider factoryCloudOp requires an augmented reality back-end service to support 500 active smart glasses on the shop floor. 
-This service sends visual technical instructions to workers' headsets, overlaying maintenance data on the framed machinery in real time. 
-The service chain begins with an <arStreamReceiverVF, 12> allocated at the edge. The chain then connects to <arPoseEstimatorVF, 24> located in the 
-cloud and a <dataOverlayEngineVF, 32> located in the cloud; for these two intensive blocks, it is mandatory that they are isolated on dedicated hardware nodes, 
-while ensuring that the network bandwidth between the initial <arStreamReceiverVF, 12> and the <arPoseEstimatorVF, 24> remains higher than 200 mbps. Finally, the system 
-routes the processed graphics to an <arStreamDispatcherVF, 16> located in the cloud, ensuring it is strictly required that the latency from the <arStreamReceiverVF, 12> 
-to this <arStreamDispatcherVF, 16> remains below 12 ms. For the overall infrastructure, it is ideally preferred that the total chain hardware remains lower than 90 gb.
+This service sends visual technical instructions to workers' headsets, overlaying maintenance data on the framed machinery in real time. Strictly 
+requiring that the total delivery latency from the initial <arStreamReceiverVF, 12> to the <arStreamDispatcherVF, 16> remains below 12 ms, the service begins 
+with an <arStreamReceiverVF, 12> allocated at the edge. Ensuring that the network bandwidth from this point to the <arPoseEstimatorVF, 24> remains higher 
+than 200 mbps, the chain connects to an <arPoseEstimatorVF, 24> located in the cloud. Mandating that this <arPoseEstimatorVF, 24> and the subsequent tool 
+are deployed on separate, dedicated infrastructure servers to guarantee isolated performance, the chain incorporates a <dataOverlayEngineVF, 32> located in the cloud. 
+Finally, preferring that the total chain hardware remains lower than 90 gb, the system completes the pipeline with an ar stream dispatcher located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.8667
-Precision (Allucinazioni) : 0.9286
-Jaccard   (Globale)       : 0.8125
-F1-Score  (Equilibrio)    : 0.8966
+Recall    (Omissioni)     : 0.8000
+Precision (Allucinazioni) : 0.8571
+Jaccard   (Globale)       : 0.7059
+F1-Score  (Equilibrio)    : 0.8276
 ==================================================
 
 --- Fatti Estratti Ideale ---
 intent(factoryCloudOp,500)
 propertyExpectation(affinity,dedicated,hard,_,_,arPoseEstimatorVF,_)
 propertyExpectation(affinity,dedicated,hard,_,_,dataOverlayEngineVF,_)
-propertyExpectation(bandwidth,greater,soft,200,megabps,arStreamReceiverVF,arPoseEstimatorVF)
+propertyExpectation(bandwidth,greater,hard,200,megabps,arStreamReceiverVF,arPoseEstimatorVF)
 propertyExpectation(latency,lower,hard,12,ms,arStreamReceiverVF,arStreamDispatcherVF)
 propertyExpectation(totChainHW,lower,soft,90,gb,_,_)
 target([arStreamReceiverVF,arPoseEstimatorVF,dataOverlayEngineVF,arStreamDispatcherVF])

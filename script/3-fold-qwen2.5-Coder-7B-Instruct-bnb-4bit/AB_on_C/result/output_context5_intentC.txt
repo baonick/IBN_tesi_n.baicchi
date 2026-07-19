@@ -1,22 +1,21 @@
-intent(cryptoAnalysisIntent, secureCryptoOp, 25000, cryptoTrafficService).
+intent(cryptoAnalysisIntent, secureCryptoOp, 25000, encryptedTrafficService).
 
 propertyExpectation(hwReq, cryptoAnalysisIntent, totChainHW, lower, soft, 80, gb, _, _).
-propertyExpectation(affReq, cryptoAnalysisIntent, affinity, same, hard, _, _, featureExtractorVF, aiClassifierVF).
-propertyExpectation(affReq, cryptoAnalysisIntent, affinity, same, hard, _, _, featureExtractorVF, policyEnforcerVF).
+propertyExpectation(affReq, cryptoAnalysisIntent, affinity, same, hard, _, _, feVF, aeVF).
 
-target(cryptoTrafficService, [trafficSplitterVF, featureExtractorVF, aiClassifierVF, alertManagerVF, policyEnforcerVF]).
+propertyExpectation(decReq, cryptoAnalysisIntent, decoding, _, teVF, _).
+propertyExpectation(secReq, cryptoAnalysisIntent, security, _, _, peVF).
 
-vnf(trafficSplitterVF, edge, 8).
-vnf(featureExtractorVF, edge, 16).
-vnf(aiClassifierVF, cloud, 32).
-vnf(alertManagerVF, cloud, 12).
-vnf(policyEnforcerVF, cloud, 16).
+target(encryptedTrafficService, [teVF, feVF, aiCVF, amVF, peVF]).
 
-vnfXUser(trafficSplitterVF, l, (1, 25000), 8).
-vnfXUser(featureExtractorVF, l, (1, 25000), 16).
-vnfXUser(aiClassifierVF, l, (1, 25000), 32).
-vnfXUser(alertManagerVF, l, (1, 25000), 12).
-vnfXUser(policyEnforcerVF, l, (1, 25000), 16).
+vnf(teVF, edge, 8).
+vnf(feVF, edge, 16).
+vnf(aiCVF, cloud, 32).
+vnf(amVF, cloud, 4).
+vnf(peVF, cloud, 12).
 
-propertyExpectation(decReq, cryptoAnalysisIntent, decoding, _, trafficSplitterVF, _).
-propertyExpectation(secReq, cryptoAnalysisIntent, security, _, _, policyEnforcerVF).
+vnfXUser(teVF, l, (1, 25000), 8).
+vnfXUser(feVF, l, (1, 25000), 16).
+vnfXUser(aiCVF, l, (1, 25000), 32).
+vnfXUser(amVF, l, (1, 25000), 4).
+vnfXUser(peVF, l, (1, 25000), 12).

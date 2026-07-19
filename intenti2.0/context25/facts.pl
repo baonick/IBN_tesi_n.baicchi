@@ -13,7 +13,7 @@ vnf(formatNormalizerVF, cloud, 16).
 vnf(metadataEnricherVF, cloud, 12).
 vnf(downloadProviderVF, cloud, 16).
 
-vnfXUser(dataExtractorVF, l, (1, 30000), 16).
+vnfXUser(dataExtractorVF, l, (1, 30000), 8).
 vnfXUser(formatNormalizerVF, l, (1, 30000), 16).
 vnfXUser(metadataEnricherVF, l, (1, 30000), 12).
 vnfXUser(downloadProviderVF, l, (1, 30000), 16).

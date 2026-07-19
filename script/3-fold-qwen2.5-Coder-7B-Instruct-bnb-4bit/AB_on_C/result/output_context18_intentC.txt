@@ -1,24 +1,21 @@
-intent(parkingIntent, smartParkOp, 100000, parkingBackendService).
+intent(smartParkingIntent, smartParkOp, 100000, parkingManagementBackend).
 
-propertyExpectation(latReq, parkingIntent, latency, lower, hard, 30, ms, sensorDataCollectorVF, securityEnforcerVF).
+propertyExpectation(latReq, smartParkingIntent, latency, lower, hard, 30, ms, sensorDataCollectorVF, securityEnforcerVF).
 
-propertyExpectation(affReq, parkingIntent, affinity, dedicated, soft, _, _, _).
-propertyExpectation(affReq, parkingIntent, affinity, dedicated, soft, _, _, _).
+propertyExpectation(encReq, smartParkingIntent, encoding, _, _, paymentProcessorVF).
+propertyExpectation(compReq, smartParkingIntent, compression, _, sensorDataCollectorVF, _).
+propertyExpectation(logReq, smartParkingIntent, logging, _, _, statusLoggerVF).
 
-propertyExpectation(encReq, parkingIntent, encoding, _, _, paymentProcessorVF).
-propertyExpectation(secReq, parkingIntent, security, _, paymentProcessorVF, _).
-propertyExpectation(logReq, parkingIntent, logging, _, _, statusLoggerVF).
-
-target(parkingBackendService, [sensorDataCollectorVF, mapUpdaterVF, paymentProcessorVF, securityEnforcerVF, statusLoggerVF]).
+target(parkingManagementBackend, [sensorDataCollectorVF, mapUpdaterVF, paymentProcessorVF, statusLoggerVF, securityEnforcerVF]).
 
 vnf(sensorDataCollectorVF, edge, 8).
 vnf(mapUpdaterVF, cloud, 16).
-vnf(paymentProcessorVF, cloud, 32).
-vnf(securityEnforcerVF, cloud, 12).
-vnf(statusLoggerVF, cloud, 8).
+vnf(paymentProcessorVF, cloud, 24).
+vnf(statusLoggerVF, cloud, 12).
+vnf(securityEnforcerVF, cloud, 16).
 
 vnfXUser(sensorDataCollectorVF, l, (1, 100000), 8).
 vnfXUser(mapUpdaterVF, l, (1, 100000), 16).
-vnfXUser(paymentProcessorVF, l, (1, 100000), 32).
-vnfXUser(securityEnforcerVF, l, (1, 100000), 12).
-vnfXUser(statusLoggerVF, l, (1, 100000), 8).
+vnfXUser(paymentProcessorVF, l, (1, 100000), 24).
+vnfXUser(statusLoggerVF, l, (1, 100000), 12).
+vnfXUser(securityEnforcerVF, l, (1, 100000), 16).

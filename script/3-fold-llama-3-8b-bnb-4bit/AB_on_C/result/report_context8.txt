@@ -4,11 +4,11 @@ File analizzato: output_context8_intentC.txt
 --- INTENTO TESTUALE ---
 The media provider mediaBroadcastOp requires a live multicamera streaming service to support 30,000 concurrent viewers. 
 This system receives video streams from different angles, allows cloud mixing, adds advertising graphics, and distributes the signal to 
-thousands of viewers simultaneously. The service chain begins with a <streamIngesterVF, 12> allocated at the edge. For this component, 
-compression is applied after it. The chain then connects to a <cloudStudioVF, 32> located in the cloud followed by a <graphicInjectorVF, 16> located in the 
-cloud. Between this <graphicInjectorVF, 16> and the next component, it is strictly required to maintain a bandwidth higher than 5000 mbps. Finally, 
-the traffic is routed to a <streamDistributorVF, 24> located in the cloud, ensuring that caching is executed before it. For the entire deployment, 
-it is ideally preferred that the total chain hardware remains lower than 150 gb.
+thousands of viewers simultaneously. Specifying that compression is applied after the initial <streamIngesterVF, 12>, the service begins with a 
+<streamIngesterVF, 12> allocated at the edge connected to a <cloudStudioVF, 32> located in the cloud. Mandating a bandwidth higher than 5000 mbps between 
+the upcoming <graphicInjectorVF, 16> and the final destination, the chain incorporates a <graphicInjectorVF, 16> located in the cloud. 
+Preferring that the total chain hardware is lower than 150 gb, and ensuring that caching is executed before the final <streamDistributorVF, 24>, 
+the system completes the pipeline with a <streamDistributorVF, 24> located in the cloud.
 ==================================================
 Recall    (Omissioni)     : 0.6429
 Precision (Allucinazioni) : 0.6429

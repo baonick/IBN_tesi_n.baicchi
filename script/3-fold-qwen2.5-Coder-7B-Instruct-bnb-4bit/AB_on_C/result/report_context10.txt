@@ -3,16 +3,16 @@ File analizzato: output_context10_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The media provider cinemaRenderOp requires a service to manage 5,000 rendering projects. This infrastructure receives raw digital scenes, 
-distributes the rendering computation across hundreds of virtual nodes, and reassembles the finished frames for post-production. 
-The service chain begins with a <sceneReceiverVF, 16> allocated at the edge. For this component, compression is applied after it. The chain 
-then connects to an <assetValidatorVF, 12> located in the cloud followed by a <renderDistributorVF, 32> located in the cloud and a <frameAssemblerVF, 24> 
-located in the cloud. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 800 gb. Finally, 
-the frames are routed to a <colorGraderVF, 20> located in the cloud, ensuring that caching is executed before it.
+distributes the rendering computation across hundreds of virtual nodes, and reassembles the finished frames for post-production. Preferring 
+that the total chain hardware is lower than 800 gb. Specifying that compression is applied after the initial function, the service 
+begins with a <sceneReceiverVF, 16> allocated at the edge connected to an <assetValidatorVF, 12> located in the cloud, a <renderDistributorVF, 32> located in the 
+cloud, and a <frameAssemblerVF, 24> located in the cloud. Ensuring that caching is executed before the final node, the system completes 
+the pipeline with a <colorGraderVF, 20> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.6000
-Precision (Allucinazioni) : 0.6000
-Jaccard   (Globale)       : 0.4286
-F1-Score  (Equilibrio)    : 0.6000
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -38,13 +38,13 @@ propertyExpectation(caching,_,_,colorGraderVF)
 propertyExpectation(compression,_,sceneReceiverVF,_)
 propertyExpectation(totChainHW,lower,soft,800,gb,_,_)
 target([sceneReceiverVF,assetValidatorVF,renderDistributorVF,frameAssemblerVF,colorGraderVF])
-vnf(assetValidatorVF,cloud,8)
-vnf(colorGraderVF,cloud,12)
-vnf(frameAssemblerVF,cloud,16)
+vnf(assetValidatorVF,cloud,12)
+vnf(colorGraderVF,cloud,20)
+vnf(frameAssemblerVF,cloud,24)
 vnf(renderDistributorVF,cloud,32)
 vnf(sceneReceiverVF,edge,16)
-vnfXUser(assetValidatorVF,l,(1,5000),8)
-vnfXUser(colorGraderVF,l,(1,5000),12)
-vnfXUser(frameAssemblerVF,l,(1,5000),16)
+vnfXUser(assetValidatorVF,l,(1,5000),12)
+vnfXUser(colorGraderVF,l,(1,5000),20)
+vnfXUser(frameAssemblerVF,l,(1,5000),24)
 vnfXUser(renderDistributorVF,l,(1,5000),32)
 vnfXUser(sceneReceiverVF,l,(1,5000),16)

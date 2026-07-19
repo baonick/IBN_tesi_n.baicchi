@@ -1,16 +1,17 @@
-intent(autonomousControlIntent, autoWarehouseOp, 500, autonomousControlService).
+intent(autoControlIntent, autoWarehouseOp, 500, autonomousVehicleSystem).
 
-propertyExpectation(latReq, autonomousControlIntent, latency, lower, hard, 500, ms, sensorDataDecoderVF, commandEncoderVF).
+propertyExpectation(latReq, autoControlIntent, latency, lower, hard, 500, ms, sensorDataDecoderVF, commandEncoderVF).
 
-propertyExpectation(decReq, autonomousControlIntent, decoding, _, sensorDataDecoderVF, _).
-propertyExpectation(encReq, autonomousControlIntent, encoding, _, _, commandEncoderVF).
 
-target(autonomousControlService, [sensorDataDecoderVF, collisionPathSolverVF, commandEncoderVF]).
+propertyExpectation(decReq, autoControlIntent, decoding, _, sensorDataDecoderVF, _).
+propertyExpectation(encReq, autoControlIntent, encoding, _, _, commandEncoderVF).
 
-vnf(sensorDataDecoderVF, edge, 8).
+target(autonomousVehicleSystem, [sensorDataDecoderVF, collisionPathSolverVF, commandEncoderVF]).
+
+vnf(sensorDataDecoderVF, edge, 16).
 vnf(collisionPathSolverVF, cloud, 32).
 vnf(commandEncoderVF, edge, 16).
 
-vnfXUser(sensorDataDecoderVF, l, (1, 500), 8).
+vnfXUser(sensorDataDecoderVF, l, (1, 500), 16).
 vnfXUser(collisionPathSolverVF, l, (1, 500), 32).
 vnfXUser(commandEncoderVF, l, (1, 500), 16).

@@ -3,11 +3,11 @@ File analizzato: output_context2_intentA.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The cybersecurity provider secureMailOp requires a service to manage 10,000 corporate mailboxes. This pipeline intercepts incoming emails, 
-removes phishing links, analyzes attachments in an isolated environment, and delivers only safe messages to the server. The service chain begins 
-with a <mailGatewayVF, 4> allocated at the edge. For this node, it is strictly required that decoding is applied after it. This <mailGatewayVF, 4> connects to a 
-<phishingFilterVF, 8> located in the cloud, and for this link, it is ideally preferred that latency remains below 50 milliseconds. The chain then proceeds 
-to a <sandboxScannerVF, 16> located in the cloud; between the filter and the scanner, it is mandatory to have a bandwidth higher than 100 Mbps. Additionally, 
-logging must be enforced before the <sandboxScannerVF, 16>. Finally, the scanner connects to a <safeDeliveryVF, 4> node located in the cloud.
+removes phishing links, analyzes attachments in an isolated environment, and delivers only safe messages to the server. The service chain includes, 
+in order: a <mailGatewayVF, 4> allocated at the edge, a <phishingFilterVF, 8> located in the cloud, a <sandboxScannerVF, 16> located in the cloud, and a <safeDeliveryVF, 4> 
+node located in the cloud. Regarding requirements, decoding must be applied after the <mailGatewayVF, 4>. Furthermore, the provider prefers to keep the 
+latency from the <mailGatewayVF, 4> to the <phishingFilterVF, 8> below 50 milliseconds. It is strictly required that the bandwidth from the <phishingFilterVF, 8> to 
+the <sandboxScannerVF, 16> is higher than 100 Mbps. Finally, logging is mandatory before the <sandboxScannerVF, 16>.
 ==================================================
 Recall    (Omissioni)     : 0.9286
 Precision (Allucinazioni) : 1.0000

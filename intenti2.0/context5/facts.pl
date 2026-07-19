@@ -12,10 +12,10 @@ vnf(trafficSplitterVF, edge, 8).
 vnf(featureExtractorVF, edge, 16).
 vnf(aiClassifierVF, cloud, 32).
 vnf(alertManagerVF, cloud, 4).
-vnf(policyEnforcerVF, cloud, 8).
+vnf(policyEnforcerVF, cloud, 12).
 
 vnfXUser(trafficSplitterVF, l, (1, 25000), 8).
 vnfXUser(featureExtractorVF, l, (1, 25000), 16).
 vnfXUser(aiClassifierVF, l, (1, 25000), 32).
 vnfXUser(alertManagerVF, l, (1, 25000), 4).
-vnfXUser(policyEnforcerVF, l, (1, 25000), 8).
+vnfXUser(policyEnforcerVF, l, (1, 25000), 12).

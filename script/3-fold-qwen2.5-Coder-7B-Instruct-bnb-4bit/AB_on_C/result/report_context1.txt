@@ -3,15 +3,15 @@ File analizzato: output_context1_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The IT provider corpITOp requires a service to manage 5,000 office employees. This service must filter dangerous websites, 
-scan downloaded files for malware, and ensure that sensitive data does not leave the network. The service chain begins by connecting a <webFilterVF, 4> 
-allocated at the edge to a <malwareScannerVF, 16> located in the cloud; for this specific segment, it is mandatory that the latency remains below 10 milliseconds.
-Subsequently, the chain proceeds by connecting the <malwareScannerVF, 16> to a <dlpEngineVF, 8> located in the cloud, ensuring a bandwidth greater than 500 mbps 
-on this final link.
+scan downloaded files for malware, and ensure that sensitive data does not leave the network. Regarding requirements, 
+ensuring a mandatory latency below 10 milliseconds, the service chain establishes a connection between a <webFilterVF, 4> allocated at the edge 
+and a <malwareScannerVF, 16> located in the cloud. Following this, guaranteeing a bandwidth greater than 500 mbps, the service proceeds to connect 
+the <malwareScannerVF, 16> to a <dlpEngineVF, 8> located in the cloud.
 ==================================================
-Recall    (Omissioni)     : 0.4000
-Precision (Allucinazioni) : 0.4000
-Jaccard   (Globale)       : 0.2500
-F1-Score  (Equilibrio)    : 0.4000
+Recall    (Omissioni)     : 0.8000
+Precision (Allucinazioni) : 0.8000
+Jaccard   (Globale)       : 0.6667
+F1-Score  (Equilibrio)    : 0.8000
 ==================================================
 
 --- Fatti Estratti Ideale ---
@@ -28,12 +28,12 @@ vnfXUser(webFilterVF,l,(1,5000),4)
 
 --- Fatti Estratti LLM ---
 intent(corpITOp,5000)
-propertyExpectation(bandwidth,greater,soft,500,megabps,webFilterVF,dlpEngineVF)
+propertyExpectation(bandwidth,greater,soft,500,megabps,malwareScannerVF,dlpEngineVF)
 propertyExpectation(latency,lower,hard,10,ms,webFilterVF,dlpEngineVF)
 target([webFilterVF,malwareScannerVF,dlpEngineVF])
-vnf(dlpEngineVF,cloud,12)
+vnf(dlpEngineVF,cloud,8)
 vnf(malwareScannerVF,cloud,16)
-vnf(webFilterVF,edge,8)
-vnfXUser(dlpEngineVF,l,(1,5000),12)
+vnf(webFilterVF,edge,4)
+vnfXUser(dlpEngineVF,l,(1,5000),8)
 vnfXUser(malwareScannerVF,l,(1,5000),16)
-vnfXUser(webFilterVF,l,(1,5000),8)
+vnfXUser(webFilterVF,l,(1,5000),4)

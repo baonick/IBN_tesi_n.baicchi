@@ -1,11 +1,11 @@
-intent(liveSubtitleIntent, liveSubsOp, 10000, liveSubtitleService).
+intent(liveSubtitleIntent, liveSubsOp, 10000, liveCaptioningService).
 
 propertyExpectation(latReq, liveSubtitleIntent, latency, lower, hard, 20, ms, speechToTextVF, subtitleInjectorVF).
 propertyExpectation(hwReq, liveSubtitleIntent, totChainHW, lower, soft, 100, gb, _, _).
 
 propertyExpectation(cachReq, liveSubtitleIntent, caching, _, audioExtractorVF, _).
 
-target(liveSubtitleService, [audioExtractorVF, speechToTextVF, multiTranslatorVF, subtitleInjectorVF]).
+target(liveCaptioningService, [audioExtractorVF, speechToTextVF, multiTranslatorVF, subtitleInjectorVF]).
 
 vnf(audioExtractorVF, edge, 8).
 vnf(speechToTextVF, cloud, 32).

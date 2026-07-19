@@ -2,13 +2,12 @@ RISULTATI PER CONTEXT28
 File analizzato: output_context28_intentA.txt
 ==================================================
 --- INTENTO TESTUALE ---
-The industrial provider factoryCloudOp requires an augmented reality back-end service to support 500 active smart glasses on the shop floor. 
-This service sends visual technical instructions to workers' headsets, overlaying maintenance data on the framed machinery in real time. 
-The service chain begins with an <arStreamReceiverVF, 12> allocated at the edge. The chain then connects to <arPoseEstimatorVF, 24> located in the 
-cloud and a <dataOverlayEngineVF, 32> located in the cloud; for these two intensive blocks, it is mandatory that they are isolated on dedicated hardware nodes, 
-while ensuring that the network bandwidth between the initial <arStreamReceiverVF, 12> and the <arPoseEstimatorVF, 24> remains higher than 200 mbps. Finally, the system 
-routes the processed graphics to an <arStreamDispatcherVF, 16> located in the cloud, ensuring it is strictly required that the latency from the <arStreamReceiverVF, 12> 
-to this <arStreamDispatcherVF, 16> remains below 12 ms. For the overall infrastructure, it is ideally preferred that the total chain hardware remains lower than 90 gb.
+The industrial provider factoryCloudOp requires an augmented reality back-end service to support 500 active smart glasses on the shop floor. This service 
+sends visual technical instructions to workers' headsets, overlaying maintenance data on the framed machinery in real time. The deployed service chain 
+includes, in order: an <arStreamReceiverVF, 12> allocated at the edge, an <arPoseEstimatorVF, 24> located in the cloud, a <dataOverlayEngineVF, 32> located in the cloud, 
+and an <arStreamDispatcherVF, 16> located in the cloud. Regarding system performance, the provider requires that the network bandwidth from the initial node to the <arPoseEstimatorVF, 24> remains higher than 200 mbps. To prevent any lag in the workers' field of view, it is strictly required that the end-to-end 
+latency from the <arStreamReceiverVF, 12> to the final <arStreamDispatcherVF, 16> remains below 12 ms. To avoid computational interference, it is mandatory that <arPoseEstimatorVF, 24> and the <dataOverlayEngineVF, 32> are hosted on separate, completely dedicated physical servers. Finally, the provider prefers that the total chain 
+hardware remains lower than 90 gb to control operational costs.
 ==================================================
 Recall    (Omissioni)     : 0.8000
 Precision (Allucinazioni) : 0.8571

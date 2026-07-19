@@ -56,7 +56,7 @@ def main():
         file_ideale = os.path.join(cartella_intenti_ideali, context_name, "facts.pl")
         
         # Definiamo il percorso per il file di testo dell'intento
-        file_testo_intento = os.path.join(cartella_intenti_ideali, context_name, "intentB.txt")
+        file_testo_intento = os.path.join(cartella_intenti_ideali, context_name, "intentC.txt")
         
         if not os.path.exists(file_ideale):
             print(f"Attenzione: file ideale non trovato per {context_name} ({file_ideale})")

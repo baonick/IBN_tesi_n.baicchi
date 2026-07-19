@@ -1,20 +1,20 @@
-intent(cinemaRenderIntent, cinemaRenderOp, 5000, postProductionRenderingService).
+intent(renderingPipelineIntent, cinemaRenderOp, 5000, renderingService).
 
-propertyExpectation(hwReq, cinemaRenderIntent, totChainHW, lower, soft, 800, gb, _, _).
+propertyExpectation(hwReq, renderingPipelineIntent, totChainHW, lower, soft, 800, gb, _, _).
 
-propertyExpectation(cachReq, cinemaRenderIntent, caching, _, _, colorGraderVF).
-propertyExpectation(compReq, cinemaRenderIntent, compression, _, sceneReceiverVF, _).
-
-target(postProductionRenderingService, [sceneReceiverVF, assetValidatorVF, renderDistributorVF, frameAssemblerVF, colorGraderVF]).
+target(renderingService, [sceneReceiverVF, assetValidatorVF, renderDistributorVF, frameAssemblerVF, colorGraderVF]).
 
 vnf(sceneReceiverVF, edge, 16).
-vnf(assetValidatorVF, cloud, 8).
+vnf(assetValidatorVF, cloud, 12).
 vnf(renderDistributorVF, cloud, 32).
-vnf(frameAssemblerVF, cloud, 16).
-vnf(colorGraderVF, cloud, 12).
+vnf(frameAssemblerVF, cloud, 24).
+vnf(colorGraderVF, cloud, 20).
 
 vnfXUser(sceneReceiverVF, l, (1, 5000), 16).
-vnfXUser(assetValidatorVF, l, (1, 5000), 8).
+vnfXUser(assetValidatorVF, l, (1, 5000), 12).
 vnfXUser(renderDistributorVF, l, (1, 5000), 32).
-vnfXUser(frameAssemblerVF, l, (1, 5000), 16).
-vnfXUser(colorGraderVF, l, (1, 5000), 12).
+vnfXUser(frameAssemblerVF, l, (1, 5000), 24).
+vnfXUser(colorGraderVF, l, (1, 5000), 20).
+
+propertyExpectation(cachReq, renderingPipelineIntent, caching, _, _, colorGraderVF).
+propertyExpectation(compReq, renderingPipelineIntent, compression, _, sceneReceiverVF, _).

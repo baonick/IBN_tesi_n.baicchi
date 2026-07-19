@@ -3,10 +3,10 @@ File analizzato: output_context1_intentA.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The IT provider corpITOp requires a service to manage 5,000 office employees. This service must filter dangerous websites, 
-scan downloaded files for malware, and ensure that sensitive data does not leave the network. The service chain begins by connecting a <webFilterVF, 4> 
-allocated at the edge to a <malwareScannerVF, 16> located in the cloud; for this specific segment, it is mandatory that the latency remains below 10 milliseconds.
-Subsequently, the chain proceeds by connecting the <malwareScannerVF, 16> to a <dlpEngineVF, 8> located in the cloud, ensuring a bandwidth greater than 500 mbps 
-on this final link.
+scan downloaded files for malware, and ensure that sensitive data does not leave the network. The service chain includes, 
+in order: a <webFilterVF, 4> allocated at the edge, a <malwareScannerVF, 16> located in the cloud, and a <dlpEngineVF, 8> located in the cloud. 
+Regarding requirements, it is a mandatory requirement that the latency from <webFilterVF, 4> to the <malwareScannerVF, 16> remains below 10 milliseconds. 
+Furthermore, the bandwidth between the <malwareScannerVF, 16> and the <dlpEngineVF, 8> must be greater than 500 mbps.
 ==================================================
 Recall    (Omissioni)     : 1.0000
 Precision (Allucinazioni) : 1.0000

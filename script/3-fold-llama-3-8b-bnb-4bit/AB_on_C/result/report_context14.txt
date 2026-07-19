@@ -3,11 +3,10 @@ File analizzato: output_context14_intentC.txt
 ==================================================
 --- INTENTO TESTUALE ---
 The financial provider hftGlobalOp requires a high frequency trading service to manage 500,000 orders. This infrastructure receives stock prices, 
-executes decision algorithms, and sends purchase orders seeking the fastest network path. The service chain begins with a <marketFeedVF, 16> allocated at the edge. 
-For this component, caching is applied after it. The chain then connects to a <tradingAlgoVF, 32> allocated at the edge, ensuring that it is mandatory for the latency 
-from the <marketFeedVF, 16> to this <tradingAlgoVF, 32> to remain below 50 ms. The chain proceeds to a <riskCheckerVF, 16> located in the cloud; it is ideally preferred that the 
-bandwidth from the <tradingAlgoVF, 32> to this <riskCheckerVF, 16> remains higher than 5000 mbps. Finally, the system routes to an <orderDispatcherVF, 8> allocated at the edge, 
-with a preference that the latency from the <riskCheckerVF, 16> to this <orderDispatcherVF, 8> remains below 5 ms, and ensuring that logging is executed before it.
+executes decision algorithms, and sends purchase orders seeking the fastest network path. Specifying that caching is applied after the initial function, the service begins with a <marketFeedVF, 16> allocated at the edge. Mandating that the latency from this first component to the <tradingAlgoVF, 32> remains 
+below 50 ms, the chain connects to a <tradingAlgoVF, 32> allocated at the edge. Preferring that the bandwidth from the <tradingAlgoVF, 32> to the <riskCheckerVF, 16> remains 
+higher than 5000 mbps, the chain incorporates a <riskCheckerVF, 16> located in the cloud. Preferring that the latency from the <riskCheckerVF, 16> to the final node remains below 5 ms, and ensuring that logging is executed before this final component, the system completes the pipeline with an <orderDispatcherVF, 8> allocated 
+at the edge.
 ==================================================
 Recall    (Omissioni)     : 0.8667
 Precision (Allucinazioni) : 0.8667
