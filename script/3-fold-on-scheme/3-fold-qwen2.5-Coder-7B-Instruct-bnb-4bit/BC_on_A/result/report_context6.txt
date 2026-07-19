@@ -1,0 +1,49 @@
+RISULTATI PER CONTEXT6
+File analizzato: output_context6_intentA.txt
+==================================================
+--- INTENTO TESTUALE ---
+The government provider govMessagingOp requires a service to manage 50,000 institutional messages. This service receives digital communications,
+verifies the electronic signature of the sender, checks its integrity, and archives the message in a legal vault. The deployed service chain 
+includes, in order: a <msgReceiverVF, 8> allocated at the edge, a <sigVerifierVF, 16> located in the cloud, an <integrityCheckerVF, 12> located in the 
+cloud, and a <legalVaultVF, 32> located in the cloud. Regarding requirements, caching is applied after the <msgReceiverVF, 8>. Furthermore, the provider 
+prefers to keep the total chain hardware lower than 100 gb. It is a mandatory requirement that the <sigVerifierVF, 16> and the <integrityCheckerVF, 12> 
+operate on the same node. Finally, compression is applied before the <legalVaultVF, 32>.
+==================================================
+Recall    (Omissioni)     : 0.9286
+Precision (Allucinazioni) : 0.8667
+Jaccard   (Globale)       : 0.8125
+F1-Score  (Equilibrio)    : 0.8966
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(govMessagingOp,50000)
+propertyExpectation(affinity,same,hard,_,_,sigVerifierVF,integrityCheckerVF)
+propertyExpectation(caching,_,msgReceiverVF,_)
+propertyExpectation(compression,_,_,legalVaultVF)
+propertyExpectation(totChainHW,lower,soft,100,gb,_,_)
+target([msgReceiverVF,sigVerifierVF,integrityCheckerVF,legalVaultVF])
+vnf(integrityCheckerVF,cloud,12)
+vnf(legalVaultVF,cloud,32)
+vnf(msgReceiverVF,edge,8)
+vnf(sigVerifierVF,cloud,16)
+vnfXUser(integrityCheckerVF,l,(1,50000),12)
+vnfXUser(legalVaultVF,l,(1,50000),32)
+vnfXUser(msgReceiverVF,l,(1,50000),8)
+vnfXUser(sigVerifierVF,l,(1,50000),16)
+
+--- Fatti Estratti LLM ---
+intent(govMessagingOp,50000)
+propertyExpectation(affinity,same,hard,_,_,integrityCheckerVF,_)
+propertyExpectation(affinity,same,hard,_,_,sigVerifierVF,_)
+propertyExpectation(caching,_,msgReceiverVF,_)
+propertyExpectation(compression,_,_,legalVaultVF)
+propertyExpectation(totChainHW,lower,soft,100,gb,_,_)
+target([msgReceiverVF,sigVerifierVF,integrityCheckerVF,legalVaultVF])
+vnf(integrityCheckerVF,cloud,12)
+vnf(legalVaultVF,cloud,32)
+vnf(msgReceiverVF,edge,8)
+vnf(sigVerifierVF,cloud,16)
+vnfXUser(integrityCheckerVF,l,(1,50000),12)
+vnfXUser(legalVaultVF,l,(1,50000),32)
+vnfXUser(msgReceiverVF,l,(1,50000),8)
+vnfXUser(sigVerifierVF,l,(1,50000),16)

@@ -1,0 +1,45 @@
+RISULTATI PER CONTEXT9
+File analizzato: output_context9_intentC.txt
+==================================================
+--- INTENTO TESTUALE ---
+Media provider vodStreamOp needs a video-on-demand distribution service to handle 80,000 active subscribers. 
+This service optimizes movie distribution by encrypting content with DRM, compressing it into various formats, and storing it on nodes close 
+to the user to avoid buffering. By specifying that encoding be applied after the initial <drmEncryptorVF, 16> and preferring that this first 
+component and the subsequent <transcoderVF, 32> service be deployed on the same hosting node, the service begins with a <drmEncryptorVF, 16> hosted in the 
+cloud and connected to a <transcoderVF, 32> also hosted in the cloud. Requiring bandwidth exceeding 10,000 Mbps before moving on to the next element, 
+the chain includes a <cachingNodeVF, 12> node hosted at the edge. Finally, by ensuring that decoding is performed before the <cachingNodeVF, 12> at the edge, 
+the system completes the video-on-demand distribution pipeline.
+==================================================
+Recall    (Omissioni)     : 0.9167
+Precision (Allucinazioni) : 0.9167
+Jaccard   (Globale)       : 0.8462
+F1-Score  (Equilibrio)    : 0.9167
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(vodStreamOp,80000)
+propertyExpectation(affinity,same,soft,_,_,drmEncryptorVF,transcoderVF)
+propertyExpectation(bandwidth,greater,hard,10000,megabps,transcoderVF,cachingNodeVF)
+propertyExpectation(decoding,_,_,cachingNodeVF)
+propertyExpectation(encoding,_,drmEncryptorVF,_)
+target([drmEncryptorVF,transcoderVF,cachingNodeVF])
+vnf(cachingNodeVF,edge,12)
+vnf(drmEncryptorVF,cloud,16)
+vnf(transcoderVF,cloud,32)
+vnfXUser(cachingNodeVF,l,(1,80000),12)
+vnfXUser(drmEncryptorVF,l,(1,80000),16)
+vnfXUser(transcoderVF,l,(1,80000),32)
+
+--- Fatti Estratti LLM ---
+intent(vodStreamOp,80000)
+propertyExpectation(affinity,same,soft,_,_,drmEncryptorVF,transcoderVF)
+propertyExpectation(bandwidth,greater,soft,10000,megabps,_,cachingNodeVF)
+propertyExpectation(decoding,_,_,cachingNodeVF)
+propertyExpectation(encoding,_,drmEncryptorVF,_)
+target([drmEncryptorVF,transcoderVF,cachingNodeVF])
+vnf(cachingNodeVF,edge,12)
+vnf(drmEncryptorVF,cloud,16)
+vnf(transcoderVF,cloud,32)
+vnfXUser(cachingNodeVF,l,(1,80000),12)
+vnfXUser(drmEncryptorVF,l,(1,80000),16)
+vnfXUser(transcoderVF,l,(1,80000),32)

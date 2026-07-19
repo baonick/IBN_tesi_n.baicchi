@@ -1,0 +1,45 @@
+RISULTATI PER CONTEXT20
+File analizzato: output_context20_intentC.txt
+==================================================
+--- INTENTO TESTUALE ---
+The infrastructure provider serverMonOp requires a telemetry monitoring service to manage 50,000 virtual machines. This service collects temperature, 
+CPU load, and memory usage data, aggregating them to identify anomalies before failure occurs. Specifying that it is mandatory for the <telemetryCollectorVF, 8> and the <dataAggregatorVF, 16> to be deployed on the same hosting node, the service begins with a <telemetryCollectorVF, 8> at the edge connected 
+to a <dataAggregatorVF, 16> at the edge. Strictly requiring that the latency from the begin to the end of the chain remains below 100 ms, and preferring 
+that the bandwidth from the begin to the end of the chain remains higher than 2000 mbps, the chain incorporates an <anomalyDetectorVF, 24> in the cloud. 
+Finally, the system completes the pipeline with an <alertDispatcherVF, 8> in the cloud.
+==================================================
+Recall    (Omissioni)     : 0.9231
+Precision (Allucinazioni) : 0.9231
+Jaccard   (Globale)       : 0.8571
+F1-Score  (Equilibrio)    : 0.9231
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(serverMonOp,50000)
+propertyExpectation(affinity,same,hard,_,_,telemetryCollectorVF,dataAggregatorVF)
+propertyExpectation(bandwidth,greater,soft,2000,megabps,telemetryCollectorVF,alertDispatcherVF)
+propertyExpectation(latency,lower,hard,100,ms,telemetryCollectorVF,alertDispatcherVF)
+target([telemetryCollectorVF,dataAggregatorVF,anomalyDetectorVF,alertDispatcherVF])
+vnf(alertDispatcherVF,cloud,8)
+vnf(anomalyDetectorVF,cloud,24)
+vnf(dataAggregatorVF,edge,16)
+vnf(telemetryCollectorVF,edge,8)
+vnfXUser(alertDispatcherVF,l,(1,50000),8)
+vnfXUser(anomalyDetectorVF,l,(1,50000),24)
+vnfXUser(dataAggregatorVF,l,(1,50000),16)
+vnfXUser(telemetryCollectorVF,l,(1,50000),8)
+
+--- Fatti Estratti LLM ---
+intent(serverMonOp,50000)
+propertyExpectation(affinity,same,hard,_,_,telemetryCollectorVF,dataAggregatorVF)
+propertyExpectation(bandwidth,greater,soft,2000,megabps,telemetryCollectorVF,alertDispatcherVF)
+propertyExpectation(latency,lower,hard,100,ms,telemetryCollectorVF,anomalyDetectorVF)
+target([telemetryCollectorVF,dataAggregatorVF,anomalyDetectorVF,alertDispatcherVF])
+vnf(alertDispatcherVF,cloud,8)
+vnf(anomalyDetectorVF,cloud,24)
+vnf(dataAggregatorVF,edge,16)
+vnf(telemetryCollectorVF,edge,8)
+vnfXUser(alertDispatcherVF,l,(1,50000),8)
+vnfXUser(anomalyDetectorVF,l,(1,50000),24)
+vnfXUser(dataAggregatorVF,l,(1,50000),16)
+vnfXUser(telemetryCollectorVF,l,(1,50000),8)

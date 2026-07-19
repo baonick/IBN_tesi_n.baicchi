@@ -1,0 +1,46 @@
+RISULTATI PER CONTEXT29
+File analizzato: output_context29_intentC.txt
+==================================================
+--- INTENTO TESTUALE ---
+The digital provider subscriptionOp requires a SaaS subscription management service to manage 50,000 active accounts. This recurring billing service handles 
+customer payment cycles, software plan upgrades, and automated reminders for expired credit cards. Specifying that customer privacy is applied after the 
+initial point, the service begins with a <subscriptionIngesterVF, 12> allocated at the edge. Ensuring that decoding is executed before the <billingCycleProcessorVF, 24>, the chain connects to a <billingCycleProcessorVF, 24> located in the cloud. Mandating that transaction logging is executed before the <dunningManagerVF, 16>, 
+the pipeline incorporates a <dunningManagerVF, 16> located in the cloud. Finally, ensuring encoding is executed before the <invoiceGeneratorVF, 16> stage, the system 
+completes the pipeline with an <invoiceGeneratorVF, 16> located in the cloud.
+==================================================
+Recall    (Omissioni)     : 0.7857
+Precision (Allucinazioni) : 0.8462
+Jaccard   (Globale)       : 0.6875
+F1-Score  (Equilibrio)    : 0.8148
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(subscriptionOp,50000)
+propertyExpectation(decoding,_,_,billingCycleProcessorVF)
+propertyExpectation(encoding,_,_,invoiceGeneratorVF)
+propertyExpectation(logging,_,_,dunningManagerVF)
+propertyExpectation(privacy,_,subscriptionIngesterVF,_)
+target([subscriptionIngesterVF,billingCycleProcessorVF,dunningManagerVF,invoiceGeneratorVF])
+vnf(billingCycleProcessorVF,cloud,24)
+vnf(dunningManagerVF,cloud,16)
+vnf(invoiceGeneratorVF,cloud,16)
+vnf(subscriptionIngesterVF,edge,12)
+vnfXUser(billingCycleProcessorVF,l,(1,50000),24)
+vnfXUser(dunningManagerVF,l,(1,50000),16)
+vnfXUser(invoiceGeneratorVF,l,(1,50000),16)
+vnfXUser(subscriptionIngesterVF,l,(1,50000),12)
+
+--- Fatti Estratti LLM ---
+intent(subscriptionOp,50000)
+propertyExpectation(bandwidth,greater,soft,100,megabps,_,dunningManagerVF)
+propertyExpectation(encoding,_,_,invoiceGeneratorVF)
+propertyExpectation(latency,lower,soft,5,ms,subscriptionIngesterVF,_)
+target([subscriptionIngesterVF,billingCycleProcessorVF,dunningManagerVF,invoiceGeneratorVF])
+vnf(billingCycleProcessorVF,cloud,24)
+vnf(dunningManagerVF,cloud,16)
+vnf(invoiceGeneratorVF,cloud,16)
+vnf(subscriptionIngesterVF,edge,12)
+vnfXUser(billingCycleProcessorVF,l,(1,50000),24)
+vnfXUser(dunningManagerVF,l,(1,50000),16)
+vnfXUser(invoiceGeneratorVF,l,(1,50000),16)
+vnfXUser(subscriptionIngesterVF,l,(1,50000),12)

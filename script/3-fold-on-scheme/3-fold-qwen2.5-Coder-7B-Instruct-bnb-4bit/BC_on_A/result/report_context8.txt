@@ -1,0 +1,49 @@
+RISULTATI PER CONTEXT8
+File analizzato: output_context8_intentA.txt
+==================================================
+--- INTENTO TESTUALE ---
+The media provider mediaBroadcastOp requires a live multicamera streaming service to support 30,000 concurrent viewers. 
+This system receives video streams from different angles, allows cloud mixing, adds advertising graphics, and distributes the signal to 
+thousands of viewers simultaneously. The deployed service chain includes, in order: a <streamIngesterVF, 12> allocated at the edge, a <cloudStudioVF, 32> 
+located in the cloud, a <graphicInjectorVF, 16> located in the cloud, and a <streamDistributorVF, 24> located in the cloud. Regarding requirements, 
+compression is applied after the <streamIngesterVF, 12>. Furthermore, it is strictly required that the bandwidth from the <graphicInjectorVF, 16> to 
+the <streamDistributorVF, 24> remains higher than 5000 mbps. Additionally, the provider prefers that the total chain hardware is lower than 150 gb. 
+Finally, caching is executed before the <streamDistributorVF, 24>.
+==================================================
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(mediaBroadcastOp,30000)
+propertyExpectation(bandwidth,greater,hard,5000,megabps,graphicInjectorVF,streamDistributorVF)
+propertyExpectation(caching,_,_,streamDistributorVF)
+propertyExpectation(compression,_,streamIngesterVF,_)
+propertyExpectation(totChainHW,lower,soft,150,gb,_,_)
+target([streamIngesterVF,cloudStudioVF,graphicInjectorVF,streamDistributorVF])
+vnf(cloudStudioVF,cloud,32)
+vnf(graphicInjectorVF,cloud,16)
+vnf(streamDistributorVF,cloud,24)
+vnf(streamIngesterVF,edge,12)
+vnfXUser(cloudStudioVF,l,(1,30000),32)
+vnfXUser(graphicInjectorVF,l,(1,30000),16)
+vnfXUser(streamDistributorVF,l,(1,30000),24)
+vnfXUser(streamIngesterVF,l,(1,30000),12)
+
+--- Fatti Estratti LLM ---
+intent(mediaBroadcastOp,30000)
+propertyExpectation(bandwidth,greater,hard,5000,megabps,graphicInjectorVF,streamDistributorVF)
+propertyExpectation(caching,_,_,streamDistributorVF)
+propertyExpectation(compression,_,streamIngesterVF,_)
+propertyExpectation(totChainHW,lower,soft,150,gb,_,_)
+target([streamIngesterVF,cloudStudioVF,graphicInjectorVF,streamDistributorVF])
+vnf(cloudStudioVF,cloud,32)
+vnf(graphicInjectorVF,cloud,16)
+vnf(streamDistributorVF,cloud,24)
+vnf(streamIngesterVF,edge,12)
+vnfXUser(cloudStudioVF,l,(1,30000),32)
+vnfXUser(graphicInjectorVF,l,(1,30000),16)
+vnfXUser(streamDistributorVF,l,(1,30000),24)
+vnfXUser(streamIngesterVF,l,(1,30000),12)

@@ -1,0 +1,47 @@
+RISULTATI PER CONTEXT15
+File analizzato: output_context15_intentA.txt
+==================================================
+--- INTENTO TESTUALE ---
+The financial provider onlineBankOp requires a digital identity verification service to manage 10,000 daily uploads. This service processes photos of 
+documents uploaded by users, verifies their authenticity, and compares the data with international blacklists to prevent money laundering. 
+The deployed service chain includes, in order: a <documentReceiverVF, 12> allocated at the edge, an <authenticityCheckerVF, 24> located in the cloud, an <amlMatcherVF, 16> 
+located in the cloud, and a <profileCreatorVF, 16> located in the cloud. Regarding requirements, encoding is applied after the <documentReceiverVF, 12>. Security is 
+executed before the <authenticityCheckerVF, 24>. Privacy is applied after the <amlMatcherVF, 16>. Finally, compression is executed before the <profileCreatorVF, 16>.
+==================================================
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(onlineBankOp,10000)
+propertyExpectation(compression,_,_,profileCreatorVF)
+propertyExpectation(encoding,_,documentReceiverVF,_)
+propertyExpectation(privacy,_,amlMatcherVF,_)
+propertyExpectation(security,_,_,authenticityCheckerVF)
+target([documentReceiverVF,authenticityCheckerVF,amlMatcherVF,profileCreatorVF])
+vnf(amlMatcherVF,cloud,16)
+vnf(authenticityCheckerVF,cloud,24)
+vnf(documentReceiverVF,edge,12)
+vnf(profileCreatorVF,cloud,16)
+vnfXUser(amlMatcherVF,l,(1,10000),16)
+vnfXUser(authenticityCheckerVF,l,(1,10000),24)
+vnfXUser(documentReceiverVF,l,(1,10000),12)
+vnfXUser(profileCreatorVF,l,(1,10000),16)
+
+--- Fatti Estratti LLM ---
+intent(onlineBankOp,10000)
+propertyExpectation(compression,_,_,profileCreatorVF)
+propertyExpectation(encoding,_,documentReceiverVF,_)
+propertyExpectation(privacy,_,amlMatcherVF,_)
+propertyExpectation(security,_,_,authenticityCheckerVF)
+target([documentReceiverVF,authenticityCheckerVF,amlMatcherVF,profileCreatorVF])
+vnf(amlMatcherVF,cloud,16)
+vnf(authenticityCheckerVF,cloud,24)
+vnf(documentReceiverVF,edge,12)
+vnf(profileCreatorVF,cloud,16)
+vnfXUser(amlMatcherVF,l,(1,10000),16)
+vnfXUser(authenticityCheckerVF,l,(1,10000),24)
+vnfXUser(documentReceiverVF,l,(1,10000),12)
+vnfXUser(profileCreatorVF,l,(1,10000),16)

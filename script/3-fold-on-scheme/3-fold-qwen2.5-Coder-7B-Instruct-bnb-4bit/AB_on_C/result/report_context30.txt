@@ -1,0 +1,50 @@
+RISULTATI PER CONTEXT30
+File analizzato: output_context30_intentC.txt
+==================================================
+--- INTENTO TESTUALE ---
+The software provider devToolsOp requires a code efficiency analyzer service to manage 20,000 daily evaluation requests. This platform receives code snippets, 
+executes a simulated runtime execution, and suggests specific optimizations to reduce computational resource consumption. Specifying that data caching is applied 
+after the second function, the service begins with a <codeReceiverVF, 8> allocated at the edge linked to a <syntaxValidatorVF, 12> located in the cloud. The pipeline proceeds 
+through a <sandboxSimulatorVF, 32> located in the cloud and an <optimizationEngineVF, 24> located in the cloud. Finally, preferring that the total chain hardware remains lower 
+than 110 gb, and ensuring that data compression is applied after the final layer, the system completes the pipeline with a <developersReportGeneratorVF, 16> located in 
+the cloud.
+==================================================
+Recall    (Omissioni)     : 0.8667
+Precision (Allucinazioni) : 0.8667
+Jaccard   (Globale)       : 0.7647
+F1-Score  (Equilibrio)    : 0.8667
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(devToolsOp,20000)
+propertyExpectation(caching,_,syntaxValidatorVF,_)
+propertyExpectation(compression,_,developersReportGeneratorVF,_)
+propertyExpectation(totChainHW,lower,soft,110,gb,_,_)
+target([codeReceiverVF,syntaxValidatorVF,sandboxSimulatorVF,optimizationEngineVF,developersReportGeneratorVF])
+vnf(codeReceiverVF,edge,8)
+vnf(developersReportGeneratorVF,cloud,16)
+vnf(optimizationEngineVF,cloud,24)
+vnf(sandboxSimulatorVF,cloud,32)
+vnf(syntaxValidatorVF,cloud,12)
+vnfXUser(codeReceiverVF,l,(1,20000),8)
+vnfXUser(developersReportGeneratorVF,l,(1,20000),16)
+vnfXUser(optimizationEngineVF,l,(1,20000),24)
+vnfXUser(sandboxSimulatorVF,l,(1,20000),32)
+vnfXUser(syntaxValidatorVF,l,(1,20000),12)
+
+--- Fatti Estratti LLM ---
+intent(devToolsOp,20000)
+propertyExpectation(caching,_,sandboxSimulatorVF,_)
+propertyExpectation(compression,_,optimizationEngineVF,_)
+propertyExpectation(totChainHW,lower,soft,110,gb,_,_)
+target([codeReceiverVF,syntaxValidatorVF,sandboxSimulatorVF,optimizationEngineVF,developersReportGeneratorVF])
+vnf(codeReceiverVF,edge,8)
+vnf(developersReportGeneratorVF,cloud,16)
+vnf(optimizationEngineVF,cloud,24)
+vnf(sandboxSimulatorVF,cloud,32)
+vnf(syntaxValidatorVF,cloud,12)
+vnfXUser(codeReceiverVF,l,(1,20000),8)
+vnfXUser(developersReportGeneratorVF,l,(1,20000),16)
+vnfXUser(optimizationEngineVF,l,(1,20000),24)
+vnfXUser(sandboxSimulatorVF,l,(1,20000),32)
+vnfXUser(syntaxValidatorVF,l,(1,20000),12)

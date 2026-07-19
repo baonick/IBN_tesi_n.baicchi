@@ -1,0 +1,50 @@
+RISULTATI PER CONTEXT14
+File analizzato: output_context14_intentB.txt
+==================================================
+--- INTENTO TESTUALE ---
+The financial provider hftGlobalOp requires a high frequency trading service to manage 500,000 orders. This infrastructure receives stock prices, 
+executes decision algorithms, and sends purchase orders seeking the fastest network path. The service chain begins with a <marketFeedVF, 16> allocated at the edge. 
+For this component, caching is applied after it. The chain then connects to a <tradingAlgoVF, 32> allocated at the edge, ensuring that it is mandatory for the latency 
+from the <marketFeedVF, 16> to this <tradingAlgoVF, 32> to remain below 50 ms. The chain proceeds to a <riskCheckerVF, 16> located in the cloud; it is ideally preferred that the 
+bandwidth from the <tradingAlgoVF, 32> to this <riskCheckerVF, 16> remains higher than 5000 mbps. Finally, the system routes to an <orderDispatcherVF, 8> allocated at the edge, 
+with a preference that the latency from the <riskCheckerVF, 16> to this <orderDispatcherVF, 8> remains below 5 ms, and ensuring that logging is executed before it.
+==================================================
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(hftGlobalOp,500000)
+propertyExpectation(bandwidth,greater,soft,5000,megabps,tradingAlgoVF,riskCheckerVF)
+propertyExpectation(caching,_,marketFeedVF,_)
+propertyExpectation(latency,lower,hard,50,ms,marketFeedVF,tradingAlgoVF)
+propertyExpectation(latency,lower,soft,5,ms,riskCheckerVF,orderDispatcherVF)
+propertyExpectation(logging,_,_,orderDispatcherVF)
+target([marketFeedVF,tradingAlgoVF,riskCheckerVF,orderDispatcherVF])
+vnf(marketFeedVF,edge,16)
+vnf(orderDispatcherVF,edge,8)
+vnf(riskCheckerVF,cloud,16)
+vnf(tradingAlgoVF,edge,32)
+vnfXUser(marketFeedVF,l,(1,500000),16)
+vnfXUser(orderDispatcherVF,l,(1,500000),8)
+vnfXUser(riskCheckerVF,l,(1,500000),16)
+vnfXUser(tradingAlgoVF,l,(1,500000),32)
+
+--- Fatti Estratti LLM ---
+intent(hftGlobalOp,500000)
+propertyExpectation(bandwidth,greater,soft,5000,megabps,tradingAlgoVF,riskCheckerVF)
+propertyExpectation(caching,_,marketFeedVF,_)
+propertyExpectation(latency,lower,hard,50,ms,marketFeedVF,tradingAlgoVF)
+propertyExpectation(latency,lower,soft,5,ms,riskCheckerVF,orderDispatcherVF)
+propertyExpectation(logging,_,_,orderDispatcherVF)
+target([marketFeedVF,tradingAlgoVF,riskCheckerVF,orderDispatcherVF])
+vnf(marketFeedVF,edge,16)
+vnf(orderDispatcherVF,edge,8)
+vnf(riskCheckerVF,cloud,16)
+vnf(tradingAlgoVF,edge,32)
+vnfXUser(marketFeedVF,l,(1,500000),16)
+vnfXUser(orderDispatcherVF,l,(1,500000),8)
+vnfXUser(riskCheckerVF,l,(1,500000),16)
+vnfXUser(tradingAlgoVF,l,(1,500000),32)

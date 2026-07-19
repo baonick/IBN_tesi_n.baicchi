@@ -1,0 +1,19 @@
+intent(postMonitorIntent, healthCareOp, 5000, postOperativeMonitoringService).
+
+propertyExpectation(latReq, postOperativeMonitoringIntent, latency, lower, hard, 100, ms, patientDataReceiverVF, doctorNotifierVF).
+propertyExpectation(hwReq, postOperativeMonitoringIntent, totChainHW, lower, soft, 80, gb, _, _).
+
+propertyExpectation(privReq, postOperativeMonitoringIntent, privacy, _, patientDataReceiverVF, _).
+propertyExpectation(logReq, postOperativeMonitoringIntent, logging, _, _, medicalAlertLoggerVF).
+
+target(postOperativeMonitoringService, [patientDataReceiverVF, cardiacAnomalyAnalyzerVF, medicalAlertLoggerVF, doctorNotifierVF]).
+
+vnf(patientDataReceiverVF, edge, 8).
+vnf(cardiacAnomalyAnalyzerVF, cloud, 24).
+vnf(medicalAlertLoggerVF, cloud, 12).
+vnf(doctorNotifierVF, cloud, 8).
+
+vnfXUser(patientDataReceiverVF, l, (1, 5000), 8).
+vnfXUser(cardiacAnomalyAnalyzerVF, l, (1, 5000), 24).
+vnfXUser(medicalAlertLoggerVF, l, (1, 5000), 12).
+vnfXUser(doctorNotifierVF, l, (1, 5000), 8).

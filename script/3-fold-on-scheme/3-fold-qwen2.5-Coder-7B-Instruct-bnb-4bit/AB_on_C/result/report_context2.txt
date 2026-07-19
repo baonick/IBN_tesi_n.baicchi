@@ -1,0 +1,48 @@
+RISULTATI PER CONTEXT2
+File analizzato: output_context2_intentC.txt
+==================================================
+--- INTENTO TESTUALE ---
+The cybersecurity provider secureMailOp requires a service to manage 10,000 corporate mailboxes. This pipeline intercepts incoming emails, 
+removes phishing links, analyzes attachments in an isolated environment, and delivers only safe messages to the server. Requiring decoding 
+to be applied after the initial node, the chain begins with a <mailGatewayVF, 4> allocated at the edge. Preferring a latency below 50 milliseconds, 
+the <mailGatewayVF, 4> connects to a <phishingFilterVF, 8> located in the cloud. With a mandatory requirement for bandwidth higher than 100 Mbps, the filter 
+links to a <sandboxScannerVF, 16> located in the cloud. Applying strictly required logging before this node, the <sandboxScannerVF, 16> is integrated into 
+the chain. Finally, the service concludes by connecting the <sandboxScannerVF, 16> to a <safeDeliveryVF, 4> node located in the cloud.
+==================================================
+Recall    (Omissioni)     : 0.9286
+Precision (Allucinazioni) : 0.9286
+Jaccard   (Globale)       : 0.8667
+F1-Score  (Equilibrio)    : 0.9286
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(secureMailOp,10000)
+propertyExpectation(bandwidth,greater,hard,100,megabps,phishingFilterVF,sandboxScannerVF)
+propertyExpectation(decoding,_,mailGatewayVF,_)
+propertyExpectation(latency,lower,soft,50,ms,mailGatewayVF,phishingFilterVF)
+propertyExpectation(logging,_,_,sandboxScannerVF)
+target([mailGatewayVF,phishingFilterVF,sandboxScannerVF,safeDeliveryVF])
+vnf(mailGatewayVF,edge,4)
+vnf(phishingFilterVF,cloud,8)
+vnf(safeDeliveryVF,cloud,4)
+vnf(sandboxScannerVF,cloud,16)
+vnfXUser(mailGatewayVF,l,(1,10000),4)
+vnfXUser(phishingFilterVF,l,(1,10000),8)
+vnfXUser(safeDeliveryVF,l,(1,10000),4)
+vnfXUser(sandboxScannerVF,l,(1,10000),16)
+
+--- Fatti Estratti LLM ---
+intent(secureMailOp,10000)
+propertyExpectation(bandwidth,greater,hard,100,megabps,phishingFilterVF,sandboxScannerVF)
+propertyExpectation(decoding,_,mailGatewayVF,_)
+propertyExpectation(latency,lower,soft,50,ms,mailGatewayVF,phishingFilterVF)
+propertyExpectation(logging,_,sandboxScannerVF,_)
+target([mailGatewayVF,phishingFilterVF,sandboxScannerVF,safeDeliveryVF])
+vnf(mailGatewayVF,edge,4)
+vnf(phishingFilterVF,cloud,8)
+vnf(safeDeliveryVF,cloud,4)
+vnf(sandboxScannerVF,cloud,16)
+vnfXUser(mailGatewayVF,l,(1,10000),4)
+vnfXUser(phishingFilterVF,l,(1,10000),8)
+vnfXUser(safeDeliveryVF,l,(1,10000),4)
+vnfXUser(sandboxScannerVF,l,(1,10000),16)

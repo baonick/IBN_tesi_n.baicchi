@@ -1,0 +1,55 @@
+RISULTATI PER CONTEXT12
+File analizzato: output_context12_intentA.txt
+==================================================
+--- INTENTO TESTUALE ---
+The enterprise provider corpDocOp requires a document classification engine to manage 50,000 daily files. This system analyzes PDF files or 
+OCR scans, identifies the document type like invoice, contract, or reminder, and routes it to the competent business function. 
+The deployed service chain includes, in order: an <ocrScannerVF, 16> allocated at the edge, a <textExtractorVF, 12> located in the edge, an <aiDocumentClassifierVF, 32> located in the cloud, a <dataRedactorVF, 16> located in the cloud, and adocumentRouterVF located in the cloud. Regarding requirements, 
+security is applied after the <ocrScannerVF, 16>. Furthermore, it is a mandatory requirement that the <ocrScannerVF, 16> and the <textExtractorVF, 12> are deployed 
+on the same hosting node. It is strictly required that the latency from the <textExtractorVF, 12> to the <aiDocumentClassifierVF, 32> remains below 50 ms. 
+Additionally, privacy is executed before the <dataRedactorVF, 16>. Finally, the provider prefers that the bandwidth from the <aiDocumentClassifierVF, 32> to 
+the <documentRouterVF, 8> remains higher than 500 mbps.
+==================================================
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(corpDocOp,50000)
+propertyExpectation(affinity,same,hard,_,_,ocrScannerVF,textExtractorVF)
+propertyExpectation(bandwidth,greater,soft,500,megabps,aiDocumentClassifierVF,documentRouterVF)
+propertyExpectation(latency,lower,hard,50,ms,textExtractorVF,aiDocumentClassifierVF)
+propertyExpectation(privacy,_,_,dataRedactorVF)
+propertyExpectation(security,_,ocrScannerVF,_)
+target([ocrScannerVF,textExtractorVF,aiDocumentClassifierVF,dataRedactorVF,documentRouterVF])
+vnf(aiDocumentClassifierVF,cloud,32)
+vnf(dataRedactorVF,cloud,16)
+vnf(documentRouterVF,cloud,8)
+vnf(ocrScannerVF,edge,16)
+vnf(textExtractorVF,edge,12)
+vnfXUser(aiDocumentClassifierVF,l,(1,50000),32)
+vnfXUser(dataRedactorVF,l,(1,50000),16)
+vnfXUser(documentRouterVF,l,(1,50000),8)
+vnfXUser(ocrScannerVF,l,(1,50000),16)
+vnfXUser(textExtractorVF,l,(1,50000),12)
+
+--- Fatti Estratti LLM ---
+intent(corpDocOp,50000)
+propertyExpectation(affinity,same,hard,_,_,ocrScannerVF,textExtractorVF)
+propertyExpectation(bandwidth,greater,soft,500,megabps,aiDocumentClassifierVF,documentRouterVF)
+propertyExpectation(latency,lower,hard,50,ms,textExtractorVF,aiDocumentClassifierVF)
+propertyExpectation(privacy,_,_,dataRedactorVF)
+propertyExpectation(security,_,ocrScannerVF,_)
+target([ocrScannerVF,textExtractorVF,aiDocumentClassifierVF,dataRedactorVF,documentRouterVF])
+vnf(aiDocumentClassifierVF,cloud,32)
+vnf(dataRedactorVF,cloud,16)
+vnf(documentRouterVF,cloud,8)
+vnf(ocrScannerVF,edge,16)
+vnf(textExtractorVF,edge,12)
+vnfXUser(aiDocumentClassifierVF,l,(1,50000),32)
+vnfXUser(dataRedactorVF,l,(1,50000),16)
+vnfXUser(documentRouterVF,l,(1,50000),8)
+vnfXUser(ocrScannerVF,l,(1,50000),16)
+vnfXUser(textExtractorVF,l,(1,50000),12)

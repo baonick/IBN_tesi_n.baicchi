@@ -1,0 +1,17 @@
+intent(renderingIntent, cinemaRenderOp, 5000, renderService).
+
+propertyExpectation(hwReq, renderingIntent, totChainHW, lower, soft, 800, gb, _, _).
+
+
+target(renderService, [sceneReceiverVF, assetValidatorVF, renderDistributorVF, frameAssemblerVF, colorGraderVF]).
+
+vnf(sceneReceiverVF, edge, 16).
+vnf(assetValidatorVF, cloud, 12).
+vnf(renderDistributorVF, cloud, 32).
+vnf(frameAssemblerVF, cloud, 24).
+vnf(colorGraderVF, cloud, 20).
+
+propertyExpectation(cachReq, renderingIntent, caching, _, _, colorGraderVF).
+
+propertyExpectation(compReq, renderingIntent, compression, _, sceneReceiverVF, _).
+propertyExpectation(cacheReq, renderingIntent, caching, _, _, colorGraderVF).

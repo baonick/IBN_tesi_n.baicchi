@@ -1,0 +1,57 @@
+RISULTATI PER CONTEXT18
+File analizzato: output_context18_intentC.txt
+==================================================
+--- INTENTO TESTUALE ---
+The municipal provider smartParkOp requires a parking management backend to handle 100,000 active parking spots. This system receives occupancy alerts, 
+updates the city map, and processes automatic payments. Specifying that compression is applied after the initial function, the service begins with 
+a <sensorDataCollectorVF, 8> at the edge. Mandating the next two components are 
+deployed on dedicated nodes, and ensuring encoding is applied before the <paymentProcessorVF, 24>, the chain connected to a <mapUpdaterVF, 16> in the cloud and a <paymentProcessorVF, 24> in the cloud. Ensuring that logging is executed before the <statusLoggerVF, 12> the chain continues to a <statusLoggerVF, 12> 
+in the cloud. The system includes a <securityEnforcerVF, 16> in the cloud. Applying security after the <paymentProcessorVF, 24>, and strictly requiring that the latency from the <sensorDataCollectorVF, 8> to the final <securityEnforcerVF, 16> remains below 30 ms, the system completes 
+the pipeline.
+==================================================
+Recall    (Omissioni)     : 0.8421
+Precision (Allucinazioni) : 0.8889
+Jaccard   (Globale)       : 0.7619
+F1-Score  (Equilibrio)    : 0.8649
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(smartParkOp,100000)
+propertyExpectation(affinity,dedicated,hard,_,_,mapUpdaterVF,_)
+propertyExpectation(affinity,dedicated,hard,_,_,paymentProcessorVF,_)
+propertyExpectation(compression,_,sensorDataCollectorVF,_)
+propertyExpectation(encoding,_,_,paymentProcessorVF)
+propertyExpectation(latency,lower,hard,30,ms,sensorDataCollectorVF,securityEnforcerVF)
+propertyExpectation(logging,_,_,statusLoggerVF)
+propertyExpectation(security,_,paymentProcessorVF,_)
+target([sensorDataCollectorVF,mapUpdaterVF,paymentProcessorVF,statusLoggerVF,securityEnforcerVF])
+vnf(mapUpdaterVF,cloud,16)
+vnf(paymentProcessorVF,cloud,24)
+vnf(securityEnforcerVF,cloud,16)
+vnf(sensorDataCollectorVF,edge,8)
+vnf(statusLoggerVF,cloud,12)
+vnfXUser(mapUpdaterVF,l,(1,100000),16)
+vnfXUser(paymentProcessorVF,l,(1,100000),24)
+vnfXUser(securityEnforcerVF,l,(1,100000),16)
+vnfXUser(sensorDataCollectorVF,l,(1,100000),8)
+vnfXUser(statusLoggerVF,l,(1,100000),12)
+
+--- Fatti Estratti LLM ---
+intent(smartParkOp,100000)
+propertyExpectation(affinity,dedicated,soft,_,_,_)
+propertyExpectation(compression,_,sensorDataCollectorVF,_)
+propertyExpectation(encoding,_,_,paymentProcessorVF)
+propertyExpectation(latency,lower,hard,30,ms,sensorDataCollectorVF,securityEnforcerVF)
+propertyExpectation(logging,_,_,statusLoggerVF)
+propertyExpectation(security,_,paymentProcessorVF,_)
+target([sensorDataCollectorVF,mapUpdaterVF,paymentProcessorVF,securityEnforcerVF,statusLoggerVF])
+vnf(mapUpdaterVF,cloud,16)
+vnf(paymentProcessorVF,cloud,24)
+vnf(securityEnforcerVF,cloud,16)
+vnf(sensorDataCollectorVF,edge,8)
+vnf(statusLoggerVF,cloud,12)
+vnfXUser(mapUpdaterVF,l,(1,100000),16)
+vnfXUser(paymentProcessorVF,l,(1,100000),24)
+vnfXUser(securityEnforcerVF,l,(1,100000),16)
+vnfXUser(sensorDataCollectorVF,l,(1,100000),8)
+vnfXUser(statusLoggerVF,l,(1,100000),12)

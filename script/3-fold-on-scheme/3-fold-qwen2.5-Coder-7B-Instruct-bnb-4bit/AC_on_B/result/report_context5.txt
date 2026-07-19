@@ -1,0 +1,52 @@
+RISULTATI PER CONTEXT5
+File analizzato: output_context5_intentB.txt
+==================================================
+--- INTENTO TESTUALE ---
+The network security provider secureCryptoOp requires an encrypted traffic analysis service to support 25,000 corporate users. This service inspects HTTPS flows 
+without fully decrypting them, using AI to identify malware or botnet patterns. The service chain begins with a <trafficSplitterVF, 8> allocated at the edge. For this 
+component, decoding is applied after it. It is mandatory that this <trafficSplitterVF, 8> and the next <featureExtractorVF, 16>, located in the edge, are deployed on the same 
+hosting node. The chain then proceeds to an <aiClassifierVF, 32> located in the cloud, followed by an <alertManagerVF, 4> located in the cloud. For the entire deployment, it is 
+ideally preferred that the total chain hardware remains lower than 80 gigabytes. Finally, the traffic is routed to a <policyEnforcerVF, 12> located in the cloud, ensuring 
+that security is executed before the <policyEnforcerVF, 12>.
+==================================================
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(secureCryptoOp,25000)
+propertyExpectation(affinity,same,hard,_,_,trafficSplitterVF,featureExtractorVF)
+propertyExpectation(decoding,_,trafficSplitterVF,_)
+propertyExpectation(security,_,_,policyEnforcerVF)
+propertyExpectation(totChainHW,lower,soft,80,gb,_,_)
+target([trafficSplitterVF,featureExtractorVF,aiClassifierVF,alertManagerVF,policyEnforcerVF])
+vnf(aiClassifierVF,cloud,32)
+vnf(alertManagerVF,cloud,4)
+vnf(featureExtractorVF,edge,16)
+vnf(policyEnforcerVF,cloud,12)
+vnf(trafficSplitterVF,edge,8)
+vnfXUser(aiClassifierVF,l,(1,25000),32)
+vnfXUser(alertManagerVF,l,(1,25000),4)
+vnfXUser(featureExtractorVF,l,(1,25000),16)
+vnfXUser(policyEnforcerVF,l,(1,25000),12)
+vnfXUser(trafficSplitterVF,l,(1,25000),8)
+
+--- Fatti Estratti LLM ---
+intent(secureCryptoOp,25000)
+propertyExpectation(affinity,same,hard,_,_,trafficSplitterVF,featureExtractorVF)
+propertyExpectation(decoding,_,trafficSplitterVF,_)
+propertyExpectation(security,_,_,policyEnforcerVF)
+propertyExpectation(totChainHW,lower,soft,80,gb,_,_)
+target([trafficSplitterVF,featureExtractorVF,aiClassifierVF,alertManagerVF,policyEnforcerVF])
+vnf(aiClassifierVF,cloud,32)
+vnf(alertManagerVF,cloud,4)
+vnf(featureExtractorVF,edge,16)
+vnf(policyEnforcerVF,cloud,12)
+vnf(trafficSplitterVF,edge,8)
+vnfXUser(aiClassifierVF,l,(1,25000),32)
+vnfXUser(alertManagerVF,l,(1,25000),4)
+vnfXUser(featureExtractorVF,l,(1,25000),16)
+vnfXUser(policyEnforcerVF,l,(1,25000),12)
+vnfXUser(trafficSplitterVF,l,(1,25000),8)

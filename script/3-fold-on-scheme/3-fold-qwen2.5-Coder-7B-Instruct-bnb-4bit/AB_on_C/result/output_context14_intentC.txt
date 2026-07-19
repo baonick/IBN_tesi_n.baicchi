@@ -1,0 +1,20 @@
+intent(hftTradingIntent, hftGlobalOp, 500000, hftTradingService).
+
+propertyExpectation(latReq1, hftTradingIntent, latency, lower, soft, 50, ms, marketFeedVF, tradingAlgoVF).
+propertyExpectation(bwReq, hftTradingIntent, bandwidth, greater, soft, 5000, megabps, tradingAlgoVF, riskCheckerVF).
+propertyExpectation(latReq2, hftTradingIntent, latency, lower, soft, 5, ms, riskCheckerVF, orderDispatcherVF).
+
+propertyExpectation(cachReq, hftTradingIntent, caching, _, marketFeedVF, _).
+propertyExpectation(logReq, hftTradingIntent, logging, _, _, riskCheckerVF).
+
+target(hftTradingService, [marketFeedVF, tradingAlgoVF, riskCheckerVF, orderDispatcherVF]).
+
+vnf(marketFeedVF, edge, 16).
+vnf(tradingAlgoVF, edge, 32).
+vnf(riskCheckerVF, cloud, 16).
+vnf(orderDispatcherVF, edge, 8).
+
+vnfXUser(marketFeedVF, l, (1, 500000), 16).
+vnfXUser(tradingAlgoVF, l, (1, 500000), 32).
+vnfXUser(riskCheckerVF, l, (1, 500000), 16).
+vnfXUser(orderDispatcherVF, l, (1, 500000), 8).

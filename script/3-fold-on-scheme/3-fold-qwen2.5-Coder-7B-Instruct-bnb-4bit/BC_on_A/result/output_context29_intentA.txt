@@ -1,0 +1,20 @@
+intent(saaSMgmtIntent, subscriptionOp, 50000, saasSubscriptionService).
+
+propertyExpectation(privReq, saaSMgmtIntent, privacy, _, subscriptionIngesterVF, _).
+propertyExpectation(decReq, saaSMgmtIntent, decoding, _, _, billingCycleProcessorVF).
+propertyExpectation(logReq, saaSMgmtIntent, logging, _, _, dunningManagerVF).
+propertyExpectation(encReq, saaSMgmtIntent, encoding, _, _, invoiceGeneratorVF).
+
+propertyExpectation(hwReq, saaSMgmtIntent, totChainHW, greater, soft, 72, gb, _, _).
+
+target(saasSubscriptionService, [subscriptionIngesterVF, billingCycleProcessorVF, dunningManagerVF, invoiceGeneratorVF]).
+
+vnf(subscriptionIngesterVF, edge, 12).
+vnf(billingCycleProcessorVF, cloud, 24).
+vnf(dunningManagerVF, cloud, 16).
+vnf(invoiceGeneratorVF, cloud, 16).
+
+vnfXUser(subscriptionIngesterVF, l, (1, 50000), 12).
+vnfXUser(billingCycleProcessorVF, l, (1, 50000), 24).
+vnfXUser(dunningManagerVF, l, (1, 50000), 16).
+vnfXUser(invoiceGeneratorVF, l, (1, 50000), 16).

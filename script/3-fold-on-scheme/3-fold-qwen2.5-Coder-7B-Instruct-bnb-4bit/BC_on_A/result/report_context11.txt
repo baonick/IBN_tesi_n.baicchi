@@ -1,0 +1,46 @@
+RISULTATI PER CONTEXT11
+File analizzato: output_context11_intentA.txt
+==================================================
+--- INTENTO TESTUALE ---
+The media provider liveSubsOp requires a live subtitling service to manage 10,000 concurrent streams. This service intercepts the audio of a 
+streaming event, transforms it into text via AI, translates it into three languages, and reinserts it into the video feed as subtitles. 
+The deployed service chain includes, in order: an <audioExtractorVF, 8> allocated at the edge, a <speechToTextVF, 32> function located in the cloud, 
+a <multiTranslatorVF, 24> located in the cloud, and a <subtitleInjectorVF, 12> allocated at the edge. Regarding requirements, caching is applied after 
+the <audioExtractorVF, 8>. Furthermore, the provider prefers that the total chain hardware remains lower than 100 gb. Finally, it is strictly 
+required that the latency from the <speechToTextVF, 32> function to the <subtitleInjectorVF, 12> remains below 20 ms.
+==================================================
+Recall    (Omissioni)     : 1.0000
+Precision (Allucinazioni) : 1.0000
+Jaccard   (Globale)       : 1.0000
+F1-Score  (Equilibrio)    : 1.0000
+==================================================
+
+--- Fatti Estratti Ideale ---
+intent(liveSubsOp,10000)
+propertyExpectation(caching,_,audioExtractorVF,_)
+propertyExpectation(latency,lower,hard,20,ms,speechToTextVF,subtitleInjectorVF)
+propertyExpectation(totChainHW,lower,soft,100,gb,_,_)
+target([audioExtractorVF,speechToTextVF,multiTranslatorVF,subtitleInjectorVF])
+vnf(audioExtractorVF,edge,8)
+vnf(multiTranslatorVF,cloud,24)
+vnf(speechToTextVF,cloud,32)
+vnf(subtitleInjectorVF,edge,12)
+vnfXUser(audioExtractorVF,l,(1,10000),8)
+vnfXUser(multiTranslatorVF,l,(1,10000),24)
+vnfXUser(speechToTextVF,l,(1,10000),32)
+vnfXUser(subtitleInjectorVF,l,(1,10000),12)
+
+--- Fatti Estratti LLM ---
+intent(liveSubsOp,10000)
+propertyExpectation(caching,_,audioExtractorVF,_)
+propertyExpectation(latency,lower,hard,20,ms,speechToTextVF,subtitleInjectorVF)
+propertyExpectation(totChainHW,lower,soft,100,gb,_,_)
+target([audioExtractorVF,speechToTextVF,multiTranslatorVF,subtitleInjectorVF])
+vnf(audioExtractorVF,edge,8)
+vnf(multiTranslatorVF,cloud,24)
+vnf(speechToTextVF,cloud,32)
+vnf(subtitleInjectorVF,edge,12)
+vnfXUser(audioExtractorVF,l,(1,10000),8)
+vnfXUser(multiTranslatorVF,l,(1,10000),24)
+vnfXUser(speechToTextVF,l,(1,10000),32)
+vnfXUser(subtitleInjectorVF,l,(1,10000),12)
