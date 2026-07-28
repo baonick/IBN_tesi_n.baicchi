@@ -181,3 +181,27 @@ ID: syntaxValidatorVF | Hardware: 12 | Description: Parses inbound source code, 
 ID: sandboxSimulatorVF | Hardware: 32 | Description: Executes isolated, safe virtual runtime simulations to capture compute footprint and execution metrics.
 ID: optimizationEngineVF | Hardware: 24 | Description: Evaluates performance bottlenecks and applies rule-based logic to suggest specific optimization fixes.
 ID: developersReportGeneratorVF | Hardware: 16 | Description: Aggregates benchmarking statistics and compiles structured, actionable optimization reports for developers.
+
+31)
+ID: agvTelemetryCollectorVF | Hardware: 6 | Description: Collects and aggregates real-time telemetry, spatial coordinates, and sensor streams from autonomous guided vehicles at the warehouse edge.
+ID: routeOptimizerVF | Hardware: 20 | Description: Computes dynamic shortest paths, handles real-time collision avoidance, and recalculates routes for AGVs.
+ID: taskDispatcherVF | Hardware: 16 | Description: Manages picking orders, assigns transport tasks, and optimizes AGV workload distribution.
+ID: centralFleetSyncVF | Hardware: 12 | Description: Synchronizes overall fleet status with the central Warehouse Management System (WMS) and inventory database.
+
+32)
+ID: sensorIngestVF | Hardware: 4 | Description: Ingests real-time pressure and temperature telemetry from furnace sensors.
+ID: dataFilteringVF | Hardware: 6 | Description: Filters high-frequency noise and validates sensor reading ranges.
+ID: thermalSimVF | Hardware: 20 | Description: Executes core thermal efficiency and mathematical simulation models.
+ID: model3dVF | Hardware: 25 | Description: Renders real-time 3D visualization of the blast furnace thermal state.
+
+33)
+ID: machineIngestVF | Hardware: 4 | Description: Ingests real-time machine status data (running, idle, error) from presses and lathes at the edge.
+ID: oeeAggregatorVF | Hardware: 8 | Description: Aggregates operational status data locally at the edge to calculate real-time line OEE (Overall Equipment Effectiveness) for shop-floor monitors.
+ID: alertDispatcherVF | Hardware: 12 | Description: Processes error conditions to trigger immediate SMS alerts to maintenance personnel.
+ID: oeeAnalyticsVF | Hardware: 16 | Description: Stores historical line availability metrics for long-term plant performance reporting.
+
+34)
+ID: cameraIngestVF | Hardware: 4 | Description: Ingests real-time video streams from factory perimeter cameras at the edge.
+ID: intrusionDetectVF | Hardware: 16 | Description: Analyzes video frames locally using AI to detect night intrusions at the edge.
+ID: alarmDispatcherVF | Hardware: 8 | Description: Triggers and dispatches alerts to the security institute.
+ID: videoStorageVF | Hardware: 32 | Description: Records and archives video flows on a central server.

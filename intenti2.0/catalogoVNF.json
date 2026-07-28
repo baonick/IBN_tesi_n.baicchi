@@ -736,5 +736,101 @@
         "id": "developersReportGeneratorVF",
         "hardware": 16,
         "description": "Aggregates benchmarking statistics and compiles structured, actionable optimization reports for developers."
+    },
+    {
+        "group_id": 31,
+        "id": "agvTelemetryCollectorVF",
+        "hardware": 6,
+        "description": "Collects and aggregates real-time telemetry, spatial coordinates, and sensor streams from autonomous guided vehicles at the warehouse edge."
+    },
+    {
+        "group_id": 31,
+        "id": "routeOptimizerVF",
+        "hardware": 20,
+        "description": "Computes dynamic shortest paths, handles real-time collision avoidance, and recalculates routes for AGVs."
+    },
+    {
+        "group_id": 31,
+        "id": "taskDispatcherVF",
+        "hardware": 16,
+        "description": "Manages picking orders, assigns transport tasks, and optimizes AGV workload distribution."
+    },
+    {
+        "group_id": 31,
+        "id": "centralFleetSyncVF",
+        "hardware": 12,
+        "description": "Synchronizes overall fleet status with the central Warehouse Management System (WMS) and inventory database."
+    },
+    {
+        "group_id": 32,
+        "id": "sensorIngestVF",
+        "hardware": 4,
+        "description": "Ingests real-time pressure and temperature telemetry from furnace sensors."
+    },
+    {
+        "group_id": 32,
+        "id": "dataFilteringVF",
+        "hardware": 6,
+        "description": "Filters high-frequency noise and validates sensor reading ranges."
+    },
+    {
+        "group_id": 32,
+        "id": "thermalSimVF",
+        "hardware": 20,
+        "description": "Executes core thermal efficiency and mathematical simulation models."
+    },
+    {
+        "group_id": 32,
+        "id": "model3dVF",
+        "hardware": 25,
+        "description": "Renders real-time 3D visualization of the blast furnace thermal state."
+    },
+    {
+        "group_id": 33,
+        "id": "machineIngestVF",
+        "hardware": 4,
+        "description": "Ingests real-time machine status data (running, idle, error) from presses and lathes at the edge."
+    },
+    {
+        "group_id": 33,
+        "id": "oeeAggregatorVF",
+        "hardware": 8,
+        "description": "Aggregates operational status data locally at the edge to calculate real-time line OEE (Overall Equipment Effectiveness) for shop-floor monitors."
+    },
+    {
+        "group_id": 33,
+        "id": "alertDispatcherVF",
+        "hardware": 12,
+        "description": "Processes error conditions to trigger immediate SMS alerts to maintenance personnel."
+    },
+    {
+        "group_id": 33,
+        "id": "oeeAnalyticsVF",
+        "hardware": 16,
+        "description": "Stores historical line availability metrics for long-term plant performance reporting."
+    },
+    {
+        "group_id": 34,
+        "id": "cameraIngestVF",
+        "hardware": 4,
+        "description": "Ingests real-time video streams from factory perimeter cameras at the edge."
+    },
+    {
+        "group_id": 34,
+        "id": "intrusionDetectVF",
+        "hardware": 16,
+        "description": "Analyzes video frames locally using AI to detect night intrusions at the edge."
+    },
+    {
+        "group_id": 34,
+        "id": "alarmDispatcherVF",
+        "hardware": 8,
+        "description": "Triggers and dispatches alerts to the security institute."
+    },
+    {
+        "group_id": 34,
+        "id": "videoStorageVF",
+        "hardware": 32,
+        "description": "Records and archives video flows on a central server."
     }
 ]
