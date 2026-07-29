@@ -6,6 +6,8 @@ import json
 # - dataset_train_AC.jsonl (Addestramento su A e C, per testare poi su B)
 # - dataset_train_BC.jsonl (Addestramento su B e C, per testare poi su A)
 
+#in questo programma non viene chiamato il parser
+
 def main():
     INSTRUCTION = """Translate the natural language network intent into formal Prolog facts using the following strict schema:
 1. Intent: intent(IntentID, ProviderOp, NumUsers, ServiceName). (camelCase; IntentID ends in 'Intent', ProviderOp in 'Op').

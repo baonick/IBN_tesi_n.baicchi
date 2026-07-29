@@ -1,6 +1,8 @@
 import os
 import json
 
+#in questo programma non viene chiamto il parser
+
 def main():
     base_dir = r"C:\Users\nbaic\Desktop\IBN_tesi_n.baicchi\intenti2.0"
     output_dir = r"C:\Users\nbaic\Desktop\IBN_tesi_n.baicchi\script\3-fold"
