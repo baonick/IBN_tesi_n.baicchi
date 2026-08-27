@@ -2,5 +2,5 @@ The software provider devToolsOp requires a code efficiency analyzer service to 
 executes a simulated runtime execution, and suggests specific optimizations to reduce computational resource consumption. Specifying that data caching is applied 
 after the second function, the service begins with a codeReceiverVF allocated at the edge linked to a syntaxValidatorVF located in the cloud. The pipeline proceeds 
 through a sandboxSimulatorVF located in the cloud and an optimizationEngineVF located in the cloud. Finally, preferring that the total chain hardware remains lower 
-than 110 gb, and ensuring that data compression is applied after the final layer, the system completes the pipeline with a developersReportGeneratorVF located in 
+than 110 GB, and ensuring that data compression is applied after the final layer, the system completes the pipeline with a developersReportGeneratorVF located in 
 the cloud.

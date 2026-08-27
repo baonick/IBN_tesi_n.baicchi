@@ -2,6 +2,6 @@ The industrial provider factoryCloudOp requires an augmented reality back-end se
 This service sends visual technical instructions to workers' headsets, overlaying maintenance data on the framed machinery in real time. 
 The service chain begins with an arStreamReceiverVF allocated at the edge. The chain then connects to arPoseEstimatorVF located in the 
 cloud and a dataOverlayEngineVF located in the cloud; for these two intensive blocks, it is mandatory that they are isolated on dedicated hardware nodes, 
-while ensuring that the network bandwidth between the initial arStreamReceiverVF and the arPoseEstimatorVF remains higher than 200 mbps. Finally, the system 
+while ensuring that the network bandwidth between the initial arStreamReceiverVF and the arPoseEstimatorVF remains higher than 200 Mbps. Finally, the system 
 routes the processed graphics to an arStreamDispatcherVF located in the cloud, ensuring it is strictly required that the latency from the arStreamReceiverVF 
-to this arStreamDispatcherVF remains below 12 ms. For the overall infrastructure, it is ideally preferred that the total chain hardware remains lower than 90 gb.
+to this arStreamDispatcherVF remains below 12 ms. For the overall infrastructure, it is ideally preferred that the total chain hardware remains lower than 90 GB.

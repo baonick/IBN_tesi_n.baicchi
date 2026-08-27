@@ -1,5 +1,4 @@
 The service provider eInvoiceOp requires a digital invoicing service to manage 50,000 invoices per day. This system transforms sales data into certified XML files, 
 applies the digital signature, and automatically sends them to governmental systems for fiscal validation. The deployed service chain includes, in order: a saleDataCollectorVF allocated at the edge, an xmlConverterVF located in the cloud, a digitalSignerVF located in the cloud, and a taxAuthorityTransmitterVF transmitter located in the cloud. 
-Regarding requirements, the provider mandates that the total chain hardware remains lower than 150 gb. Furthermore, it is strictly required that the latency from the 
-xmlConverterVF to the digitalSignerVF remains below 30 ms. Finally, the provider prefers that the bandwidth from the digitalSignerVF to the taxAuthorityTransmitterVF transmitter 
-remains higher than 100 mbps.
+Regarding requirements, the provider mandates that the total chain hardware remains lower than 150 GB. Furthermore, it is strictly required that the latency from the 
+xmlConverterVF to the digitalSignerVF remains below 30 ms. Finally, the provider prefers that the bandwidth from the digitalSignerVF to the taxAuthorityTransmitterVF transmitter remains higher than 100 Mbps.

@@ -9,10 +9,10 @@ target(routeOptimizationService, [gpsIngesterVF, trafficAnalyzerVF, routeOptimiz
 
 vnf(gpsIngesterVF, edge, 8).
 vnf(trafficAnalyzerVF, cloud, 24).
-vnf(routeOptimizerVF, cloud, 32).
+vnf(routeOptimizerVF, cloud, 20).
 vnf(terminalUpdaterVF, edge, 12).
 
 vnfXUser(gpsIngesterVF, l, (1, 15000), 8).
 vnfXUser(trafficAnalyzerVF, l, (1, 15000), 24).
-vnfXUser(routeOptimizerVF, l, (1, 15000), 32).
+vnfXUser(routeOptimizerVF, l, (1, 15000), 20).
 vnfXUser(terminalUpdaterVF, l, (1, 15000), 12).

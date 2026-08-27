@@ -4,4 +4,4 @@ The deployed service chain includes, in order: an ocrScannerVF allocated at the 
 security is applied after the ocrScannerVF. Furthermore, it is a mandatory requirement that the ocrScannerVF and the textExtractorVF are deployed 
 on the same hosting node. It is strictly required that the latency from the textExtractorVF to the aiDocumentClassifierVF remains below 50 ms. 
 Additionally, privacy is executed before the dataRedactorVF. Finally, the provider prefers that the bandwidth from the aiDocumentClassifierVF to 
-the documentRouterVF remains higher than 500 mbps.
+the documentRouterVF remains higher than 500 Mbps.

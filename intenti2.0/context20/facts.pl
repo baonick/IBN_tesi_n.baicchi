@@ -9,9 +9,9 @@ target(telemetryMonitoringService, [telemetryCollectorVF, dataAggregatorVF, anom
 vnf(telemetryCollectorVF, edge, 8).
 vnf(dataAggregatorVF, edge, 16).
 vnf(anomalyDetectorVF, cloud, 24).
-vnf(alertDispatcherVF, cloud, 8).
+vnf(alertDispatcherVF, cloud, 12).
 
 vnfXUser(telemetryCollectorVF, l, (1, 50000), 8).
 vnfXUser(dataAggregatorVF, l, (1, 50000), 16).
 vnfXUser(anomalyDetectorVF, l, (1, 50000), 24).
-vnfXUser(alertDispatcherVF, l, (1, 50000), 8).
+vnfXUser(alertDispatcherVF, l, (1, 50000), 12).

@@ -3,4 +3,4 @@ payment request, compares it with habitual user spending patterns via machine le
 The deployed service chain includes, in order: a requestInterceptorVF at the edge, a profileMatcherVF at the edge, an mlAnalyzerVF in the cloud, a policyEnforcerVF 
 in the cloud, and a responseEmitterVF in the cloud. Regarding requirements, security is applied after the requestInterceptorVF. Furthermore, it is strictly required 
 that the requestInterceptorVF and the profileMatcherVF are deployed on the same hosting node. Privacy is executed before the mlAnalyzerVF. Finally, the provider prefers 
-that the bandwidth from the mlAnalyzerVF to the policyEnforcerVF remains higher than 1000 mbps, and that the total chain hardware remains lower than 120 gb.
+that the bandwidth from the mlAnalyzerVF to the policyEnforcerVF remains higher than 1000 Mbps, and that the total chain hardware remains lower than 120 GB.

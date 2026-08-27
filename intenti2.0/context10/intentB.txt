@@ -2,5 +2,5 @@ The media provider cinemaRenderOp requires a service to manage 5,000 rendering p
 distributes the rendering computation across hundreds of virtual nodes, and reassembles the finished frames for post-production. 
 The service chain begins with a sceneReceiverVF allocated at the edge. For this component, compression is applied after it. The chain 
 then connects to an assetValidatorVF located in the cloud followed by a renderDistributorVF located in the cloud and a frameAssemblerVF 
-located in the cloud. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 800 gb. Finally, 
+located in the cloud. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 800 GB. Finally, 
 the frames are routed to a colorGraderVF located in the cloud, ensuring that caching is executed before it.

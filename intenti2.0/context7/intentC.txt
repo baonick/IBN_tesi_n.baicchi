@@ -1,4 +1,4 @@
-Cloud gaming service provider GamingOp needs a service to handle 40,000 active players. This service runs games on powerful servers and 
+Cloud gaming service provider cloudGamingOp needs a service to handle 40,000 active players. This service runs games on powerful servers and 
 delivers the video stream to the user, ensuring very low latency to prevent the game from becoming unplayable. Specifying that encoding 
 be applied after the initial gameExecutorVF, the service begins with a gameExecutorVF hosted in the cloud. Preferring that this first component 
 operate on a dedicated node, the chain includes a streamPackerVF hosted in the cloud. Finally, strictly requiring that the latency from 

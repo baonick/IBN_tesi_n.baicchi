@@ -3,5 +3,5 @@ This system receives video streams from different angles, allows cloud mixing, a
 thousands of viewers simultaneously. The deployed service chain includes, in order: a streamIngesterVF allocated at the edge, a cloudStudioVF 
 located in the cloud, a graphicInjectorVF located in the cloud, and a streamDistributorVF located in the cloud. Regarding requirements, 
 compression is applied after the streamIngesterVF. Furthermore, it is strictly required that the bandwidth from the graphicInjectorVF to 
-the streamDistributorVF remains higher than 5000 mbps. Additionally, the provider prefers that the total chain hardware is lower than 150 gb. 
+the streamDistributorVF remains higher than 5000 Mbps. Additionally, the provider prefers that the total chain hardware is lower than 150 GB. 
 Finally, caching is executed before the streamDistributorVF.

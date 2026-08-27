@@ -2,5 +2,5 @@ The government provider govMessagingOp requires a service to manage 50,000 insti
 verifies the electronic signature of the sender, checks its integrity, and archives the message in a legal vault. The service chain begins with 
 a msgReceiverVF allocated at the edge. For this component, caching is applied after it. The chain connects to a sigVerifierVF located in 
 the cloud. It is strictly required that this sigVerifierVF and the next component, an integrityCheckerVF located in the cloud, are deployed 
-on the same hosting node. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 100 gb. Finally, 
+on the same hosting node. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 100 GB. Finally, 
 the messages are routed to a legalVaultVF located in the cloud, ensuring that compression is executed before it.

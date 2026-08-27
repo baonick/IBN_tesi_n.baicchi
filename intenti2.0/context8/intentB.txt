@@ -2,6 +2,6 @@ The media provider mediaBroadcastOp requires a live multicamera streaming servic
 This system receives video streams from different angles, allows cloud mixing, adds advertising graphics, and distributes the signal to 
 thousands of viewers simultaneously. The service chain begins with a streamIngesterVF allocated at the edge. For this component, 
 compression is applied after it. The chain then connects to a cloudStudioVF located in the cloud followed by a graphicInjectorVF located in the 
-cloud. Between this graphicInjectorVF and the next component, it is strictly required to maintain a bandwidth higher than 5000 mbps. Finally, 
+cloud. Between this graphicInjectorVF and the next component, it is strictly required to maintain a bandwidth higher than 5000 Mbps. Finally, 
 the traffic is routed to a streamDistributorVF located in the cloud, ensuring that caching is executed before it. For the entire deployment, 
-it is ideally preferred that the total chain hardware remains lower than 150 gb.
+it is ideally preferred that the total chain hardware remains lower than 150 GB.

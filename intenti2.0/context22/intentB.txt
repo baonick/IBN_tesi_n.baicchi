@@ -2,4 +2,4 @@ The healthcare provider healthCareOp requires a post-operative tele-monitoring s
 vital data from home, analyzes cardiac anomalies, and notifies the doctor on duty immediately in case of danger. The service chain begins with a patientDataReceiverVF allocated at the edge. For this component, privacy is applied after it. The chain then connects to a cardiacAnomalyAnalyzerVF located in the cloud. 
 The next component is a medicalAlertLoggerVF located in the cloud, ensuring that logging is executed before it. Finally, the system routes to a doctorNotifierVF 
 located in the cloud, ensuring it is strictly required that the latency from the patientDataReceiverVF to this doctorNotifierVF remains below 100 ms. 
-For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 80 gb.
+For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 80 GB.

@@ -1,6 +1,6 @@
 The media provider cinemaRenderOp requires a service to manage 5,000 rendering projects. This infrastructure receives raw digital scenes, 
 distributes the rendering computation across hundreds of virtual nodes, and reassembles the finished frames for post-production. Preferring 
-that the total chain hardware is lower than 800 gb. Specifying that compression is applied after the initial function, the service 
+that the total chain hardware is lower than 800 GB. Specifying that compression is applied after the initial function, the service 
 begins with a sceneReceiverVF allocated at the edge connected to an assetValidatorVF located in the cloud, a renderDistributorVF located in the 
 cloud, and a frameAssemblerVF located in the cloud. Ensuring that caching is executed before the final node, the system completes 
 the pipeline with a colorGraderVF located in the cloud.

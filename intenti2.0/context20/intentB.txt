@@ -3,4 +3,4 @@ CPU load, and memory usage data, aggregating them to identify anomalies before f
 It is mandatory that this telemetryCollectorVF and the next component, a dataAggregatorVF located in the edge, are deployed on the same hosting node. 
 The chain then connects to ananomalyDetectorVF located in the cloud, and subsequently to an alertDispatcherVF located in the cloud. Regarding constraints, 
 it is strictly required that the latency from the begin to the end of the chain remains below 100 ms, and the provider ideally prefers that the bandwidth 
-from the begin to the end of the chain remains higher than 2000 mbps.
+from the begin to the end of the chain remains higher than 2000 Mbps.

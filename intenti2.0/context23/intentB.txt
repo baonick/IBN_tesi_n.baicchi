@@ -1,5 +1,5 @@
 The healthcare provider medDiagnosticOp requires a radiology AI diagnostics service to manage 10,000 daily scans. 
 This pipeline receives high-resolution medical images, processes them with computer vision algorithms to highlight suspicious lesions, and stores them securely. 
 The service chain begins with a dicomIngesterVF allocated at the edge, specifying compression is applied after it. The chain then connects to a lesionAnalyzerVF located in the cloud and a metadataExtractorVF located in the cloud; for these two components, it is mandatory that they are isolated on dedicated hardware 
-nodes, while ensuring the bandwidth from the dicomIngesterVF to the lesionAnalyzerVF remains higher than 500 mbps. Finally, the system routes the data to a secure 
+nodes, while ensuring the bandwidth from the dicomIngesterVF to the lesionAnalyzerVF remains higher than 500 Mbps. Finally, the system routes the data to a secure 
 secureArchiverVF in the cloud, ensuring that data encoding is executed before it.

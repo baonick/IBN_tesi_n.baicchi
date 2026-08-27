@@ -4,4 +4,4 @@ The service chain begins with an ocrScannerVF allocated at the edge. For this co
 this ocrScannerVF and the next textExtractorVF, located in the edge, are deployed on the same hosting node. The chain then connects to an aiDocumentClassifierVF located in the cloud; for this connection, it is strictly required that the latency from the textExtractorVF to the aiDocumentClassifierVF 
 remains below 50 ms. The chain proceeds to a dataRedactorVF located in the cloud, ensuring that privacy is executed before it. Finally, the 
 files are routed to a documentRouterVF located in the cloud, and it is ideally preferred that the bandwidth from the aiDocumentClassifierVF to this 
-documentRouterVF remains higher than 500 mbps.
+documentRouterVF remains higher than 500 Mbps.

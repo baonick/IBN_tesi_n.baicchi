@@ -2,5 +2,5 @@ The healthcare provider medDiagnosticOp requires a radiology AI diagnostics serv
 medical images, processes them with computer vision algorithms to highlight suspicious lesions, and stores them securely. The deployed service chain includes, 
 in order: a dicomIngesterVF allocated at the edge, a lesionAnalyzerVF located in the cloud, a metadataExtractorVF located in the cloud, and a secureArchiverVF 
 located in the cloud. Regarding operational requirements compression is applied after the dicomIngesterVF, while ensuring that the network bandwidth 
-from this initial dicomIngesterVF to the lesionAnalyzerVF remains higher than 500 mbps. To guarantee maximum computing performance, it is mandatory that the 
+from this initial dicomIngesterVF to the lesionAnalyzerVF remains higher than 500 Mbps. To guarantee maximum computing performance, it is mandatory that the 
 lesionAnalyzerVF and the metadataExtractorVF are hosted on completely separate, dedicated physical servers. Finally, data encoding is executed before the secureArchiverVF for permanent storage.

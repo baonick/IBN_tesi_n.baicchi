@@ -3,4 +3,4 @@ normalizes them into open formats, adds search metadata, and makes them availabl
 function to the final VNF below 200 ms, the service begins with a data extractor allocated at the edge. Specifying caching is 
 applied after the formatNormalizerVF, the chain connects to a formatNormalizerVF located in the cloud. Mandating that this formatNormalizerVF and the 
 subsequent metadataEnricherVF are hosted together on the exact same physical server, and preferring that the network bandwidth between them remains higher 
-than 1000 mbps, the chain incorporates both blocks in cloud. Finally, the system completes the pipeline with a downloadProviderVF located in the cloud.
+than 1000 Mbps, the chain incorporates both blocks in cloud. Finally, the system completes the pipeline with a downloadProviderVF located in the cloud.

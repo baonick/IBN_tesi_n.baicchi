@@ -3,5 +3,5 @@ files or OCR scans, identifies the document type like invoice, contract, or remi
 Specifying that security is applied after the initial phase, and mandating that this first component and the textExtractorVF are deployed on the same hosting node, the service begins with an ocrScannerVF allocated at the edge connected to a textExtractorVF 
 located in the edge. Strictly requiring that the latency from the textExtractorVF to the aiDocumentClassifierVF remains below 50 ms, the 
 chain incorporates an aiDocumentClassifierVF located in the cloud. Ensuring that privacy is executed before the dataRedactorVF, the chain connects 
-to a dataRedactorVF located in the cloud. Finally, preferring a bandwidth higher than 500 mbps between the aiDocumentClassifierVF and the final 
+to a dataRedactorVF located in the cloud. Finally, preferring a bandwidth higher than 500 Mbps between the aiDocumentClassifierVF and the final 
 distribution point, the system completes the pipeline with a documentRouterVF located in the cloud.

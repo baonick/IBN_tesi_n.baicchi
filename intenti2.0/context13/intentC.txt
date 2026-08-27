@@ -3,5 +3,5 @@ payment request, compares it with habitual user spending patterns via machine le
 Specifying that security is applied after the initial node, and mandating that the requestInterceptorVF and the profileMatcherVF are deployed 
 on the same edge node, the service begins with a requestInterceptorVF allocated at the edge connected to a profileMatcherVF at the edge. Ensuring that privacy 
 is executed before the mlAnalyzerVF, the chain incorporates an mlAnalyzerVF located in the cloud. Preferring that the bandwidth from the mlAnalyzerVF to 
-the policyEnforcerVF remains higher than 1000 mbps, the chain adds a policyEnforcerVF located in the cloud. Finally, preferring that the total chain hardware 
-remains lower than 120 gb, the system completes the pipeline with a responseEmitterVF located in the cloud.
+the policyEnforcerVF remains higher than 1000 Mbps, the chain adds a policyEnforcerVF located in the cloud. Finally, preferring that the total chain hardware 
+remains lower than 120 GB, the system completes the pipeline with a responseEmitterVF located in the cloud.

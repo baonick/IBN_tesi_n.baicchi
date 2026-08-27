@@ -4,4 +4,4 @@ chain includes, in order: a sessionIngesterVF allocated at the edge, a resourceA
 mechanisms are applied after the sessionIngesterVF. To detect anomalies early, security are executed before the activityMonitorVF, while ensuring that 
 the latency time between the initial sessionIngesterVF and this activityMonitorVF is kept under 40 ms. Furthermore, logging operations are executed 
 before the auditLoggerVF. Data compression is applied after the final outputPackagerVF. For the network backbone, the provider requires that the bandwidth between 
-the sessionIngesterVF and the resourceAllocatorVF supports more than 500 mbps. Finally, the provider prefers that the aggregate infrastructure footprint stays below 120 gb.
+the sessionIngesterVF and the resourceAllocatorVF supports more than 500 Mbps. Finally, the provider prefers that the aggregate infrastructure footprint stays below 120 GB.

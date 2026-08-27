@@ -1,5 +1,5 @@
 The IT provider corpITOp requires a service to manage 5,000 office employees. This service must filter dangerous websites, 
 scan downloaded files for malware, and ensure that sensitive data does not leave the network. Regarding requirements, 
 ensuring a mandatory latency below 10 milliseconds, the service chain establishes a connection between a webFilterVF allocated at the edge 
-and a malwareScannerVF located in the cloud. Following this, guaranteeing a bandwidth greater than 500 mbps, the service proceeds to connect 
+and a malwareScannerVF located in the cloud. Following this, guaranteeing a bandwidth greater than 500 Mbps, the service proceeds to connect 
 the malwareScannerVF to a dlpEngineVF located in the cloud.

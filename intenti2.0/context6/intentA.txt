@@ -2,5 +2,5 @@ The government provider govMessagingOp requires a service to manage 50,000 insti
 verifies the electronic signature of the sender, checks its integrity, and archives the message in a legal vault. The deployed service chain 
 includes, in order: a msgReceiverVF allocated at the edge, a sigVerifierVF located in the cloud, an integrityCheckerVF located in the 
 cloud, and a legalVaultVF located in the cloud. Regarding requirements, caching is applied after the msgReceiverVF. Furthermore, the provider 
-prefers to keep the total chain hardware lower than 100 gb. It is a mandatory requirement that the sigVerifierVF and the integrityCheckerVF 
+prefers to keep the total chain hardware lower than 100 GB. It is a mandatory requirement that the sigVerifierVF and the integrityCheckerVF 
 operate on the same node. Finally, compression is applied before the legalVaultVF.

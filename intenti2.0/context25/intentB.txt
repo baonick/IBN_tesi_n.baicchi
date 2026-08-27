@@ -2,6 +2,6 @@ The digital provider govDataOp requires an open data portal service to manage 30
 normalizes them into open formats, adds search metadata, and makes them available for public download. The service chain begins with a dataExtractorVF 
 allocated at the edge. The chain then connects to a formatNormalizerVF located in the cloud, specifying that data caching is applied after it. 
 The next component is a metadataEnricherVF located in the cloud; it is mandatory that this formatNormalizerVF and the metadataEnricherVF are hosted 
-together on the exact same physical server, while preferring that the network bandwidth between them remains higher than 1000 mbps. Finally, 
+together on the exact same physical server, while preferring that the network bandwidth between them remains higher than 1000 Mbps. Finally, 
 the system routes the files to a downloadProviderVF located in the cloud, ensuring that the total latency from the initial dataExtractorVF to 
 this final downloadProviderVF is strictly required to remain below 200 ms.

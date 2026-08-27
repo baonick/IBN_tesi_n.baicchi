@@ -3,4 +3,4 @@ distributes the rendering computation across hundreds of virtual nodes, and reas
 The deployed service chain includes, in order: a sceneReceiverVF allocated at the edge, an assetValidatorVF located in the cloud, 
 a renderDistributorVF located in the cloud, a frameAssemblerVF located in the cloud, and a colorGraderVF located in the cloud. 
 Regarding requirements, compression is applied after the sceneReceiverVF. Furthermore, the provider prefers that the total chain hardware 
-remains lower than 800 gb. Finally, caching is executed before the colorGraderVF.
+remains lower than 800 GB. Finally, caching is executed before the colorGraderVF.

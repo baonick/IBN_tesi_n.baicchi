@@ -4,4 +4,4 @@ The deployed service chain includes, in order: a codeReceiverVF allocated at the
 a sandboxSimulatorVF located in the cloud, an optimizationEngineVF located in the cloud, and a developersReportGeneratorVF located in the cloud. 
 Regarding operational requirements, caching is applied after the syntaxValidatorVF to avoid processing identical code inputs. Furthermore, 
 data compression is applied after the final developersReportGeneratorVF to streamline delivery. Finally, the provider prefers that the total chain hardware 
-remains lower than 110 gb to minimize overall infrastructure overhead.
+remains lower than 110 GB to minimize overall infrastructure overhead.

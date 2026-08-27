@@ -3,4 +3,4 @@ This service receives digitalized patient vital data from home, analyzes cardiac
 Specifying that privacy is applied after the initial unit, the service begins with a patientDataReceiverVF allocated at the edge connected to a 
 cardiacAnomalyAnalyzerVF located in the cloud. Ensuring that logging is executed before, the chain incorporates a medicalAlertLoggerVF 
 located in the cloud. Finally, strictly requiring that the latency from the patientDataReceiverVF to the final node remains below 100 ms, 
-and preferring that the total chain hardware remains lower than 80 gb, the system completes the pipeline with a doctorNotifierVF located in the cloud.
+and preferring that the total chain hardware remains lower than 80 GB, the system completes the pipeline with a doctorNotifierVF located in the cloud.

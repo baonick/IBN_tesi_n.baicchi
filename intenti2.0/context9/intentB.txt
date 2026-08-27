@@ -3,5 +3,5 @@ This service optimizes movie delivery by encrypting content with DRM, compressin
 close to the user to avoid buffering. The service chain begins with a drmEncryptorVF allocated in the cloud. For this component, encoding 
 is applied after it. It is ideally preferred that this drmEncryptorVF and the next component, a transcoderVF allocated in the cloud, 
 are deployed on the same hosting node. The chain then proceeds to a cachingNodeVF node allocated at the edge; between the transcoderVF and 
-this cachingNodeVF node, it is strictly required to maintain a bandwidth higher than 10000 mbps. Additionally, decoding must be executed 
+this cachingNodeVF node, it is strictly required to maintain a bandwidth higher than 10000 Mbps. Additionally, decoding must be executed 
 before the cachingNodeVF node.
