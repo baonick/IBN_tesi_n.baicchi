@@ -2,19 +2,19 @@
 import sys
 import json
 
-# Importiamo il parser del catalogo VNF
+# Import the VNF catalog parser
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 _PROJECT_ROOT = os.path.normpath(os.path.join(_SCRIPT_DIR, "../../../../.."))
 sys.path.insert(0, os.path.join(_PROJECT_ROOT, "script"))
 # pyrefly: ignore [missing-import]
 import parser_catalogo
 
-# Programma che crea un dataset in formato JSONL per l'approccio 3-fold cross-validation per contesto.
+# Program that creates a dataset in JSONL format for the 3-fold cross-validation approach by context.
 # Seleziona un intervallo di contesti e per ciascuno include tutti e 3 gli schemi (A, B, C).
-# Ogni contesto produce 3 righe nel JSONL (una per schema).
+# Each context produces 3 rows in JSONL (one per schema).
 
 # ============================================================
-# CONFIGURAZIONE: Modifica questi valori per selezionare l'intervallo di contesti
+# CONFIGURATION: Modify these values to select the context range
 # ============================================================
 CONTEXT_START = 1    # Numero del primo contesto da includere (incluso)
 CONTEXT_END = 28     # Numero dell'ultimo contesto da includere (incluso)
@@ -66,16 +66,16 @@ SCHEMA DEFINITIONS:
     schemi = ["intentA.txt", "intentB.txt", "intentC.txt"]
 
     if CONTEXT_START > CONTEXT_END:
-        print(f"Errore: CONTEXT_START ({CONTEXT_START}) deve essere <= CONTEXT_END ({CONTEXT_END}).")
+        print(f"Error: CONTEXT_START ({CONTEXT_START}) must be <= CONTEXT_END ({CONTEXT_END}).")
         sys.exit(1)
 
-    # Carichiamo la mappa VNF una sola volta per efficienza
+    # We load the VNF map only once for efficiency
     catalogo_json = os.path.join(cartella_base, "catalogoVNF.json")
     try:
         mappa_vnf = parser_catalogo.carica_catalogo_vnf(catalogo_json)
-        print(f"Catalogo VNF caricato: {len(mappa_vnf)} VNF trovate.")
+        print(f"VNF catalog loaded: {len(mappa_vnf)} VNFs found.")
     except FileNotFoundError:
-        print(f"Attenzione: catalogo VNF non trovato in {catalogo_json}. Il testo non verrà arricchito.")
+        print(f"Warning: VNF catalog not found in {catalogo_json}. Text will not be enriched.")
         mappa_vnf = {}
 
     if not os.path.exists(output_dir):
@@ -84,7 +84,7 @@ SCHEMA DEFINITIONS:
     nome_file_jsonl = os.path.join(output_dir, f"dataset_train_context{CONTEXT_START}-{CONTEXT_END}.jsonl")
 
     print(f"Creazione dataset di training per contesti da {CONTEXT_START} a {CONTEXT_END}...")
-    print(f"Per ogni contesto verranno inclusi tutti e 3 gli schemi: A, B, C")
+    print(f"For each context, all 3 schemas will be included: A, B, C")
 
     with open(nome_file_jsonl, "w", encoding="utf-8") as f_out:
         count = 0
@@ -96,11 +96,11 @@ SCHEMA DEFINITIONS:
             percorso_pl = os.path.join(percorso_cartella, nome_file_pl)
 
             if not os.path.exists(percorso_cartella):
-                print(f"  [SKIP] {nome_cartella} - cartella non trovata.")
+                print(f"  [SKIP] {nome_cartella} - folder not found.")
                 continue
 
             if not os.path.exists(percorso_pl):
-                print(f"  [SKIP] {nome_cartella} - {nome_file_pl} non trovato.")
+                print(f"  [SKIP] {nome_cartella} - {nome_file_pl} not found.")
                 continue
 
             with open(percorso_pl, "r", encoding="utf-8") as f_pl:
@@ -115,7 +115,7 @@ SCHEMA DEFINITIONS:
                     with open(percorso_txt, "r", encoding="utf-8") as f_txt:
                         testo_naturale = f_txt.read().strip()
 
-                    # Arricchiamo il testo con i valori hardware del catalogo VNF
+                    # Enrich the text with the hardware values of the VNF catalog
                     if mappa_vnf:
                         testo_naturale = parser_catalogo.arricchisci_intento_con_hardware(testo_naturale, mappa_vnf)
 
@@ -128,11 +128,11 @@ SCHEMA DEFINITIONS:
                     f_out.write(json.dumps(riga_json, ensure_ascii=False) + "\n")
                     count += 1
                 else:
-                    print(f"  [WARN] {nome_cartella}/{nome_txt} non trovato.")
+                    print(f"  [WARN] {nome_cartella}/{nome_txt} not found.")
 
-    print(f"\n[OK] Creato {nome_file_jsonl}")
-    print(f"     Contesti processati: {contesti_trovati} (da context{CONTEXT_START} a context{CONTEXT_END})")
-    print(f"     Righe totali: {count} (3 schemi x {contesti_trovati} contesti)")
+    print(f"\n[OK] Created {nome_file_jsonl}")
+    print(f"     Processed contexts: {contesti_trovati} (da context{CONTEXT_START} a context{CONTEXT_END})")
+    print(f"     Total rows: {count} (3 schemas x {contesti_trovati} contexts)")
 
 if __name__ == "__main__":
     main()

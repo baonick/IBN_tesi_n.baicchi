@@ -2,7 +2,7 @@
 import sys
 import json
 
-# Importiamo il parser del catalogo VNF
+# Import the VNF catalog parser
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 _PROJECT_ROOT = os.path.normpath(os.path.join(_SCRIPT_DIR, "../../../../.."))
 sys.path.insert(0, os.path.join(_PROJECT_ROOT, "script"))
@@ -14,7 +14,7 @@ import parser_catalogo
 # Ogni contesto produce 3 elementi nel JSON (uno per schema).
 
 # ============================================================
-# CONFIGURAZIONE: Modifica questi valori per selezionare l'intervallo di contesti
+# CONFIGURATION: Modify these values to select the context range
 # ============================================================
 CONTEXT_START = 8   # Numero del primo contesto da includere (incluso)
 CONTEXT_END = 14     # Numero dell'ultimo contesto da includere (incluso)
@@ -26,23 +26,23 @@ def main():
     schemi = ["A", "B", "C"]
 
     if CONTEXT_START > CONTEXT_END:
-        print(f"Errore: CONTEXT_START ({CONTEXT_START}) deve essere <= CONTEXT_END ({CONTEXT_END}).")
+        print(f"Error: CONTEXT_START ({CONTEXT_START}) must be <= CONTEXT_END ({CONTEXT_END}).")
         sys.exit(1)
 
-    # Carichiamo la mappa VNF una sola volta per efficienza
+    # We load the VNF map only once for efficiency
     catalogo_json = os.path.join(base_dir, "catalogoVNF.json")
     try:
         mappa_vnf = parser_catalogo.carica_catalogo_vnf(catalogo_json)
-        print(f"Catalogo VNF caricato: {len(mappa_vnf)} VNF trovate.")
+        print(f"VNF catalog loaded: {len(mappa_vnf)} VNFs found.")
     except FileNotFoundError:
-        print(f"Attenzione: catalogo VNF non trovato in {catalogo_json}. Il testo non verrà arricchito.")
+        print(f"Warning: VNF catalog not found in {catalogo_json}. Text will not be enriched.")
         mappa_vnf = {}
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
     print(f"Creazione file di testing per contesti da {CONTEXT_START} a {CONTEXT_END}...")
-    print(f"Per ogni contesto verranno inclusi tutti e 3 gli schemi: A, B, C")
+    print(f"For each context, all 3 schemas will be included: A, B, C")
 
     intents = []
     contesti_trovati = 0
@@ -52,7 +52,7 @@ def main():
         context_path = os.path.join(base_dir, context_name)
 
         if not os.path.exists(context_path):
-            print(f"  [SKIP] {context_name} - cartella non trovata.")
+            print(f"  [SKIP] {context_name} - folder not found.")
             continue
 
         if not os.path.isdir(context_path):
@@ -69,7 +69,7 @@ def main():
                 with open(intent_path, "r", encoding="utf-8") as f:
                     content = f.read().strip()
 
-                # Arricchiamo il testo con i valori hardware del catalogo VNF
+                # Enrich the text with the hardware values of the VNF catalog
                 if mappa_vnf:
                     content = parser_catalogo.arricchisci_intento_con_hardware(content, mappa_vnf)
 
@@ -78,7 +78,7 @@ def main():
                     "input": content
                 })
             else:
-                print(f"  [WARN] {context_name}/{intent_filename} non trovato.")
+                print(f"  [WARN] {context_name}/{intent_filename} not found.")
 
     output_file = os.path.join(output_dir, f"test_context{CONTEXT_START}-{CONTEXT_END}.json")
 
@@ -86,7 +86,7 @@ def main():
         json.dump(intents, f, indent=4, ensure_ascii=False)
 
     print(f"\n[OK] Creato {output_file}")
-    print(f"     Contesti processati: {contesti_trovati} (da context{CONTEXT_START} a context{CONTEXT_END})")
+    print(f"     Processed contexts: {contesti_trovati} (da context{CONTEXT_START} a context{CONTEXT_END})")
     print(f"     Intenti totali: {len(intents)} (3 schemi x {contesti_trovati} contesti)")
 
 if __name__ == "__main__":

@@ -4,18 +4,18 @@ import subprocess
 
 
 def main():
-    # Se viene passata una cartella come argomento, la usiamo, altrimenti usiamo la cartella dello script
+    # If a folder is passed as an argument, we use it, otherwise we use the script folder
     if len(sys.argv) > 1:
         base_dir = os.path.abspath(sys.argv[1])
     else:
         base_dir = os.path.dirname(os.path.abspath(__file__))
     
     print(f"{'*'*60}")
-    print(f" ESECUZIONE PIPELINE SU TUTTE LE SOTTO-CARTELLE")
-    print(f" Cartella base: {base_dir}")
+    print(f" PIPELINE EXECUTION ON ALL SUB-FOLDERS")
+    print(f" Base folder: {base_dir}")
     print(f"{'*'*60}")
     
-    # Trova tutte le sotto-cartelle che contengono esegui_pipeline.py
+    # Find all sub-folders that contain esegui_pipeline.py
     sottocartelle = sorted([
         d for d in os.listdir(base_dir)
         if os.path.isdir(os.path.join(base_dir, d))
@@ -24,10 +24,10 @@ def main():
     ])
     
     if not sottocartelle:
-        print("\nNessuna sotto-cartella con esegui_pipeline.py trovata.")
+        print("\nNo sub-folder with esegui_pipeline.py found.")
         return
     
-    print(f"\nTrovate {len(sottocartelle)} cartelle da elaborare:")
+    print(f"\nFound {len(sottocartelle)} folders to process:")
     for i, nome in enumerate(sottocartelle, 1):
         print(f"  {i}. {nome}")
     
@@ -38,29 +38,29 @@ def main():
         dir_path = os.path.join(base_dir, nome_cartella)
         
         print(f"\n{'='*60}")
-        print(f" [{i}/{len(sottocartelle)}] AVVIO PIPELINE: {nome_cartella}")
+        print(f" [{i}/{len(sottocartelle)}] PIPELINE START: {nome_cartella}")
         print(f"{'='*60}")
         
-        # Esegue esegui_pipeline.py nella sotto-cartella
+        # Executes esegui_pipeline.py in the sub-folder
         result = subprocess.run(
             [sys.executable, "esegui_pipeline.py"],
             cwd=dir_path
         )
         
         if result.returncode != 0:
-            print(f"\n!!! ERRORE nella pipeline di: {nome_cartella}")
+            print(f"\n!!! ERROR in pipeline of: {nome_cartella}")
             fallimenti += 1
         else:
-            print(f"\n>>> COMPLETATO CON SUCCESSO: {nome_cartella}")
+            print(f"\n>>> SUCCESSFULLY COMPLETED: {nome_cartella}")
             successi += 1
     
-    # Riepilogo finale
+    # Final summary
     print(f"\n{'*'*60}")
-    print(f" RIEPILOGO ESECUZIONE GLOBALE")
+    print(f" GLOBAL EXECUTION SUMMARY")
     print(f"{'*'*60}")
-    print(f"  Totale cartelle elaborate: {len(sottocartelle)}")
-    print(f"  Successi: {successi}")
-    print(f"  Fallimenti: {fallimenti}")
+    print(f"  Total folders processed: {len(sottocartelle)}")
+    print(f"  Successes: {successi}")
+    print(f"  Failures: {fallimenti}")
     print(f"{'*'*60}")
 
 

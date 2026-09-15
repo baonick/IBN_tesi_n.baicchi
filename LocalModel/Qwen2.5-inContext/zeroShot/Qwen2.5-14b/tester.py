@@ -8,7 +8,7 @@ from datetime import datetime
 
 os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "0"
 
-# Istruzione di sistema (deve essere identica a quella usata in train_qwen.py)
+# System instruction (must be identical to the one used in train_qwen.py)
 SYSTEM_PROMPT = """ROLE AND OBJECTIVE
 You are an expert networking logic parser. Your task is to extract information from a natural language network intent and translate it into formal Prolog facts using ONLY the strictly defined schema below. You must not hallucinate, invent, or assume any information outside the provided text.
 
@@ -78,28 +78,28 @@ Return ONLY the generated Prolog facts.
 Do not include introductory text, conversational filler, or explanations.
 """
 
-# --- FASE 1: CARICAMENTO DEL MODELLO ADDESTRATO ---
-# MODIFICA QUI: inserisci il percorso della cartella del modello addestrato
+# --- PHASE 1: LOADING THE TRAINED MODEL ---
+# MODIFY HERE: insert the path of the trained model folder
 model, tokenizer = FastLanguageModel.from_pretrained(
     model_name = "unsloth/Qwen2.5-Coder-14B-Instruct",
     max_seq_length = 8192,
     load_in_4bit = False,
 )
 
-# Applichiamo lo stesso chat template usato durante il training
+# Apply the same chat template used during training
 tokenizer = get_chat_template(
     tokenizer,
     chat_template = "qwen-2.5",
 )
 
-FastLanguageModel.for_inference(model)  # Ottimizza il modello per l'inferenza
+FastLanguageModel.for_inference(model)  # Optimize the model for inference
 
-# --- FASE 2: CARICAMENTO DEL FILE JSON CON LE RICHIESTE ---
-# MODIFICA QUI: inserisci il percorso del file JSON di test
+# --- PHASE 2: LOADING THE JSON FILE WITH REQUESTS ---
+# MODIFY HERE: insert the path of the test JSON file
 percorso_json = "test_context1-34.json"
 cartella_output = "./result"
 
-# Crea la cartella per gli output se non esiste
+# Create the output folder if it doesn't exist
 if not os.path.exists(cartella_output):
     os.makedirs(cartella_output)
 
@@ -107,17 +107,17 @@ try:
     with open(percorso_json, "r", encoding="utf-8") as f:
         richieste = json.load(f)
 except FileNotFoundError:
-    print(f"Errore: Il file '{percorso_json}' non è stato trovato.")
+    print(f"Error: The file '{percorso_json}' was not found.")
     richieste = []
 
-print(f"Trovate {len(richieste)} richieste da elaborare.")
+print(f"Found {len(richieste)} requests to process.")
 
-# Dizionario per raccogliere i tempi di esecuzione
+# Dictionary to collect execution times
 tempi_esecuzione = {}
 
-# --- FASE 3: ELABORAZIONE DI OGNI RICHIESTA ---
+# --- PHASE 3: PROCESSING EACH REQUEST ---
 for i, item in enumerate(richieste):
-    # Gestisce sia una lista di stringhe che una lista di dizionari JSON
+    # Handles both a list of strings and a list of JSON dictionaries
     if isinstance(item, dict):
         testo_richiesta = item.get("input", item.get("richiesta", item.get("text", str(item))))
         nome_file = f"output_{item.get('id', i+1)}.txt"
@@ -125,23 +125,23 @@ for i, item in enumerate(richieste):
         testo_richiesta = str(item)
         nome_file = f"output_{i+1}.txt"
 
-    print(f"[{i+1}/{len(richieste)}] Elaborazione richiesta in corso...")
+    print(f"[{i+1}/{len(richieste)}] Processing request in progress...")
 
-    # Misuriamo il tempo di esecuzione dell'inferenza
+    # Measure inference execution time
     timestamp_inizio = datetime.now()
     tempo_inizio = time.time()
 
-    # Costruiamo la conversazione nel formato chat nativo di Qwen 2.5
+    # Build the conversation in the native chat format of Qwen 2.5
     conversation = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user",   "content": testo_richiesta},
     ]
 
-    # Applichiamo il chat template e tokenizziamo
+    # Apply the chat template and tokenize
     prompt = tokenizer.apply_chat_template(
         conversation,
         tokenize = False,
-        add_generation_prompt = True,  # Aggiunge <|im_start|>assistant\n per far partire la generazione
+        add_generation_prompt = True,  # Adds <|im_start|>assistant\n to start generation
     )
 
     inputs = tokenizer(
@@ -149,46 +149,46 @@ for i, item in enumerate(richieste):
         return_tensors = "pt",
     ).to("cuda")
 
-    # Generiamo la risposta
+    # Generate the response
     outputs = model.generate(**inputs, max_new_tokens = 8192)
     risposta = tokenizer.batch_decode(outputs, skip_special_tokens=True)
 
-    # Fine misurazione tempo
+    # End time measurement
     tempo_fine = time.time()
     timestamp_fine = datetime.now()
     durata_secondi = round(tempo_fine - tempo_inizio, 4)
 
-    # Puliamo la risposta: estraiamo solo l'ultimo messaggio dell'assistant
+    # Clean the response: extract only the last assistant message
     try:
-        # Con il formato Qwen 2.5 la risposta dell'assistant segue l'ultimo "assistant\n"
+        # With the Qwen 2.5 format, the assistant's response follows the last "assistant\n"
         risposta_completa = risposta[0]
-        # Cerchiamo l'ultima occorrenza del ruolo assistant nel testo decodificato
+        # Look for the last occurrence of the assistant role in the decoded text
         parti = risposta_completa.rsplit("assistant\n", 1)
         if len(parti) > 1:
             risposta_pulita = parti[-1].strip()
         else:
-            # Fallback: proviamo con il formato Alpaca nel caso
+            # Fallback: let's try with the Alpaca format just in case
             risposta_pulita = risposta_completa.split("### Response:")[-1].strip()
     except (IndexError, AttributeError):
-        risposta_pulita = risposta[0].strip()  # Fallback generico
+        risposta_pulita = risposta[0].strip()  # Generic fallback
 
-    # --- FASE 4: SALVATAGGIO IN UN FILE TXT SEPARATO ---
+    # --- PHASE 4: SAVING IN A SEPARATE TXT FILE ---
     percorso_salvataggio = os.path.join(cartella_output, nome_file)
     with open(percorso_salvataggio, "w", encoding="utf-8") as f_out:
         f_out.write(risposta_pulita)
 
-    # Salva il tempo di esecuzione per questo file
+    # Save the execution time for this file
     tempi_esecuzione[nome_file] = {
         "durata_secondi": durata_secondi,
         "timestamp_inizio": timestamp_inizio.strftime("%Y-%m-%d %H:%M:%S"),
         "timestamp_fine": timestamp_fine.strftime("%Y-%m-%d %H:%M:%S"),
     }
-    print(f"    Tempo di esecuzione: {durata_secondi:.4f}s")
+    print(f"    Execution time: {durata_secondi:.4f}s")
 
-# --- FASE 5: SALVATAGGIO FILE TEMPI DI ESECUZIONE ---
+# --- PHASE 5: SAVING EXECUTION TIMES FILE ---
 percorso_tempi = os.path.join(cartella_output, "tempi_esecuzione.json")
 with open(percorso_tempi, "w", encoding="utf-8") as f_tempi:
     json.dump(tempi_esecuzione, f_tempi, indent=2, ensure_ascii=False)
 
-print(f"\nElaborazione completata. Tutti i risultati sono stati salvati in '{cartella_output}/'.")
-print(f"File tempi di esecuzione salvato in: {percorso_tempi}")
+print(f"\nProcessing completed. All results have been saved in '{cartella_output}/'.")
+print(f"Execution times file saved in: {percorso_tempi}")

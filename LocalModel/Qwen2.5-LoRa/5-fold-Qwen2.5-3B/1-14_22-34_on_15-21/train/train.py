@@ -5,9 +5,9 @@ from datasets import load_dataset
 from trl import SFTTrainer
 from transformers import TrainingArguments
 
-# Programma per addestrare Qwen 2.5 Coder con il chat template nativo
+# Program to train Qwen 2.5 Coder with the native chat template
 
-# --- FASE 1: CARICAMENTO DEL MODELLO ---
+# --- PHASE 1: LOADING THE MODEL ---
 max_seq_length = 2048
 
 model, tokenizer = FastLanguageModel.from_pretrained(
@@ -16,8 +16,8 @@ model, tokenizer = FastLanguageModel.from_pretrained(
     load_in_4bit = False,
 )
 
-# Applichiamo il chat template nativo di Qwen 2.5
-# Questo configura il tokenizer per usare i token <|im_start|> e <|im_end|>
+# Apply the native chat template of Qwen 2.5
+# This configures the tokenizer to use the <|im_start|> and <|im_end|> tokens
 tokenizer = get_chat_template(
     tokenizer,
     chat_template = "qwen-2.5",
@@ -31,32 +31,32 @@ model = FastLanguageModel.get_peft_model(
     use_gradient_checkpointing = "unsloth",
 )
 
-# --- FASE 2: PREPARAZIONE DEI DATI ---
-# Istruzione di sistema estratta direttamente dal dataset
+# --- PHASE 2: DATA PREPARATION ---
+# System instruction extracted directly from the dataset
 
 def formatta_dati(examples):
-    """Formatta ogni esempio nel formato conversazionale nativo di Qwen 2.5.
+    """Format each example in the native conversational format of Qwen 2.5.
     
-    Converte i campi instruction/input/output del dataset nel formato:
+    Converts the instruction/input/output fields of the dataset into the format:
     [{"role": "system", ...}, {"role": "user", ...}, {"role": "assistant", ...}]
-    e poi applica il chat template del tokenizer.
+    and then applies the tokenizer's chat template.
     """
     instructions = examples["instruction"]
     inputs       = examples["input"]
     outputs      = examples["output"]
     texts = []
     for inst, inp, out in zip(instructions, inputs, outputs):
-        # Combiniamo instruction e input nel messaggio utente
-        user_message = inp  # L'input contiene la richiesta in linguaggio naturale
+        # Combine instruction and input in the user message
+        user_message = inp  # The input contains the natural language request
         
-        # Costruiamo la conversazione nel formato chat
+        # Build the conversation in the chat format
         conversation = [
             {"role": "system", "content": inst},
             {"role": "user",   "content": user_message},
             {"role": "assistant", "content": out},
         ]
         
-        # Applichiamo il template nativo di Qwen 2.5
+        # Apply the native template of Qwen 2.5
         text = tokenizer.apply_chat_template(
             conversation,
             tokenize = False,
@@ -65,11 +65,11 @@ def formatta_dati(examples):
         texts.append(text)
     return { "text" : texts }
 
-# MODIFICA QUI: inserisci il percorso del tuo dataset di training
+# MODIFY HERE: insert the path of your training dataset
 dataset = load_dataset("json", data_files="dataset_train_context1-14_22-34.jsonl", split="train")
 dataset = dataset.map(formatta_dati, batched = True)
 
-# --- FASE 3: MOTORE DI ADDESTRAMENTO ---
+# --- PHASE 3: TRAINING ENGINE ---
 trainer = SFTTrainer(
     model = model,
     tokenizer = tokenizer,
@@ -93,6 +93,6 @@ trainer = SFTTrainer(
 
 trainer.train()
 
-# --- FASE 4: SALVATAGGIO ---
-# MODIFICA QUI: nome della cartella dove salvare il modello addestrato
+# --- PHASE 4: SAVING ---
+# MODIFY HERE: name of the folder where to save the trained model
 model.save_pretrained("../tester/qwen2.5-3B-1-14_22-34")

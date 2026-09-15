@@ -8,7 +8,7 @@ from google.api_core.exceptions import ResourceExhausted, ServiceUnavailable
 
 
 
-API_KEY = os.getenv("GEMINI_API_KEY", "")#inserire chiave di gemini qui
+API_KEY = os.getenv("GEMINI_API_KEY", "") # insert Gemini key here
 genai.configure(api_key=API_KEY)
 
 SYSTEM_PROMPT = """ROLE AND OBJECTIVE
@@ -80,18 +80,18 @@ Return ONLY the generated Prolog facts.
 Do not include introductory text, conversational filler, or explanations.
 """
 
-# Inizializzazione del modello Gemini
+# Gemini model initialization
 model = genai.GenerativeModel(
     model_name="gemini-3.5-flash",
     system_instruction=SYSTEM_PROMPT
 )
 
 # ==========================================
-# 2. FUNZIONE CHIAMATA API CON RETRY
+# 2. API CALL FUNCTION WITH RETRY
 # ==========================================
 def chiama_gemini_con_retry(prompt_utente, max_retries=5):
     """
-    Gestisce in automatico i limiti di frequenza (429) e l'indisponibilità del server (503).
+    Automatically handles rate limits (429) and server unavailability (503).
     """
     attesa_secondi = 60
     
@@ -99,110 +99,110 @@ def chiama_gemini_con_retry(prompt_utente, max_retries=5):
         try:
             response = model.generate_content(prompt_utente)
             
-            # Pausa di sicurezza di 4 secondi
+            # Safety pause of 5 seconds
             time.sleep(5) 
             
             return response.text.strip() if response.text else ""
 
         except (ResourceExhausted, ServiceUnavailable) as e:
-            print(f"\n⚠️ [Tentativo {tentativo}/{max_retries}] Errore API: {type(e).__name__}")
-            print(f"   Quota superata o server occupato. In pausa per {attesa_secondi}s...")
+            print(f"\n⚠️ [Attempt {tentativo}/{max_retries}] API Error: {type(e).__name__}")
+            print(f"   Quota exceeded or server busy. Pausing for {attesa_secondi}s...")
             time.sleep(attesa_secondi)
             
         except Exception as e:
             errore_str = str(e)
             if "429" in errore_str or "503" in errore_str or "RESOURCE_EXHAUSTED" in errore_str:
-                print(f"\n⚠️ [Tentativo {tentativo}/{max_retries}] Blocco di quota/servizio.")
-                print(f"   In pausa per {attesa_secondi}s...")
+                print(f"\n⚠️ [Attempt {tentativo}/{max_retries}] Quota/service block.")
+                print(f"   Pausing for {attesa_secondi}s...")
                 time.sleep(attesa_secondi)
             else:
-                print(f"\n❌ Errore critico: {e}")
+                print(f"\n❌ Critical error: {e}")
                 raise e
 
-    raise Exception(f"Impossibile completare la richiesta dopo {max_retries} tentativi.")
+    raise Exception(f"Unable to complete request after {max_retries} attempts.")
 
 # ==========================================
-# 3. LETTURA JSON E SALVATAGGIO IN TXT
+# 3. JSON READING AND TXT SAVING
 # ==========================================
 def main():
-    file_json_input = "test_context33-34.json"  # Inserisci qui il nome del tuo file JSON
+    file_json_input = "test_context33-34.json"  # Insert here the name of your JSON file
     cartella_output = "result_3.5-flash"
     
-    # Crea la cartella di output se non esiste
+    # Create the output folder if it doesn't exist
     os.makedirs(cartella_output, exist_ok=True)
 
     if not os.path.exists(file_json_input):
-        print(f"❌ Errore: Il file di input '{file_json_input}' non è stato trovato.")
+        print(f"❌ Error: The input file '{file_json_input}' was not found.")
         return
 
-    # Carica i dati dal file JSON
+    # Load data from the JSON file
     with open(file_json_input, "r", encoding="utf-8") as f:
         dataset = json.load(f)
 
     totale = len(dataset)
-    print(f"Avvio test di baseline su {totale} richieste estratte dal JSON...\n")
+    print(f"Starting baseline test on {totale} requests extracted from JSON...\n")
 
-    # Dizionario per accumulare i tempi di esecuzione
+    # Dictionary to accumulate execution times
     percorso_json_tempi = os.path.join(cartella_output, "tempi_esecuzione.json")
 
-    # Carica i tempi già esistenti (append) se il file esiste
+    # Load already existing times (append) if the file exists
     if os.path.exists(percorso_json_tempi):
         with open(percorso_json_tempi, "r", encoding="utf-8") as f_tempi:
             tempi_esecuzione = json.load(f_tempi)
-        print(f"📂 Caricati {len(tempi_esecuzione)} tempi esistenti da '{percorso_json_tempi}'.")
+        print(f"📂 Loaded {len(tempi_esecuzione)} existing times from '{percorso_json_tempi}'.")
     else:
         tempi_esecuzione = {}
 
     for idx, item in enumerate(dataset, 1):
-        # Estrae l'ID e il testo di input dal JSON
-        id_richiesta = item.get("id", f"sconosciuto_{idx}")
+        # Extracts ID and input text from JSON
+        id_richiesta = item.get("id", f"unknown_{idx}")
         intento_testo = item.get("input", "")
         
         if not intento_testo:
-            print(f"[{idx}/{totale}] ⚠️ Nessun input trovato per l'ID '{id_richiesta}', salto.")
+            print(f"[{idx}/{totale}] ⚠️ No input found for ID '{id_richiesta}', skipping.")
             continue
 
-        print(f"[{idx}/{totale}] Interrogazione Gemini per: {id_richiesta}.txt")
+        print(f"[{idx}/{totale}] Interrogating Gemini for: {id_richiesta}.txt")
 
         try:
-            # Timestamp PRIMA della chiamata API
+            # Timestamp BEFORE the API call
             timestamp_inizio = datetime.now()
             t_start = time.time()
 
-            # Chiamata API con gestione del Rate Limit
+            # API call with Rate Limit management
             prolog_generato = chiama_gemini_con_retry(intento_testo)
 
-            # Timestamp DOPO la risposta ricevuta
+            # Timestamp AFTER receiving the response
             t_end = time.time()
             timestamp_fine = datetime.now()
             durata_secondi = round(t_end - t_start, 4)
 
-            # Crea il nome del file usando il campo "id"
+            # Create the file name using the "id" field
             nome_file = f"{id_richiesta}.txt"
             percorso_file = os.path.join(cartella_output, nome_file)
 
-            # Salva il risultato generato da Gemini nel file txt
+            # Save the result generated by Gemini in the txt file
             with open(percorso_file, "w", encoding="utf-8") as f_out:
                 f_out.write(prolog_generato)
 
-            # Registra i tempi di esecuzione
+            # Record execution times
             tempi_esecuzione[nome_file] = {
                 "durata_secondi": durata_secondi,
                 "timestamp_inizio": timestamp_inizio.strftime("%Y-%m-%d %H:%M:%S"),
                 "timestamp_fine": timestamp_fine.strftime("%Y-%m-%d %H:%M:%S")
             }
 
-            # Salva il JSON dei tempi in modo incrementale (ad ogni iterazione)
+            # Save the times JSON incrementally (at each iteration)
             with open(percorso_json_tempi, "w", encoding="utf-8") as f_tempi:
                 json.dump(tempi_esecuzione, f_tempi, indent=2, ensure_ascii=False)
 
-            print(f"   ⏱️ Tempo risposta: {durata_secondi}s")
+            print(f"   ⏱️ Response time: {durata_secondi}s")
 
         except Exception as e:
-            print(f"❌ Impossibile elaborare l'elemento {id_richiesta}: {e}")
+            print(f"❌ Unable to process item {id_richiesta}: {e}")
 
-    print(f"\n✅ Test completato! I {totale} file .txt sono stati salvati nella cartella '{cartella_output}'.")
-    print(f"📊 Tempi di esecuzione salvati in: {percorso_json_tempi}")
+    print(f"\n✅ Test completed! The {totale} .txt files have been saved in the '{cartella_output}' folder.")
+    print(f"📊 Execution times saved in: {percorso_json_tempi}")
 
 if __name__ == "__main__":
     main()

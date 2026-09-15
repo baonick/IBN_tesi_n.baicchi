@@ -2,27 +2,27 @@
 import sys
 import json
 
-# Importiamo il parser del catalogo VNF
+# Import the VNF catalog parser
 _SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 _PROJECT_ROOT = os.path.normpath(os.path.join(_SCRIPT_DIR, "../../../../.."))
 sys.path.insert(0, os.path.join(_PROJECT_ROOT, "script"))
 # pyrefly: ignore [missing-import]
 import parser_catalogo
 
-# Programma che crea un dataset in formato JSONL per l'approccio 3-fold cross-validation per contesto.
-# Seleziona DUE intervalli distinti di contesti e per ciascuno include tutti e 3 gli schemi (A, B, C).
-# Ogni contesto produce 3 righe nel JSONL (una per schema).
+# Program that creates a dataset in JSONL format for the 3-fold cross-validation approach by context.
+# Selects TWO distinct ranges of contexts and for each includes all 3 schemas (A, B, C).
+# Each context produces 3 rows in JSONL (one per schema).
 
 # ============================================================
-# CONFIGURAZIONE: Modifica questi valori per selezionare i due intervalli di contesti
+# CONFIGURATION: Modify these values to select the two context ranges
 # ============================================================
-# Primo intervallo
-CONTEXT_START_1 = 1     # Numero del primo contesto del primo intervallo (incluso)
-CONTEXT_END_1 = 21      # Numero dell'ultimo contesto del primo intervallo (incluso)
+# First range
+CONTEXT_START_1 = 1     # Number of the first context of the first range (included)
+CONTEXT_END_1 = 21      # Number of the last context of the first range (included)
 
-# Secondo intervallo
-CONTEXT_START_2 = 29    # Numero del primo contesto del secondo intervallo (incluso)
-CONTEXT_END_2 = 34      # Numero dell'ultimo contesto del secondo intervallo (incluso)
+# Second range
+CONTEXT_START_2 = 29    # Number of the first context of the second range (included)
+CONTEXT_END_2 = 34      # Number of the last context of the second range (included)
 # ============================================================
 
 def main():
@@ -71,27 +71,27 @@ SCHEMA DEFINITIONS:
     nome_file_pl = "facts.pl"
     schemi = ["intentA.txt", "intentB.txt", "intentC.txt"]
 
-    # Validazione degli intervalli
+    # Range validation
     if CONTEXT_START_1 > CONTEXT_END_1:
-        print(f"Errore: CONTEXT_START_1 ({CONTEXT_START_1}) deve essere <= CONTEXT_END_1 ({CONTEXT_END_1}).")
+        print(f"Error: CONTEXT_START_1 ({CONTEXT_START_1}) must be <= CONTEXT_END_1 ({CONTEXT_END_1}).")
         sys.exit(1)
     if CONTEXT_START_2 > CONTEXT_END_2:
-        print(f"Errore: CONTEXT_START_2 ({CONTEXT_START_2}) deve essere <= CONTEXT_END_2 ({CONTEXT_END_2}).")
+        print(f"Error: CONTEXT_START_2 ({CONTEXT_START_2}) must be <= CONTEXT_END_2 ({CONTEXT_END_2}).")
         sys.exit(1)
 
-    # Carichiamo la mappa VNF una sola volta per efficienza
+    # We load the VNF map only once for efficiency
     catalogo_json = os.path.join(cartella_base, "catalogoVNF.json")
     try:
         mappa_vnf = parser_catalogo.carica_catalogo_vnf(catalogo_json)
-        print(f"Catalogo VNF caricato: {len(mappa_vnf)} VNF trovate.")
+        print(f"VNF catalog loaded: {len(mappa_vnf)} VNFs found.")
     except FileNotFoundError:
-        print(f"Attenzione: catalogo VNF non trovato in {catalogo_json}. Il testo non verrà arricchito.")
+        print(f"Warning: VNF catalog not found in {catalogo_json}. Text will not be enriched.")
         mappa_vnf = {}
 
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    # Costruiamo la lista di contesti dai due intervalli
+    # Build the context list from the two ranges
     contesti_da_processare = list(range(CONTEXT_START_1, CONTEXT_END_1 + 1)) + \
                              list(range(CONTEXT_START_2, CONTEXT_END_2 + 1))
 
@@ -100,10 +100,10 @@ SCHEMA DEFINITIONS:
         f"dataset_train_context{CONTEXT_START_1}-{CONTEXT_END_1}_{CONTEXT_START_2}-{CONTEXT_END_2}.jsonl"
     )
 
-    print(f"Creazione dataset di training per due intervalli di contesti:")
-    print(f"  Intervallo 1: context{CONTEXT_START_1} - context{CONTEXT_END_1}")
-    print(f"  Intervallo 2: context{CONTEXT_START_2} - context{CONTEXT_END_2}")
-    print(f"Per ogni contesto verranno inclusi tutti e 3 gli schemi: A, B, C")
+    print(f"Training dataset creation for two context ranges:")
+    print(f"  Range 1: context{CONTEXT_START_1} - context{CONTEXT_END_1}")
+    print(f"  Range 2: context{CONTEXT_START_2} - context{CONTEXT_END_2}")
+    print(f"For each context, all 3 schemas will be included: A, B, C")
 
     with open(nome_file_jsonl, "w", encoding="utf-8") as f_out:
         count = 0
@@ -115,11 +115,11 @@ SCHEMA DEFINITIONS:
             percorso_pl = os.path.join(percorso_cartella, nome_file_pl)
 
             if not os.path.exists(percorso_cartella):
-                print(f"  [SKIP] {nome_cartella} - cartella non trovata.")
+                print(f"  [SKIP] {nome_cartella} - folder not found.")
                 continue
 
             if not os.path.exists(percorso_pl):
-                print(f"  [SKIP] {nome_cartella} - {nome_file_pl} non trovato.")
+                print(f"  [SKIP] {nome_cartella} - {nome_file_pl} not found.")
                 continue
 
             with open(percorso_pl, "r", encoding="utf-8") as f_pl:
@@ -134,7 +134,7 @@ SCHEMA DEFINITIONS:
                     with open(percorso_txt, "r", encoding="utf-8") as f_txt:
                         testo_naturale = f_txt.read().strip()
 
-                    # Arricchiamo il testo con i valori hardware del catalogo VNF
+                    # Enrich the text with the hardware values of the VNF catalog
                     if mappa_vnf:
                         testo_naturale = parser_catalogo.arricchisci_intento_con_hardware(testo_naturale, mappa_vnf)
 
@@ -147,13 +147,13 @@ SCHEMA DEFINITIONS:
                     f_out.write(json.dumps(riga_json, ensure_ascii=False) + "\n")
                     count += 1
                 else:
-                    print(f"  [WARN] {nome_cartella}/{nome_txt} non trovato.")
+                    print(f"  [WARN] {nome_cartella}/{nome_txt} not found.")
 
-    print(f"\n[OK] Creato {nome_file_jsonl}")
-    print(f"     Contesti processati: {contesti_trovati}")
+    print(f"\n[OK] Created {nome_file_jsonl}")
+    print(f"     Processed contexts: {contesti_trovati}")
     print(f"       Intervallo 1: context{CONTEXT_START_1}-{CONTEXT_END_1}")
     print(f"       Intervallo 2: context{CONTEXT_START_2}-{CONTEXT_END_2}")
-    print(f"     Righe totali: {count} (3 schemi x {contesti_trovati} contesti)")
+    print(f"     Total rows: {count} (3 schemas x {contesti_trovati} contexts)")
 
 if __name__ == "__main__":
     main()

@@ -1,36 +1,36 @@
-﻿import re
+import re
 
 # ==============================================================================
-#  PARSING PROLOG
+#  PROLOG PARSING
 # ==============================================================================
 
 def trova_target_list(testo_pl):
-    """Estrae la lista VNF dal predicato target/2 (es. target(_, [fw, ids]) → ['fw','ids'])."""
+    """Extracts the VNF list from the target/2 predicate (e.g. target(_, [fw, ids]) → ['fw','ids'])."""
     match = re.search(r"target\([^,]+,\s*\[(.*?)\]\)", testo_pl)
     return [v.strip() for v in match.group(1).split(',') if v.strip()] if match else []
 
 
 def crea_mappatura_vnf(lista_vnf):
-    """Mappa ogni VNF al nome normalizzato: {fw: vnf_0, ids: vnf_1, ...}."""
+    """Maps each VNF to the normalized name: {fw: vnf_0, ids: vnf_1, ...}."""
     return {vnf: f"vnf_{i}" for i, vnf in enumerate(lista_vnf)}
 
 
 # ==============================================================================
-#  NORMALIZZAZIONE PREDICATI
+#  PREDICATE NORMALIZATION
 # ==============================================================================
 
 def _norm_property_expectation(args):
-    """Rimuove ID Regola e ID Intento (primi 2 parametri).
+    """Removes Rule ID and Intent ID (first 2 parameters).
     
-    Per le property 'affinity dedicated', ordina alfabeticamente i due
-    parametri VNF finali (SourceVNF, DestVNF) perché sono intercambiabili.
+    For 'affinity dedicated' properties, sorts the last two VNF parameters
+    (SourceVNF, DestVNF) alphabetically because they are interchangeable.
     """
     parts = args.split(',')
     if len(parts) <= 2:
         return args
     norm = parts[2:]
-    # norm ha 7 elementi: Type, Operator, hard/soft, Value, Unit, SourceVNF, DestVNF
-    # Se Type == 'affinity' e Value == 'dedicated', ordina SourceVNF e DestVNF
+    # norm has 7 elements: Type, Operator, hard/soft, Value, Unit, SourceVNF, DestVNF
+    # If Type == 'affinity' and Value == 'dedicated', sort SourceVNF and DestVNF
     if len(norm) == 7:
         tipo = norm[0].strip()
         valore = norm[3].strip()
@@ -40,18 +40,18 @@ def _norm_property_expectation(args):
 
 
 def _norm_intent(args):
-    """Rimuove ID Intento (primo) e ID Target (ultimo)."""
+    """Removes Intent ID (first) and Target ID (last)."""
     parts = args.split(',')
     return ",".join(parts[1:-1]) if len(parts) > 2 else args
 
 
 def _norm_target(args):
-    """Mantiene solo la lista tra parentesi quadre."""
+    """Keeps only the list inside square brackets."""
     match = re.search(r'\[(.*?)\]', args)
     return f"[{match.group(1)}]" if match else args
 
 
-# Dispatch: predicato → funzione di normalizzazione degli argomenti
+# Dispatch: predicate → argument normalization function
 _NORMALIZZATORI = {
     'propertyExpectation': _norm_property_expectation,
     'intent':              _norm_intent,
@@ -60,33 +60,33 @@ _NORMALIZZATORI = {
 
 
 def normalizza_argomenti(predicato, argomenti_raw):
-    """Applica la normalizzazione specifica al predicato, se definita."""
+    """Applies specific normalization to the predicate, if defined."""
     args = re.sub(r'\s+', ' ', argomenti_raw).replace(', ', ',').strip()
     normalizzatore = _NORMALIZZATORI.get(predicato)
     return normalizzatore(args) if normalizzatore else args
 
 
 # ==============================================================================
-#  ESTRAZIONE SET DI FATTI
+#  FACT SET EXTRACTION
 # ==============================================================================
 
 def estrai_set_da_pl(percorso_file):
-    """Legge un .pl, estrae i fatti Prolog e li normalizza (VNF + ID arbitrari)."""
+    """Reads a .pl file, extracts Prolog facts and normalizes them (VNF + arbitrary IDs)."""
     try:
         with open(percorso_file, 'r', encoding='utf-8') as f:
             testo = f.read()
     except FileNotFoundError:
-        print(f"❌ Errore: Il file {percorso_file} non esiste!")
+        print(f"❌ Error: The file {percorso_file} does not exist!")
         return set()
 
-    testo = re.sub(r'%.*', '', testo)                    # rimuovi commenti
+    testo = re.sub(r'%.*', '', testo)                    # remove comments
     # mappatura = crea_mappatura_vnf(trova_target_list(testo))
 
     set_fatti = set()
     for m in re.finditer(r"([a-zA-Z0-9_]+)\((.*?)\)\.", testo):
         predicato, argomenti = m.group(1).strip(), m.group(2)
 
-        # LA NORMALIZZAZIONE DELLE VNF È STATA DISABILITATA
+        # VNF NORMALIZATION HAS BEEN DISABLED
         # for orig, norm in mappatura.items():
         #     argomenti = re.sub(rf'\b{re.escape(orig)}\b', norm, argomenti)
 
@@ -98,50 +98,50 @@ def estrai_set_da_pl(percorso_file):
 
 
 def set_to_string(s):
-    """Formatta un set di fatti come stringa ordinata, una riga per fatto."""
-    return "\n".join(sorted(s)) if s else "Nessun fatto trovato (Set vuoto)"
+    """Formats a set of facts as an ordered string, one line per fact."""
+    return "\n".join(sorted(s)) if s else "No facts found (Empty set)"
 
 
 # ==============================================================================
-#  METRICHE DI VALUTAZIONE
+#  EVALUATION METRICS
 # ==============================================================================
 
 def calcola_jaccard(set_ideale, set_llm):
-    """Jaccard: |I ∩ L| / |I ∪ L|  — penalizza omissioni e allucinazioni."""
+    """Jaccard: |I ∩ L| / |I ∪ L|  — penalizes omissions and hallucinations."""
     if not set_ideale and not set_llm: return 1.0
     if not set_ideale or  not set_llm: return 0.0
     return round(len(set_ideale & set_llm) / len(set_ideale | set_llm), 4)
 
 
 def calcola_recall(set_ideale, set_llm):
-    """Recall: |I ∩ L| / |I|  — misura le omissioni dell'LLM."""
+    """Recall: |I ∩ L| / |I|  — measures LLM omissions."""
     if not set_ideale: return 1.0
     if not set_llm:    return 0.0
     return round(len(set_ideale & set_llm) / len(set_ideale), 4)
 
 
 def calcola_precision(set_ideale, set_llm):
-    """Precision: |I ∩ L| / |L|  — misura le allucinazioni dell'LLM."""
+    """Precision: |I ∩ L| / |L|  — measures LLM hallucinations."""
     if not set_llm and not set_ideale: return 1.0
     if not set_llm:                    return 0.0
     return round(len(set_ideale & set_llm) / len(set_llm), 4)
 
 
 def calcola_f1(precision, recall):
-    """F1-Score: media armonica tra Precision e Recall."""
+    """F1-Score: harmonic mean between Precision and Recall."""
     return round(2 * precision * recall / (precision + recall), 4) if (precision + recall) else 0.0
 
 
 def calcola_accuracy(lista_metriche):
-    """Accuracy: numero di elementi perfetti / numero totale di elementi.
+    """Accuracy: number of perfect elements / total number of elements.
     
-    Un elemento è 'perfetto' se ha precision == 1.0 e recall == 1.0.
+    An element is 'perfect' if it has precision == 1.0 and recall == 1.0.
     
     Args:
-        lista_metriche: lista di tuple (precision, recall) per ogni elemento del test set.
+        lista_metriche: list of tuples (precision, recall) for each element of the test set.
     
     Returns:
-        Accuracy arrotondata a 4 decimali.
+        Accuracy rounded to 4 decimals.
     """
     if not lista_metriche:
         return 0.0
@@ -160,10 +160,10 @@ if __name__ == "__main__":
     set_ideale = estrai_set_da_pl(FILE_IDEALE)
     set_llm    = estrai_set_da_pl(FILE_LLM)
 
-    print("=== VALUTATORE SEMANTICO PROLOG ===\n")
-    print("--- Fatti Estratti Ideale ---")
+    print("=== PROLOG SEMANTIC EVALUATOR ===\n")
+    print("--- Ideal Extracted Facts ---")
     print(set_to_string(set_ideale), "\n")
-    print("--- Fatti Estratti LLM ---")
+    print("--- LLM Extracted Facts ---")
     print(set_to_string(set_llm), "\n")
 
     recall    = calcola_recall(set_ideale, set_llm)
@@ -172,10 +172,10 @@ if __name__ == "__main__":
     f1        = calcola_f1(precision, recall)
 
     print("==================================================")
-    print("📊 RISULTATI VALUTAZIONE LOGICA")
+    print("📊 LOGICAL EVALUATION RESULTS")
     print("==================================================")
-    print(f"✅ Recall      (Omissioni)     : {recall}")
-    print(f"🎯 Precision   (Allucinazioni) : {precision}")
-    print(f"⚖️  Jaccard     (Globale)       : {jaccard}")
-    print(f"🏆 F1-Score    (Equilibrio)    : {f1}")
+    print(f"✅ Recall      (Omissions)     : {recall}")
+    print(f"🎯 Precision   (Hallucinations) : {precision}")
+    print(f"⚖️  Jaccard     (Global)        : {jaccard}")
+    print(f"🏆 F1-Score    (Balance)       : {f1}")
     print("==================================================")

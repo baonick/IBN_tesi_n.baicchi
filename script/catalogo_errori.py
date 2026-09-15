@@ -1,21 +1,21 @@
 """
-catalogo_errori.py — Catalogazione degli errori LLM su fatti Prolog IBN
+catalogo_errori.py — LLM Error Catalog on IBN Prolog Facts
 ========================================================================
 
-Classifica ogni differenza tra Gold Standard e Predizione LLM in 4 categorie:
-    A. SINTASSI     — errori strutturali (punti, parentesi, arity)        → Alta
-    B. VALORI ERRATI — type/valore-unità/hard-soft mismatch               → Alta
-       Eccezioni Bassa: hard→soft (vincolo più rigido),
-                        latenza inferiore o banda superiore (vincolo più stretto)
-    C. VNF ERRATE    — topologia, target chain, assegnazione edge/cloud   → Alta
-    D. INSERZIONI/RIMOZIONI — fatti extra o mancanti (FP / FN)            → Alta
+Classifies each difference between Gold Standard and LLM Prediction into 4 categories:
+    A. SYNTAX        — structural errors (dots, parentheses, arity)          → High
+    B. WRONG VALUES  — type/value-unit/hard-soft mismatch                    → High
+       Low Severity Exceptions: hard→soft (stricter constraint),
+                                lower latency or higher bandwidth (stricter constraint)
+    C. WRONG VNFs    — topology, target chain, edge/cloud assignment         → High
+    D. INSERTIONS/REMOVALS — extra or missing facts (FP / FN)                → High
 
-Percorre automaticamente tutte le cartelle di output nel workspace, rileva
-i file predizione (pattern 'output_context*' e 'context*_intent*'), li
-accoppia al gold standard in intent/ e produce un report riassuntivo.
+Automatically traverses all output folders in the workspace, detects
+prediction files (pattern 'output_context*' and 'context*_intent*'), pairs them
+with the gold standard in intent/ and produces a summary report.
 
-Utilizza la stessa logica a insiemi di esegui_valutazione_tutti_schemi.py
-e MetricExecuterInputDips.py per l'estrazione e normalizzazione dei fatti.
+It uses the same set logic of esegui_valutazione_tutti_schemi.py
+and MetricExecuterInputDips.py for extraction and normalization of facts.
 """
 
 import os
@@ -24,32 +24,32 @@ import sys
 from collections import defaultdict
 
 # ---------------------------------------------------------------------------
-#  Importa il modulo metriche esistente
+#  Import the existing metrics module
 # ---------------------------------------------------------------------------
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 import MetricExecuterInputDips as metrics  # noqa: E402
 
 # ---------------------------------------------------------------------------
-#  CONFIGURAZIONE
+#  CONFIGURATION
 # ---------------------------------------------------------------------------
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-BASE_DIR = os.path.dirname(SCRIPT_DIR)  # radice del progetto (IBN github/)
+BASE_DIR = os.path.dirname(SCRIPT_DIR)  # project root (IBN github/)
 CARTELLA_INTENTI_IDEALI = os.path.join(BASE_DIR, "intent")
 
 
 
 
 # ============================================================================
-#  STRUTTURA PER ACCUMULARE ERRORI
+#  STRUCTURE FOR ACCUMULATING ERRORS
 # ============================================================================
 class ErrorEntry:
-    """Singola segnalazione di errore catalogato."""
+    """Single cataloged error entry."""
     def __init__(self, categoria, sottotipo, gravita, descrizione,
                  fatto_llm="", fatto_gold="", file_sorgente=""):
         self.categoria = categoria       # "A", "B", "C", "D"
-        self.sottotipo = sottotipo       # es. "PARENTESI_SBILANCIATE"
-        self.gravita = gravita           # "Alta" o "Bassa"
-        self.descrizione = descrizione   # stringa human-readable
+        self.sottotipo = sottotipo       # e.g. "UNBALANCED_PARENTHESES"
+        self.gravita = gravita           # "Alta" (High) or "Bassa" (Low)
+        self.descrizione = descrizione   # human-readable string
         self.fatto_llm = fatto_llm
         self.fatto_gold = fatto_gold
         self.file_sorgente = file_sorgente
@@ -60,10 +60,10 @@ class ErrorEntry:
 
 
 # ============================================================================
-#  A. ANALISI SINTATTICA (sul testo raw, scollegata dal Gold Standard)
+#  A. SYNTACTIC ANALYSIS (on raw text, disconnected from Gold Standard)
 # ============================================================================
 
-# Arity attese per ogni predicato
+# Expected arity for each predicate
 _ARITY_ATTESE = {
     "intent": 4,
     "target": 2,
@@ -74,11 +74,11 @@ _ARITY_ATTESE = {
 
 def check_syntax_errors(raw_text, file_sorgente=""):
     """
-    Analizza il testo raw del file LLM per errori sintattici Prolog.
-    Ogni riga non vuota e non-commento che non rispetta il formato Prolog
-    viene segnalata come errore di categoria A / SINTASSI.
+    Analyzes the raw text of the LLM file for Prolog syntax errors.
+    Every non-empty, non-comment line that doesn't respect the Prolog format
+    is reported as a category A / SYNTAX error.
 
-    Restituisce una lista di ErrorEntry di categoria A.
+    Returns a list of category A ErrorEntry.
     """
     errori = []
     lines = raw_text.strip().split("\n")
@@ -88,30 +88,30 @@ def check_syntax_errors(raw_text, file_sorgente=""):
         if not line_stripped:
             continue
 
-        # Ignora commenti Prolog
+        # Ignore Prolog comments
         if line_stripped.startswith("%"):
             continue
 
-        # Punto finale mancante
+        # Missing final dot
         if not line_stripped.endswith("."):
             errori.append(ErrorEntry(
-                categoria="A", sottotipo="SINTASSI", gravita="Alta",
-                descrizione=f"Riga {i}: manca il punto finale → '{line_stripped}'",
+                categoria="A", sottotipo="SYNTAX", gravita="Alta",
+                descrizione=f"Line {i}: missing final dot → '{line_stripped}'",
                 fatto_llm=line_stripped, file_sorgente=file_sorgente
             ))
 
-        # Parentesi sbilanciate
+        # Unbalanced parentheses
         content = line_stripped.rstrip(".")
         if content.count("(") != content.count(")"):
             errori.append(ErrorEntry(
-                categoria="A", sottotipo="SINTASSI", gravita="Alta",
-                descrizione=f"Riga {i}: parentesi tonde sbilanciate → '{line_stripped}'",
+                categoria="A", sottotipo="SYNTAX", gravita="Alta",
+                descrizione=f"Line {i}: unbalanced round parentheses → '{line_stripped}'",
                 fatto_llm=line_stripped, file_sorgente=file_sorgente
             ))
         if content.count("[") != content.count("]"):
             errori.append(ErrorEntry(
-                categoria="A", sottotipo="SINTASSI", gravita="Alta",
-                descrizione=f"Riga {i}: parentesi quadre sbilanciate → '{line_stripped}'",
+                categoria="A", sottotipo="SYNTAX", gravita="Alta",
+                descrizione=f"Line {i}: unbalanced square parentheses → '{line_stripped}'",
                 fatto_llm=line_stripped, file_sorgente=file_sorgente
             ))
 
@@ -125,18 +125,18 @@ def check_syntax_errors(raw_text, file_sorgente=""):
             if predicato == "propertyExpectation":
                 if num_args not in (6, 9):
                     errori.append(ErrorEntry(
-                        categoria="A", sottotipo="SINTASSI", gravita="Alta",
-                        descrizione=(f"Riga {i}: propertyExpectation ha {num_args} "
-                                     f"parametri (attesi 6 o 9) → '{line_stripped}'"),
+                        categoria="A", sottotipo="SYNTAX", gravita="Alta",
+                        descrizione=(f"Line {i}: propertyExpectation has {num_args} "
+                                     f"parameters (expected 6 or 9) → '{line_stripped}'"),
                         fatto_llm=line_stripped, file_sorgente=file_sorgente
                     ))
             elif predicato in _ARITY_ATTESE:
                 expected = _ARITY_ATTESE[predicato]
                 if num_args != expected:
                     errori.append(ErrorEntry(
-                        categoria="A", sottotipo="SINTASSI", gravita="Alta",
-                        descrizione=(f"Riga {i}: {predicato} ha {num_args} "
-                                     f"parametri (attesi {expected}) → '{line_stripped}'"),
+                        categoria="A", sottotipo="SYNTAX", gravita="Alta",
+                        descrizione=(f"Line {i}: {predicato} has {num_args} "
+                                     f"parameters (expected {expected}) → '{line_stripped}'"),
                         fatto_llm=line_stripped, file_sorgente=file_sorgente
                     ))
 
@@ -145,13 +145,13 @@ def check_syntax_errors(raw_text, file_sorgente=""):
 
 
 # ============================================================================
-#  MATCHING E CLASSIFICAZIONE (Cat. B valori, Cat. C vnf, Cat. D ins/rim)
+#  MATCHING AND CLASSIFICATION (Cat. B values, Cat. C vnf, Cat. D ins/rem)
 # ============================================================================
 def _parse_args(args_str):
     """
-    Parsa la stringa degli argomenti di un fatto Prolog,
-    gestendo correttamente le liste [...] e le tuple (...).
-    Restituisce una lista di stringhe (un elemento per parametro).
+    Parses the arguments string of a Prolog fact,
+    correctly handling lists [...] and tuples (...).
+    Returns a list of strings (one element per parameter).
     """
     args = []
     bracket_level = 0
@@ -185,8 +185,8 @@ def _parse_args(args_str):
 
 def _parse_fact(fact_str):
     """
-    Parsa un fatto normalizzato (senza ID arbitrari) nel formato
-    'predicato(arg1, arg2, ...)' restituendo (predicato, [arg1, arg2, ...]).
+    Parses a normalized fact (without arbitrary IDs) in the format
+    'predicate(arg1, arg2, ...)' returning (predicate, [arg1, arg2, ...]).
     """
     match = re.match(r'^([a-zA-Z0-9_]+)\((.*)\)$', fact_str)
     if not match:
@@ -196,8 +196,8 @@ def _parse_fact(fact_str):
 
 def _parse_raw_fact(line):
     """
-    Parsa un fatto Prolog raw (con punto finale) restituendo
-    (predicato, [arg1, arg2, ...]) oppure (None, []) se malformato.
+    Parses a raw Prolog fact (with final dot) returning
+    (predicate, [arg1, arg2, ...]) or (None, []) if malformed.
     """
     line = line.strip().rstrip(".")
     match = re.match(r'^([a-zA-Z0-9_]+)\((.*)\)$', line)
@@ -210,159 +210,159 @@ def classify_parameter_diff(predicato, param_index, val_llm, val_gold,
                             args_llm, args_gold, fatto_llm_str, fatto_gold_str,
                             file_sorgente=""):
     """
-    Dato un parametro che differisce tra LLM e Gold, determina la categoria
-    e il sottotipo dell'errore.
+    Given a parameter that differs between LLM and Gold, determines the category
+    and subtype of the error.
 
-    La logica dipende dal predicato e dalla posizione del parametro:
+    The logic depends on the predicate and the position of the parameter:
 
-    Per propertyExpectation NORMALIZZATO (senza i primi 2 ID):
-      - Parametri non-changing (7 args): Type, Operator, hard/soft, Value, Unit, SourceVNF, DestVNF
+    For NORMALIZED propertyExpectation (without first 2 IDs):
+      - Non-changing parameters (7 args): Type, Operator, hard/soft, Value, Unit, SourceVNF, DestVNF
         index:                             0      1         2        3     4       5          6
-      - Parametri changing (4 args):      Type, _, Source, Dest
+      - Changing parameters (4 args):      Type, _, Source, Dest
         index:                             0    1    2      3
 
-    Per intent NORMALIZZATO (senza ID iniziale e finale):
+    For NORMALIZED intent (without starting and ending ID):
       - args: ProviderOp, NumUsers
         index:    0           1
 
-    Per target NORMALIZZATO:
-      - args: [lista vnf]
+    For NORMALIZED target:
+      - args: [vnf list]
         index:   0
 
-    Per vnf / vnfXUser: non normalizzati, tutti i parametri visibili.
+    For vnf / vnfXUser: not normalized, all parameters visible.
     """
     # ---------- propertyExpectation ----------
     if predicato == "propertyExpectation":
-        num_args = len(args_gold)  # usiamo il gold come riferimento
+        num_args = len(args_gold)  # use gold as reference
 
         if num_args == 7:
             # Non-changing: Type(0), Operator(1), hard/soft(2), Value(3), Unit(4), SrcVNF(5), DstVNF(6)
             if param_index == 0:
                 return "B", "TYPE_MISMATCH", "Alta", \
-                    f"Type errato: '{val_llm}' invece di '{val_gold}'"
+                    f"Wrong type: '{val_llm}' instead of '{val_gold}'"
             elif param_index == 2 and val_llm in ("hard", "soft") and val_gold in ("hard", "soft"):
-                # hard al posto di soft → vincolo più rigido → Bassa
-                # soft al posto di hard → vincolo più lasco → Alta
+                # hard instead of soft → stricter constraint → Low (Bassa)
+                # soft instead of hard → looser constraint → High (Alta)
                 if val_llm == "hard" and val_gold == "soft":
                     return "B", "HARD_SOFT_MISMATCH", "Bassa", \
-                        f"Hard/Soft errato: '{val_llm}' invece di '{val_gold}' (vincolo più rigido)"
+                        f"Wrong Hard/Soft: '{val_llm}' instead of '{val_gold}' (stricter constraint)"
                 else:
                     return "B", "HARD_SOFT_MISMATCH", "Alta", \
-                        f"Hard/Soft errato: '{val_llm}' invece di '{val_gold}'"
+                        f"Wrong Hard/Soft: '{val_llm}' instead of '{val_gold}'"
             elif param_index in (1, 2, 3, 4):
-                # Per param_index==3 (Value) nelle property non-changing,
-                # controlla se l'errore è "benigno" (vincolo più stretto):
-                #   - latency: valore LLM inferiore al Gold → Bassa
-                #   - bandwidth: valore LLM superiore al Gold → Bassa
+                # For param_index==3 (Value) in non-changing properties,
+                # check if the error is "benign" (stricter constraint):
+                #   - latency: LLM value lower than Gold → Low
+                #   - bandwidth: LLM value higher than Gold → Low
                 if param_index == 3 and len(args_gold) > 0:
                     tipo = args_gold[0].strip().lower()
                     try:
                         v_llm = float(val_llm)
                         v_gold = float(val_gold)
                         if tipo == "latency" and v_llm < v_gold:
-                            return "B", "VALORE_UNITA_MISMATCH", "Bassa", \
-                                f"Latenza più bassa: '{val_llm}' invece di '{val_gold}' (vincolo più stretto)"
+                            return "B", "VALUE_UNIT_MISMATCH", "Bassa", \
+                                f"Lower latency: '{val_llm}' instead of '{val_gold}' (stricter constraint)"
                         elif tipo == "bandwidth" and v_llm > v_gold:
-                            return "B", "VALORE_UNITA_MISMATCH", "Bassa", \
-                                f"Banda più alta: '{val_llm}' invece di '{val_gold}' (vincolo più stretto)"
+                            return "B", "VALUE_UNIT_MISMATCH", "Bassa", \
+                                f"Higher bandwidth: '{val_llm}' instead of '{val_gold}' (stricter constraint)"
                     except (ValueError, TypeError):
-                        pass  # valori non numerici → resta Alta
-                return "B", "VALORE_UNITA_MISMATCH", "Alta", \
-                    f"Valore/Unità errato (param {param_index+1}): '{val_llm}' invece di '{val_gold}'"
+                        pass  # non-numeric values → stays High
+                return "B", "VALUE_UNIT_MISMATCH", "Alta", \
+                    f"Wrong Value/Unit (param {param_index+1}): '{val_llm}' instead of '{val_gold}'"
             elif param_index in (5, 6):
-                # Nelle property da 9 parametri Source e Dest sono sempre
-                # intercambiabili (vincoli di collegamento VNF o affinity):
-                # uno swap puro NON costituisce errore.
+                # In 9-parameter properties, Source and Dest are always
+                # interchangeable (VNF link constraints or affinity):
+                # a pure swap DOES NOT constitute an error.
                 other_idx = 6 if param_index == 5 else 5
                 val_llm_other = args_llm[other_idx] if other_idx < len(args_llm) else ""
                 val_gold_other = args_gold[other_idx] if other_idx < len(args_gold) else ""
                 if val_llm == val_gold_other and val_llm_other == val_gold:
-                    return None  # swap Source/Dest accettato: nessun errore
-                return "C", "ERRORE_TOPOLOGICO", "Alta", \
-                    f"VNF errata (param {param_index+1}): '{val_llm}' invece di '{val_gold}'"
+                    return None  # Source/Dest swap accepted: no error
+                return "C", "TOPOLOGY_ERROR", "Alta", \
+                    f"Wrong VNF (param {param_index+1}): '{val_llm}' instead of '{val_gold}'"
 
         elif num_args == 4:
             # Changing: Type(0), _(1), Source(2), Dest(3)
             if param_index == 0:
                 return "B", "TYPE_MISMATCH", "Alta", \
-                    f"Type errato: '{val_llm}' invece di '{val_gold}'"
+                    f"Wrong Type: '{val_llm}' instead of '{val_gold}'"
             elif param_index == 1:
-                return "B", "VALORE_UNITA_MISMATCH", "Alta", \
-                    f"Placeholder 4° parametro errato: '{val_llm}' invece di '{val_gold}'"
+                return "B", "VALUE_UNIT_MISMATCH", "Alta", \
+                    f"Wrong 4th parameter placeholder: '{val_llm}' instead of '{val_gold}'"
             elif param_index in (2, 3):
-                # Controlla se è uno swap Source↔Dest
+                # Check if it's a Source↔Dest swap
                 other_idx = 3 if param_index == 2 else 2
                 val_llm_other = args_llm[other_idx] if other_idx < len(args_llm) else ""
                 val_gold_other = args_gold[other_idx] if other_idx < len(args_gold) else ""
                 if val_llm == val_gold_other and val_llm_other == val_gold:
                     return "C", "SOURCE_DEST_SWAP", "Alta", \
-                        f"Source/Dest invertiti: LLM ha ({args_llm[2]},{args_llm[3]}) invece di ({args_gold[2]},{args_gold[3]})"
-                return "C", "ERRORE_TOPOLOGICO", "Alta", \
-                    f"VNF errata (param {param_index+1}): '{val_llm}' invece di '{val_gold}'"
+                        f"Source/Dest swapped: LLM has ({args_llm[2]},{args_llm[3]}) instead of ({args_gold[2]},{args_gold[3]})"
+                return "C", "TOPOLOGY_ERROR", "Alta", \
+                    f"Wrong VNF (param {param_index+1}): '{val_llm}' instead of '{val_gold}'"
 
-        # Fallback per arity inattesa (ma comunque matchata)
-        return "B", "VALORE_UNITA_MISMATCH", "Alta", \
-            f"Parametro {param_index+1} errato: '{val_llm}' invece di '{val_gold}'"
+        # Fallback for unexpected arity (but still matched)
+        return "B", "VALUE_UNIT_MISMATCH", "Alta", \
+            f"Wrong parameter {param_index+1}: '{val_llm}' instead of '{val_gold}'"
 
     # ---------- intent ----------
     if predicato == "intent":
-        # Normalizzato: ProviderOp(0), NumUsers(1)
+        # Normalized: ProviderOp(0), NumUsers(1)
         if param_index == 0:
-            return "B", "VALORE_UNITA_MISMATCH", "Alta", \
-                f"ProviderOp errato: '{val_llm}' invece di '{val_gold}'"
+            return "B", "VALUE_UNIT_MISMATCH", "Alta", \
+                f"Wrong ProviderOp: '{val_llm}' instead of '{val_gold}'"
         elif param_index == 1:
-            return "B", "VALORE_UNITA_MISMATCH", "Alta", \
-                f"NumUsers errato: '{val_llm}' invece di '{val_gold}'"
-        return "B", "VALORE_UNITA_MISMATCH", "Alta", \
-            f"Parametro intent errato: '{val_llm}' invece di '{val_gold}'"
+            return "B", "VALUE_UNIT_MISMATCH", "Alta", \
+                f"Wrong NumUsers: '{val_llm}' instead of '{val_gold}'"
+        return "B", "VALUE_UNIT_MISMATCH", "Alta", \
+            f"Wrong intent parameter: '{val_llm}' instead of '{val_gold}'"
 
     # ---------- target ----------
     if predicato == "target":
-        return "C", "TARGET_CHAIN_ERRATA", "Alta", \
-            f"Target chain errata: '{val_llm}' invece di '{val_gold}'"
+        return "C", "WRONG_TARGET_CHAIN", "Alta", \
+            f"Wrong Target chain: '{val_llm}' instead of '{val_gold}'"
 
     # ---------- vnf / vnfXUser ----------
     if predicato in ("vnf", "vnfXUser"):
         # vnf: VnfID(0), edge/cloud(1), HW(2)
         # vnfXUser: VnfID(0), l(1), (1,N)(2), HW(3)
         if param_index == 0:
-            return "C", "ERRORE_TOPOLOGICO", "Alta", \
-                f"VnfID errato: '{val_llm}' invece di '{val_gold}'"
+            return "C", "TOPOLOGY_ERROR", "Alta", \
+                f"Wrong VnfID: '{val_llm}' instead of '{val_gold}'"
         elif predicato == "vnf" and param_index == 1:
-            return "C", "ASSEGNAZIONE_ERRATA", "Alta", \
-                f"Posizionamento errato: '{val_llm}' invece di '{val_gold}'"
+            return "C", "WRONG_ASSIGNMENT", "Alta", \
+                f"Wrong placement: '{val_llm}' instead of '{val_gold}'"
         elif predicato == "vnf" and param_index == 2:
-            return "C", "ASSEGNAZIONE_ERRATA", "Alta", \
-                f"Hardware errato: '{val_llm}' invece di '{val_gold}'"
+            return "C", "WRONG_ASSIGNMENT", "Alta", \
+                f"Wrong Hardware: '{val_llm}' instead of '{val_gold}'"
         elif predicato == "vnfXUser":
-            return "C", "ASSEGNAZIONE_ERRATA", "Alta", \
-                f"Parametro vnfXUser errato (pos {param_index+1}): '{val_llm}' invece di '{val_gold}'"
+            return "C", "WRONG_ASSIGNMENT", "Alta", \
+                f"Wrong vnfXUser parameter (pos {param_index+1}): '{val_llm}' instead of '{val_gold}'"
 
-    # Fallback generico
-    return "B", "VALORE_UNITA_MISMATCH", "Alta", \
-        f"Parametro {param_index+1} errato: '{val_llm}' invece di '{val_gold}'"
+    # Generic fallback
+    return "B", "VALUE_UNIT_MISMATCH", "Alta", \
+        f"Wrong parameter {param_index+1}: '{val_llm}' instead of '{val_gold}'"
 
 
 def match_and_classify(set_ideale, set_llm, file_sorgente=""):
     """
-    Logica a insiemi: calcola leftovers, accoppia i fatti per predicato + best-match,
-    classifica ogni parametro differente nelle categorie B/C, e i fatti non accoppiati
-    nella categoria D.
+    Set logic: computes leftovers, pairs facts by predicate + best-match,
+    classifies every differing parameter in categories B/C, and unpaired facts
+    in category D.
 
-    Restituisce una lista di ErrorEntry.
+    Returns a list of ErrorEntry.
     """
     errori = []
 
-    # Fatti in comune → nessun errore
+    # Facts in common → no error
     # Leftovers
-    leftovers_gs = set_ideale - set_llm       # Fatti gold mancanti nell'LLM
-    leftovers_llm = set_llm - set_ideale      # Fatti LLM extra (non nel gold)
+    leftovers_gs = set_ideale - set_llm       # Gold facts missing in LLM
+    leftovers_llm = set_llm - set_ideale      # Extra LLM facts (not in gold)
 
     if not leftovers_gs and not leftovers_llm:
-        return errori  # perfetto match
+        return errori  # perfect match
 
     # -------------------------------------------------------------------
-    #  FASE 1: Accoppiamento per predicato + best-match
+    #  PHASE 1: Pairing by predicate + best-match
     # -------------------------------------------------------------------
     matched_gs = set()
     matched_llm = set()
@@ -380,11 +380,11 @@ def match_and_classify(set_ideale, set_llm, file_sorgente=""):
 
             gs_pred, gs_args = _parse_fact(gs_fact)
 
-            # Devono avere lo stesso predicato per essere accoppiabili
+            # They must have the same predicate to be paired
             if llm_pred != gs_pred:
                 continue
 
-            # Calcola score di similarità (numero parametri uguali)
+            # Compute similarity score (number of identical parameters)
             max_len = max(len(llm_args), len(gs_args))
             if max_len == 0:
                 continue
@@ -392,8 +392,8 @@ def match_and_classify(set_ideale, set_llm, file_sorgente=""):
             score = 0
             diffs = []
             for idx in range(max_len):
-                val_llm = llm_args[idx] if idx < len(llm_args) else "<mancante>"
-                val_gs = gs_args[idx] if idx < len(gs_args) else "<mancante>"
+                val_llm = llm_args[idx] if idx < len(llm_args) else "<missing>"
+                val_gs = gs_args[idx] if idx < len(gs_args) else "<missing>"
                 if val_llm == val_gs:
                     score += 1
                 else:
@@ -404,7 +404,7 @@ def match_and_classify(set_ideale, set_llm, file_sorgente=""):
                 best_match = gs_fact
                 best_diffs = diffs
 
-        # Se trovato un match, classifica le differenze parametriche
+        # If a match is found, classify the parameter differences
         if best_match is not None and best_score > 0:
             matched_gs.add(best_match)
             matched_llm.add(llm_fact)
@@ -430,27 +430,27 @@ def match_and_classify(set_ideale, set_llm, file_sorgente=""):
                 ))
 
     # -------------------------------------------------------------------
-    #  FASE 2: Fatti non accoppiati → Inserzioni (D) e Rimozioni (D)
+    #  PHASE 2: Unpaired facts → Insertions (D) and Removals (D)
     # -------------------------------------------------------------------
-    # Inserzioni: fatti nell'LLM senza corrispondente nel gold
+    # Insertions: facts in LLM without correspondent in gold
     for llm_fact in sorted(leftovers_llm - matched_llm):
         errori.append(ErrorEntry(
             categoria="D",
-            sottotipo="INSERZIONE",
+            sottotipo="INSERTION",
             gravita="Alta",
-            descrizione=f"Fatto extra generato dall'LLM (Falso Positivo): '{llm_fact}'",
+            descrizione=f"Extra fact generated by LLM (False Positive): '{llm_fact}'",
             fatto_llm=llm_fact,
             fatto_gold="",
             file_sorgente=file_sorgente
         ))
 
-    # Rimozioni: fatti nel gold non generati dall'LLM
+    # Removals: gold facts not generated by LLM
     for gs_fact in sorted(leftovers_gs - matched_gs):
         errori.append(ErrorEntry(
             categoria="D",
-            sottotipo="RIMOZIONE",
+            sottotipo="REMOVAL",
             gravita="Alta",
-            descrizione=f"Fatto gold non generato dall'LLM (Falso Negativo): '{gs_fact}'",
+            descrizione=f"Gold fact not generated by LLM (False Negative): '{gs_fact}'",
             fatto_llm="",
             fatto_gold=gs_fact,
             file_sorgente=file_sorgente
@@ -460,32 +460,32 @@ def match_and_classify(set_ideale, set_llm, file_sorgente=""):
 
 
 # ============================================================================
-#  ANALISI COMPLETA DI UN SINGOLO FILE
+#  COMPLETE ANALYSIS OF A SINGLE FILE
 # ============================================================================
 def analizza_file(file_llm_path, file_gold_path):
     """
-    Analisi completa di un singolo file LLM vs Gold Standard.
+    Complete analysis of a single LLM file vs Gold Standard.
 
-    Passata 1: Analisi sintattica sul testo raw (Cat. A)
-    Passata 2: Confronto a insiemi normalizzato (Cat. B.valori + C + D)
+    Pass 1: Syntax analysis on raw text (Cat. A)
+    Pass 2: Normalized set comparison (Cat. B.values + C + D)
 
-    Restituisce una lista di ErrorEntry.
+    Returns a list of ErrorEntry.
     """
     file_label = os.path.basename(file_llm_path)
 
-    # Leggi il testo raw dell'LLM
+    # Read the raw LLM text
     try:
         with open(file_llm_path, "r", encoding="utf-8") as f:
             raw_text = f.read()
     except FileNotFoundError:
-        return [ErrorEntry("A", "FILE_NON_TROVATO", "Alta",
-                           f"File LLM non trovato: {file_llm_path}",
+        return [ErrorEntry("A", "FILE_NOT_FOUND", "Alta",
+                           f"LLM File not found: {file_llm_path}",
                            file_sorgente=file_label)]
 
-    # ----- PASSATA 1: errori sintattici -----
+    # ----- PASS 1: syntactic errors -----
     errori = check_syntax_errors(raw_text, file_sorgente=file_label)
 
-    # ----- PASSATA 2: confronto a insiemi normalizzato -----
+    # ----- PASS 2: normalized set comparison -----
     set_ideale = metrics.estrai_set_da_pl(file_gold_path)
     set_llm = metrics.estrai_set_da_pl(file_llm_path)
 
@@ -495,16 +495,16 @@ def analizza_file(file_llm_path, file_gold_path):
 
 
 # ============================================================================
-#  DISCOVERY E MAIN LOOP
+#  DISCOVERY AND MAIN LOOP
 # ============================================================================
 def trova_file_output(dir_path):
     """
-    Cerca tutti i file di output LLM in una directory.
-    Rileva due pattern di naming:
-    - 'output_contextN_intentX.txt' (cartelle Qwen)
-    - 'contextN_intentX.txt' (cartelle Gemini)
+    Searches for all LLM output files in a directory.
+    Detects two naming patterns:
+    - 'output_contextN_intentX.txt' (Qwen folders)
+    - 'contextN_intentX.txt' (Gemini folders)
 
-    Restituisce una lista di tuple (file_path, context_name, intent_letter).
+    Returns a list of tuples (file_path, context_name, intent_letter).
     """
     risultati = []
 
@@ -516,7 +516,7 @@ def trova_file_output(dir_path):
     for f in sorted(files):
         if not f.endswith(".txt"):
             continue
-        # Salta i file di report già generati
+        # Skip report files that have already been generated
         if f.startswith("report"):
             continue
 
@@ -542,50 +542,50 @@ def trova_file_output(dir_path):
     return risultati
 
 
-# Lista categorie e nomi (usata ovunque nei report)
+# List of categories and names (used everywhere in reports)
 CATEGORIE_ORDINATE = ["A", "B", "C", "D"]
 NOMI_CATEGORIE = {
-    "A": "A. SINTASSI",
-    "B": "B. VALORI ERRATI",
-    "C": "C. VNF ERRATE",
-    "D": "D. INSERZIONI/RIMOZIONI"
+    "A": "A. SYNTAX",
+    "B": "B. WRONG VALUES",
+    "C": "C. WRONG VNFs",
+    "D": "D. INSERTIONS/REMOVALS"
 }
 
 
 def genera_report(tutti_errori_per_modello, output_path):
     """
-    Genera il report riassuntivo con frequenza e gravità degli errori,
-    aggregato per modello e per categoria.
+    Generates the summary report with error frequency and severity,
+    aggregated by model and by category.
 
-    tutti_errori_per_modello: dict { "nome_modello": [ErrorEntry, ...] }
+    tutti_errori_per_modello: dict { "model_name": [ErrorEntry, ...] }
     """
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
-        f.write("CATALOGO ERRORI LLM — REPORT RIASSUNTIVO\n")
+        f.write("LLM ERROR CATALOG — SUMMARY REPORT\n")
         f.write("=" * 80 + "\n\n")
 
-        # ---- AGGREGATO GLOBALE ----
+        # ---- GLOBAL AGGREGATE ----
         tutti_errori = []
         for errs in tutti_errori_per_modello.values():
             tutti_errori.extend(errs)
 
-        _scrivi_sezione_report(f, "AGGREGATO GLOBALE", tutti_errori)
+        _scrivi_sezione_report(f, "GLOBAL AGGREGATE", tutti_errori)
 
-        # ---- PER MODELLO ----
+        # ---- PER MODEL ----
         for modello, errori in sorted(tutti_errori_per_modello.items()):
             f.write("\n" + "=" * 80 + "\n")
-            _scrivi_sezione_report(f, f"MODELLO: {modello}", errori)
+            _scrivi_sezione_report(f, f"MODEL: {modello}", errori)
 
-    print(f"\n=> Report catalogo errori salvato in: {output_path}")
+    print(f"\n=> Error catalog report saved at: {output_path}")
 
 
 def genera_report_singolo(nome_modello, errori_per_file, output_path):
     """
-    Genera un report dettagliato per un singolo modello/test.
+    Generates a detailed report for a single model/test.
 
-    errori_per_file: dict { "nome_file": [ErrorEntry, ...] }
-                     Include anche file con 0 errori (lista vuota).
-    output_path: percorso del file di report da creare.
+    errori_per_file: dict { "file_name": [ErrorEntry, ...] }
+                     Includes files with 0 errors (empty list) as well.
+    output_path: path to the report file to be created.
     """
     tutti_errori = []
     for errs in errori_per_file.values():
@@ -596,17 +596,17 @@ def genera_report_singolo(nome_modello, errori_per_file, output_path):
 
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("=" * 80 + "\n")
-        f.write(f"CATALOGO ERRORI — {nome_modello}\n")
+        f.write(f"ERROR CATALOG — {nome_modello}\n")
         f.write("=" * 80 + "\n\n")
 
-        f.write(f"File analizzati:    {len(errori_per_file)}\n")
-        f.write(f"File con errori:    {len(file_con_errori)}\n")
-        f.write(f"File senza errori:  {len(file_senza_errori)}\n")
-        f.write(f"Totale errori:      {len(tutti_errori)}\n\n")
+        f.write(f"Analyzed files:     {len(errori_per_file)}\n")
+        f.write(f"Files with errors:  {len(file_con_errori)}\n")
+        f.write(f"Files without errors: {len(file_senza_errori)}\n")
+        f.write(f"Total errors:       {len(tutti_errori)}\n\n")
 
-        # ---- RIEPILOGO FILE CON ERRORI ----
+        # ---- SUMMARY OF FILES WITH ERRORS ----
         f.write("-" * 80 + "\n")
-        f.write("RIEPILOGO FILE CON ERRORI\n")
+        f.write("SUMMARY OF FILES WITH ERRORS\n")
         f.write("-" * 80 + "\n\n")
 
         if file_con_errori:
@@ -618,98 +618,98 @@ def genera_report_singolo(nome_modello, errori_per_file, output_path):
                 parti_cat = ", ".join(
                     f"{cat}={conteggio.get(cat, 0)}" for cat in CATEGORIE_ORDINATE
                 )
-                f.write(f"  {nome_file:45s} : {len(errs):3d} errori ({parti_cat})\n")
+                f.write(f"  {nome_file:45s} : {len(errs):3d} errors ({parti_cat})\n")
         else:
-            f.write("  Nessun file con errori!\n")
+            f.write("  No files with errors!\n")
         f.write("\n")
 
-        # ---- FILE SENZA ERRORI ----
+        # ---- FILES WITHOUT ERRORS ----
         f.write("-" * 80 + "\n")
-        f.write("FILE SENZA ERRORI\n")
+        f.write("FILES WITHOUT ERRORS\n")
         f.write("-" * 80 + "\n\n")
 
         if file_senza_errori:
             for nome_file in sorted(file_senza_errori):
                 f.write(f"  ✓ {nome_file}\n")
         else:
-            f.write("  Tutti i file contengono errori.\n")
+            f.write("  All files contain errors.\n")
         f.write("\n")
 
-        # ---- STATISTICHE AGGREGATE ----
+        # ---- AGGREGATED STATISTICS ----
         f.write("-" * 80 + "\n")
-        f.write("STATISTICHE AGGREGATE\n")
+        f.write("AGGREGATED STATISTICS\n")
         f.write("-" * 80 + "\n")
         _scrivi_sezione_report(f, nome_modello, tutti_errori)
 
-        # ---- DETTAGLIO ERRORI PER FILE ----
+        # ---- ERROR DETAIL PER FILE ----
         f.write("\n" + "-" * 80 + "\n")
-        f.write("DETTAGLIO ERRORI PER FILE\n")
+        f.write("ERROR DETAIL PER FILE\n")
         f.write("-" * 80 + "\n\n")
 
         for nome_file in sorted(file_con_errori.keys()):
             errs = file_con_errori[nome_file]
-            f.write(f"  [{nome_file}] — {len(errs)} errori\n")
+            f.write(f"  [{nome_file}] — {len(errs)} errors\n")
             for e in errs:
                 f.write(f"    [{e.categoria}.{e.sottotipo}/{e.gravita}] {e.descrizione}\n")
             f.write("\n")
 
-    print(f"  => Report singolo salvato in: {output_path}")
+    print(f"  => Single report saved at: {output_path}")
 
 
 def _scrivi_sezione_report(f, titolo, errori):
     """
-    Scrive una sezione del report per un dato insieme di errori.
-    Include: conteggi per categoria, sottotipo, gravità, e top esempi.
+    Writes a section of the report for a given set of errors.
+    Includes: counts by category, subtype, severity, and top examples.
     """
     f.write(f"\n--- {titolo} ---\n")
-    f.write(f"Totale errori catalogati: {len(errori)}\n\n")
+    f.write(f"Total cataloged errors: {len(errori)}\n\n")
 
     if not errori:
-        f.write("Nessun errore trovato.\n")
+        f.write("No errors found.\n")
         return
 
-    # Conteggio per CATEGORIA
+    # Count by CATEGORY
     conteggio_cat = defaultdict(int)
     for e in errori:
         conteggio_cat[e.categoria] += 1
 
-    f.write("  FREQUENZA PER CATEGORIA:\n")
+    f.write("  FREQUENCY BY CATEGORY:\n")
     for cat in CATEGORIE_ORDINATE:
         count = conteggio_cat.get(cat, 0)
         pct = (count / len(errori) * 100) if errori else 0
         f.write(f"    {NOMI_CATEGORIE.get(cat, cat):30s} : {count:5d}  ({pct:5.1f}%)\n")
     f.write("\n")
 
-    # Conteggio per SOTTOTIPO
+    # Count by SUBTYPE
     conteggio_sottotipo = defaultdict(int)
     for e in errori:
         chiave = f"{e.categoria}.{e.sottotipo}"
         conteggio_sottotipo[chiave] += 1
 
-    f.write("  FREQUENZA PER SOTTOTIPO:\n")
+    f.write("  FREQUENCY BY SUBTYPE:\n")
     for chiave, count in sorted(conteggio_sottotipo.items(),
                                  key=lambda x: -x[1]):
         pct = (count / len(errori) * 100) if errori else 0
         f.write(f"    {chiave:40s} : {count:5d}  ({pct:5.1f}%)\n")
     f.write("\n")
 
-    # Conteggio per GRAVITÀ
+    # Count by SEVERITY
     alta = sum(1 for e in errori if e.gravita == "Alta")
     bassa = sum(1 for e in errori if e.gravita == "Bassa")
-    f.write("  DISTRIBUZIONE GRAVITÀ:\n")
-    f.write(f"    {'Alta (modifica intento di rete)':40s} : {alta:5d}  ({alta/len(errori)*100:5.1f}%)\n")
-    f.write(f"    {'Bassa (fixabile in post-processing)':40s} : {bassa:5d}  ({bassa/len(errori)*100:5.1f}%)\n")
+    f.write("  SEVERITY DISTRIBUTION:\n")
+    f.write(f"    {'High (modifies network intent)':40s} : {alta:5d}  ({alta/len(errori)*100:5.1f}%)\n")
+    f.write(f"    {'Low (fixable in post-processing)':40s} : {bassa:5d}  ({bassa/len(errori)*100:5.1f}%)\n")
     f.write("\n")
 
-    # Conteggio per GRAVITÀ per CATEGORIA
-    f.write("  GRAVITÀ PER CATEGORIA:\n")
+    # Count by SEVERITY per CATEGORY
+    f.write("  SEVERITY PER CATEGORY:\n")
     for cat in CATEGORIE_ORDINATE:
         cat_errs = [e for e in errori if e.categoria == cat]
         if not cat_errs:
             continue
         alta_cat = sum(1 for e in cat_errs if e.gravita == "Alta")
         bassa_cat = sum(1 for e in cat_errs if e.gravita == "Bassa")
-        f.write(f"    {NOMI_CATEGORIE.get(cat, cat):30s} : Alta={alta_cat:4d}, Bassa={bassa_cat:4d}\n")
+        f.write(f"    {NOMI_CATEGORIE.get(cat, cat):30s} : High={alta_cat:4d}, Low={bassa_cat:4d}\n")
     f.write("\n")
 
 
@@ -717,54 +717,54 @@ def _scrivi_sezione_report(f, titolo, errori):
 
 def main():
     """
-    Entry point: percorre tutte le cartelle nel workspace, rileva i file
-    di output LLM, li confronta con i gold standard, e genera il report.
-    Genera anche report singoli per ogni modello in una cartella dedicata.
+    Entry point: traverses all folders in the workspace, detects LLM
+    output files, compares them with gold standards, and generates the report.
+    It also generates single reports for each model in a dedicated folder.
     """
     print("=" * 60)
-    print("=== CATALOGO ERRORI LLM — Avvio analisi ===")
+    print("=== LLM ERROR CATALOG — Starting analysis ===")
     print("=" * 60)
 
     tutti_errori_per_modello = {}
-    # Mappa: nome_modello → { nome_file: [ErrorEntry, ...] }
+    # Map: model_name → { file_name: [ErrorEntry, ...] }
     errori_per_file_per_modello = {}
-    # Mappa: nome_modello → directory del modello (per info)
+    # Map: model_name → model directory (for info)
     dir_per_modello = {}
     file_analizzati = 0
 
-    # Percorri tutte le sottocartelle cercando file di output
+    # Traverse all subfolders looking for output files
     for root, dirs, files in os.walk(BASE_DIR):
-        # Salta la cartella gold standard, __pycache__, .git e reports_catalogo
+        # Skip gold standard folder, __pycache__, .git and reports_catalogo
         basename = os.path.basename(root)
         if basename in ("intent", "__pycache__", ".git", "reports_catalogo", "dips"):
-            dirs.clear()  # non scendere nelle sotto-cartelle
+            dirs.clear()  # do not descend into subfolders
             continue
 
         file_output = trova_file_output(root)
         if not file_output:
             continue
 
-        # Determina il nome del modello dalla struttura della cartella
-        # es. "3-shot/.../Qwen2.5-14b" → "3-shot/Qwen2.5-14b"
+        # Determine the model name from the folder structure
+        # e.g. "3-shot/.../Qwen2.5-14b" → "3-shot/Qwen2.5-14b"
         rel_path = os.path.relpath(root, BASE_DIR)
         parti = rel_path.replace("\\", "/").split("/")
-        # Cerca di estrarre un nome significativo
+        # Try to extract a meaningful name
         nome_modello = "/".join(p for p in parti
                                 if not p.endswith("-001") and p != ".")
         if not nome_modello:
             nome_modello = rel_path
 
-        print(f"\nAnalisi: {nome_modello} ({len(file_output)} file)")
+        print(f"\nAnalysis: {nome_modello} ({len(file_output)} files)")
 
         errori_modello = []
-        errori_per_file = {}  # per il report singolo
+        errori_per_file = {}  # for the single report
 
         for file_path, context_name, intent_letter in file_output:
-            # Trova il gold standard corrispondente
+            # Find the corresponding gold standard
             gold_path = os.path.join(CARTELLA_INTENTI_IDEALI,
                                      context_name, "facts.pl")
             if not os.path.exists(gold_path):
-                print(f"  ⚠ Gold standard non trovato per {context_name}")
+                print(f"  ⚠ Gold standard not found for {context_name}")
                 continue
 
             nome_file = os.path.basename(file_path)
@@ -773,35 +773,35 @@ def main():
             errori_per_file[nome_file] = errori
             file_analizzati += 1
 
-        # Sommario per modello
+        # Summary by model
         if errori_modello:
             conteggi = {cat: sum(1 for e in errori_modello if e.categoria == cat)
                         for cat in CATEGORIE_ORDINATE}
             parti_str = ", ".join(f"{cat}={conteggi[cat]}" for cat in CATEGORIE_ORDINATE)
-            print(f"  Totale errori: {len(errori_modello)} ({parti_str})")
+            print(f"  Total errors: {len(errori_modello)} ({parti_str})")
 
         tutti_errori_per_modello[nome_modello] = errori_modello
         errori_per_file_per_modello[nome_modello] = errori_per_file
         dir_per_modello[nome_modello] = root
 
-    # ---- Genera il report globale ----
+    # ---- Generate the global report ----
     print(f"\n{'=' * 60}")
-    print(f"File analizzati: {file_analizzati}")
+    print(f"Analyzed files: {file_analizzati}")
 
     report_path = os.path.join(BASE_DIR, "report_catalogo_errori.txt")
     genera_report(tutti_errori_per_modello, report_path)
 
-    # ---- Genera report singoli nella cartella dedicata ----
+    # ---- Generate single reports in the dedicated folder ----
     cartella_reports = os.path.join(BASE_DIR, "reports_catalogo")
     os.makedirs(cartella_reports, exist_ok=True)
 
     print(f"\n{'=' * 60}")
-    print(f"Generazione report singoli in: {cartella_reports}")
+    print(f"Generating single reports in: {cartella_reports}")
 
     for nome_modello in sorted(errori_per_file_per_modello.keys()):
         errori_per_file = errori_per_file_per_modello[nome_modello]
-        # Crea un nome file valido dal nome modello
-        # es. "3-shot/Qwen2.5-3b" → "3-shot_Qwen2.5-3b"
+        # Create a valid file name from the model name
+        # e.g. "3-shot/Qwen2.5-3b" → "3-shot_Qwen2.5-3b"
         nome_file_report = nome_modello.replace("/", "_").replace("\\", "_")
         report_singolo_path = os.path.join(
             cartella_reports, f"report_{nome_file_report}.txt"
@@ -809,13 +809,9 @@ def main():
         genera_report_singolo(nome_modello, errori_per_file, report_singolo_path)
 
     print(f"\n{'=' * 60}")
-    print("Elaborazione completata!")
-
-
-
+    print("Processing completed!")
 
 
 # ============================================================================
 if __name__ == "__main__":
     main()
-

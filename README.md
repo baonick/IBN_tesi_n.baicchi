@@ -1,124 +1,124 @@
 # LLM Intent-to-Prolog Translation for DIPS
 
-Framework sperimentale per la traduzione automatica di intenti di rete espressi in linguaggio naturale in fatti logici formali Prolog compatibili con il framework **DIPS**(Declarative Intent Processing System).  
+Experimental framework for the automatic translation of network intents expressed in natural language into formal Prolog logic facts compatible with the **DIPS** (Declarative Intent Processing System) framework.
 
-Il repository implementa e confronta due strategie di adattamento di modelli linguistici in scenari con scarsità di dati:
-- **In-Context Learning (ICL):** Valutazione in configurazioni *0-shot*, *3-shot* e *9-shot*.
-- **Parameter-Efficient Fine-Tuning (PEFT via LoRA):** Addestramento con validazione incrociata *5-Fold Cross-Validation* partizionata a livello di contesto semantico per prevenire il data leakage.
+The repository implements and compares two adaptation strategies for language models in data-scarce scenarios:
+- **In-Context Learning (ICL):** Evaluation in *0-shot*, *3-shot*, and *9-shot* configurations.
+- **Parameter-Efficient Fine-Tuning (PEFT via LoRA):** Training with *5-Fold Cross-Validation* partitioned at the semantic context level to prevent data leakage.
 
-## Struttura del Repository
+## Repository Structure
 
 IBN github/
-├── CloudModel/                                 # Modello Gemini 3.5 flash (Cloud)
-│   ├── prompt_fewShot/                         # Valutazione In-Context Learning 3-shot e 9-shot
-│   └── prompt_zeroShot/                        # Valutazione In-Context Learning 0-shot
-├── dips/                                       # File sorgente e regole formali DIPS (Prolog)
-├── intent/                                     # Dataset di intenti in 3 differenti formati
+├── CloudModel/                                 # Gemini 3.5 flash Model (Cloud)
+│   ├── prompt_fewShot/                         # In-Context Learning evaluation 3-shot and 9-shot
+│   └── prompt_zeroShot/                        # In-Context Learning evaluation 0-shot
+├── dips/                                       # DIPS source files and formal rules (Prolog)
+├── intent/                                     # Intent dataset in 3 different formats
 ├── LocalModel/
 │   ├── Qwen2.5-inContext/
-│   │   ├── zeroShot/                           # Script Qwen ICL 0-shot (3B, 7B, 14B)
-│   │   ├── 3-Shot/                             # Script Qwen ICL 3-shot (3B, 7B, 14B)
-│   │   └── 9-Shot/                             # Script Qwen ICL 9-shot (3B, 7B, 14B)
+│   │   ├── zeroShot/                           # Qwen ICL 0-shot scripts (3B, 7B, 14B)
+│   │   ├── 3-Shot/                             # Qwen ICL 3-shot scripts (3B, 7B, 14B)
+│   │   └── 9-Shot/                             # Qwen ICL 9-shot scripts (3B, 7B, 14B)
 │   └── Qwen2.5-LoRa/
-│       ├── 5-fold-Qwen2.5-3B/                  # Esperimenti 5-Fold per Qwen 3B
-│       ├── 5-fold-Qwen2.5-7B/                  # Esperimenti 5-Fold per Qwen 7B
-│       ├── 5-fold-Qwen2.5-14B/                 # Esperimenti 5-Fold per Qwen 14B
-│       ├── esegui_creazione_dataset_json.py    # Preparazione dataset partizionato per i fold
-│       ├── esegui_pipeline.py                  # Pipeline completa training LoRA e inferenza
-│       └── esegui_valutazione.py               # Calcolo metriche globali e per-fold
+│       ├── 5-fold-Qwen2.5-3B/                  # 5-Fold experiments for Qwen 3B
+│       ├── 5-fold-Qwen2.5-7B/                  # 5-Fold experiments for Qwen 7B
+│       ├── 5-fold-Qwen2.5-14B/                 # 5-Fold experiments for Qwen 14B
+│       ├── esegui_creazione_dataset_json.py    # Preparation of partitioned dataset for folds
+│       ├── esegui_pipeline.py                  # Complete LoRA training and inference pipeline
+│       └── esegui_valutazione.py               # Calculation of global and per-fold metrics
 ├── script/
-│   ├── DipsExecuter.py                         # Esecuzione query DIPS
-│   ├── MetricExecuterInputDips.py              # Calcolo metriche su sintassi Prolog (F1, Recall, Exact Match)
-│   ├── catalogo_errori.py                      # Tassonomia e tracciamento errori sintattici/logici
-│   └── parser_catalogo.py                      # Parsing degli intenti di test
-├── prompts.txt                                 # Definizioni dei template di prompt (LoRA e ICL)
+│   ├── DipsExecuter.py                         # DIPS query execution
+│   ├── MetricExecuterInputDips.py              # Metrics calculation on Prolog syntax (F1, Recall, Exact Match)
+│   ├── catalogo_errori.py                      # Taxonomy and tracking of syntactic/logic errors
+│   └── parser_catalogo.py                      # Parsing of test intents
+├── prompts.txt                                 # Definitions of prompt templates (LoRA and ICL)
 └── README.md
 
 
 
 
-## Requisiti di Sistema e Dipendenze
+## System Requirements and Dependencies
 
-**Hardware & Sistema**
-* **Sistema Operativo:** Linux
-* **GPU:** NVIDIA con supporto CUDA (compute capability adeguata per modelli 3B–14B)
-* **Driver & Toolkit:** NVIDIA CUDA Toolkit (v12.4 consigliata)
-* **Storage:** Spazio su disco sufficiente per pesi dei modelli e cache Hugging Face (`HF_HOME`)
+**Hardware & System**
+* **Operating System:** Linux
+* **GPU:** NVIDIA with CUDA support (compute capability adequate for 3B–14B models)
+* **Drivers & Toolkit:** NVIDIA CUDA Toolkit (v12.4 recommended)
+* **Storage:** Sufficient disk space for model weights and Hugging Face cache (`HF_HOME`)
 
-**Software di Rete & Logica**
-* **SWI-Prolog (`swipl`):** Necessario per l'esecuzione del framework DIPS e la validazione dei fatti Prolog generati
+**Network & Logic Software**
+* **SWI-Prolog (`swipl`):** Required for executing the DIPS framework and validating generated Prolog facts
 
-**Librerie Python Core**
+**Core Python Libraries**
 * **Python:** 3.10+
-* **PyTorch (`torch`, `torchvision`, `torchaudio`):** Compilato con supporto CUDA
-* **Unsloth:** Framework di accelerazione e ottimizzazione memoria per PEFT/LoRA
-* **Transformers, Datasets & Accelerate:** Gestione modelli Hugging Face e pipeline di training
-* **google-genai** / **requests:** Interfacciamento API per i test su modelli in cloud (Gemini / gateway OpenRouter)
+* **PyTorch (`torch`, `torchvision`, `torchaudio`):** Compiled with CUDA support
+* **Unsloth:** Acceleration and memory optimization framework for PEFT/LoRA
+* **Transformers, Datasets & Accelerate:** Hugging Face model management and training pipelines
+* **google-genai** / **requests:** API interfacing for tests on cloud models (Gemini / OpenRouter gateway)
 
 
 
 
 
 
-### Descrizione degli Script Principali
+### Main Scripts Description
 
 *   **`esegui_pipeline.py`**
-    Questo è lo script di orchestrazione principale, progettato per automatizzare l'esecuzione batch dei test su tutte le varianti dimensionali del modello locale (3B, 7B e 14B). Il suo comportamento si adatta dinamicamente in base alla directory in cui viene eseguito:
-    *   **In ambiente LoRA:** Gestisce automaticamente l'intera coda di esecuzione, avviando in sequenza l'addestramento e la successiva inferenza per tutti i 5 fold, ripetendo il processo per i modelli da 3B, 7B e 14B.
-    *   **In ambiente In-Context** Esegue sequenzialmente i test di inferenza per i tre modelli (3B, 7B, 14B), applicando tutti i vari set di prompt (0-shot, 3-shot, 9-shot) a tutto il dataset di test.
-    *   **`esegui_valutazione.py`** Questo script è responsabile dell'analisi prestazionale e del calcolo delle metriche. Si occupa di confrontare i fatti Prolog generati dai modelli (salvati all'interno delle cartelle dei risultati) con il *ground truth* atteso presente nel dataset originale degli intenti. Il calcolo delle metriche (F1-Score, Accuracy Globale/Exact Match, Precision, Recall e Jaccard Index) avviene in modo ricorsivo: nel caso del LoRA, lo script attraversa in automatico tutti i fold, analizzando le singole iterazioni. Al termine dell'esecuzione, genera e salva dei report di testo dettagliati per ogni modello e configurazione analizzata.
-    *   **`esegui_creazione_dataset_json.py`** Questo script si occupa di generare i file JSON strutturati che verranno forniti in input ai modelli sia per la fase di addestramento (Train) che per i test di inferenza. 
-    Risulta fondamentale qualora si decida di espandere o modificare il dataset originale: eseguendo lo script, tutte le partizioni necessarie vengono rigenerate. Nel progetto è presente anche un file master che, sfruttando `os.walk`, rintraccia e avvia a cascata tutti gli script di creazione dataset presenti nelle varie sottocartelle.
-    * **Nota di configurazione:** Le regole di partizionamento (come il numero totale di contesti o il range assegnato a ciascun fold) sono definite direttamente all'interno del codice. Qualora si aggiungano nuovi elementi al dataset (oltre i 34 contesti attuali), sarà necessario aggiornare manualmente queste variabili all'interno dello script prima di eseguirlo.
+    This is the main orchestration script, designed to automate the batch execution of tests on all dimensional variants of the local model (3B, 7B, and 14B). Its behavior dynamically adapts based on the directory in which it is executed:
+    *   **In LoRA environment:** Automatically manages the entire execution queue, sequentially starting the training and subsequent inference for all 5 folds, repeating the process for the 3B, 7B, and 14B models.
+    *   **In In-Context environment:** Sequentially executes inference tests for the three models (3B, 7B, 14B), applying all the various prompt sets (0-shot, 3-shot, 9-shot) to the entire test dataset.
+    *   **`esegui_valutazione.py`** This script is responsible for performance analysis and metrics calculation. It compares the Prolog facts generated by the models (saved within the results folders) with the expected *ground truth* present in the original intent dataset. The calculation of the metrics (F1-Score, Global Accuracy/Exact Match, Precision, Recall, and Jaccard Index) occurs recursively: in the case of LoRA, the script automatically traverses all folds, analyzing the single iterations. Upon completion of the execution, it generates and saves detailed text reports for each model and configuration analyzed.
+    *   **`esegui_creazione_dataset_json.py`** This script generates the structured JSON files that will be provided as input to the models for both the training phase (Train) and the inference tests.
+    It is fundamental if you decide to expand or modify the original dataset: by executing the script, all the necessary partitions are regenerated. The project also includes a master file that, leveraging `os.walk`, locates and cascades the execution of all dataset creation scripts present in the various subdirectories.
+    * **Configuration note:** The partitioning rules (such as the total number of contexts or the range assigned to each fold) are defined directly within the code. Should you add new elements to the dataset (beyond the current 34 contexts), you will need to manually update these variables within the script before running it.
     *   **`catalogo_errori.py`**
-    Questo script si occupa dell'analisi qualitativa dei risultati. Va eseguito a valle dell'inferenza e del calcolo delle metriche generali. Attraversando automaticamente tutte le directory dei risultati, effettua un parsing avanzato dei fatti Prolog generati per identificare la natura esatta degli errori commessi dai modelli. Al termine, genera una cartella contenente report diagnostici dettagliati. 
-    Per fornire una tassonomia precisa, gli errori sono classificati in quattro macro-categorie (di cui le ultime tre ulteriormente divise in sotto-categorie specifiche):
-    *   **Sintassi:** Errori di formattazione che impediscono la compilazione in Prolog.
-    *   **Valori errati:** Assegnazione scorretta di parametri, attributi (es. `hard`/`soft`) o topologie (`Before`/`After`).
-    *   **VNF errate:** Allucinazione di Network Function inesistenti o scambio di nodi validi.
-    *   **Inserzioni e Rimozioni:** Fatti Prolog aggiunti in eccesso (non richiesti) o mancanti rispetto al *ground truth*.
+    This script handles the qualitative analysis of the results. It should be executed after inference and the calculation of the general metrics. By automatically traversing all the results directories, it performs an advanced parsing of the generated Prolog facts to identify the exact nature of the errors committed by the models. Upon completion, it generates a folder containing detailed diagnostic reports.
+    To provide a precise taxonomy, errors are classified into four macro-categories (the latter three of which are further divided into specific sub-categories):
+    *   **Syntax:** Formatting errors that prevent Prolog compilation.
+    *   **Wrong values:** Incorrect assignment of parameters, attributes (e.g., `hard`/`soft`), or topologies (`Before`/`After`).
+    *   **Wrong VNFs:** Hallucination of non-existent Network Functions or swapping of valid nodes.
+    *   **Insertions and Removals:** Prolog facts added in excess (not requested) or missing compared to the *ground truth*.
     *   **`DipsExecuter.py`**
-    Questo script funge da interfaccia diretta tra le predizioni generate dai modelli linguistici e il framework logico DIPS. Attraversa in modo automatizzato l'intero progetto per individuare tutti i file di risultato generati, rispettando rigorosamente la gerarchia delle sottocartelle, e li sottopone all'esecuzione diretta in DIPS. Questo passaggio è cruciale per validare sul campo se il codice Prolog generato (anche qualora sintatticamente corretto e privo di errori di battitura) viene effettivamente accettato, elaborato e validato dal framework di rete ricevente.
+    This script acts as a direct interface between the predictions generated by the language models and the DIPS logical framework. It automates the traversal of the entire project to locate all generated result files, strictly adhering to the subdirectory hierarchy, and subjects them to direct execution in DIPS. This step is crucial to validate in the field whether the generated Prolog code (even if syntactically correct and free of typos) is actually accepted, processed, and validated by the receiving network framework.
 
 
 
-### Il dataset proprietario utilizzato per questo esperimento è stato costruito per valutare la capacità di astrazione dei modelli. È composto da un nucleo di **34 contesti di rete originali**, ciascuno espanso in tre varianti strutturali (per un totale di 102 campioni):
+### The proprietary dataset used for this experiment was built to evaluate the models' abstraction capability. It consists of a core of **34 original network contexts**, each expanded into three structural variants (for a total of 102 samples):
 
-- **Schema A:** Formulazione standard e diretta.
-- **Schema B:** Formulazione passiva o con struttura sintattica invertita.
-- **Schema C:** Formulazione discorsiva frammentata.
+- **Schema A:** Standard and direct formulation.
+- **Schema B:** Passive formulation or with inverted syntactic structure.
+- **Schema C:** Fragmented discursive formulation.
 
-Per garantire la validità scientifica (evitando il *data leakage*), la **5-Fold Cross-Validation** nel training LoRA non separa le singole frasi, ma isola i contesti semantici interi. In questo modo il modello in fase di test affronta sempre topologie e catene VNF mai viste durante l'addestramento. 
+To ensure scientific validity (avoiding *data leakage*), the **5-Fold Cross-Validation** in LoRA training does not separate single sentences but isolates entire semantic contexts. In this way, during the test phase, the model always faces topologies and VNF chains never seen during training.
 
 
-## 🚀 Quick Start (Pipeline di Esecuzione)
+## Quick Start (Execution Pipeline)
 
-L'ambiente e i dataset sono già preconfigurati. Il flusso di esecuzione è standardizzato e risulta identico per entrambe le strategie analizzate nel progetto (In-Context Learning e LoRA). 
+The environment and datasets are already pre-configured. The execution flow is standardized and is identical for both strategies analyzed in the project (In-Context Learning and LoRA).
 
-Per riprodurre i test, segui questi semplici passaggi:
+To reproduce the tests, follow these simple steps:
 
-1. **Naviga nella cartella di test desiderata:** Posizionati all'interno della directory della strategia che intendi eseguire (all'interno di `LocalModel`).
+1. **Navigate to the desired test folder:** Position yourself within the directory of the strategy you intend to execute (inside `LocalModel`).
    ```bash
-   # Esempio: Entra nella cartella dell'In-Context Learning
+   # Example: Enter the In-Context Learning folder
    cd LocalModel/Qwen2.5-inContext/
    
-   # OPPURE nella cartella del LoRA
+   # OR in the LoRA folder
    # cd LocalModel/Qwen2.5-LoRa/
    ```
-2. **Esegui la pipeline principale:** Avvia lo script di orchestrazione per avviare i test in sequenza.
+2. **Execute the main pipeline:** Run the orchestration script to start the tests in sequence.
    ```bash
    python esegui_all_pipeline.py
-
-3. **Avvia il tool di valutazione:** Una volta completata l'inferenza, esegui lo script di valutazione per analizzare i risultati.
+   ```
+3. **Run the evaluation tool:** Once inference is complete, run the evaluation script to analyze the results.
    ```bash
    python esegui_valutazione.py
    ```
 
 
-## Contesto del Progetto e Autore
+## Project Context and Author
 
-Questo progetto è stato sviluppato come parte di un lavoro di Tesi presso l'**Università di Pisa**. 
-Gli intenti generati da questa pipeline sono progettati specificamente per alimentare **DIPS**, un framework basato su logica dichiarativa (Prolog) per la modellazione, la traduzione e la risoluzione dei conflitti degli intenti di rete.
+This project was developed as part of a Thesis work at the **University of Pisa**.
+The intents generated by this pipeline are specifically designed to feed **DIPS**, a framework based on declarative logic (Prolog) for modeling, translating, and resolving network intent conflicts.
 
-- **Autore:** Niccolò Baicchi
-- **Istituzione:** Università di Pisa
+- **Author:** Niccolò Baicchi
+- **Institution:** University of Pisa

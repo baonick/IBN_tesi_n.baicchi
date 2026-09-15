@@ -1,15 +1,15 @@
-﻿import json
+import json
 import re
 import os
 import glob
 
 def carica_catalogo_vnf(json_path):
     """
-    Carica il catalogo VNF dal file JSON e restituisce un dizionario
-    che mappa l'ID della VNF al suo valore hardware.
+    Loads the VNF catalog from the JSON file and returns a dictionary
+    that maps the VNF ID to its hardware value.
     
-    :param json_path: Percorso del file catalogoVNF.json
-    :return: Dizionario { 'nome_vnf': hardware_int }
+    :param json_path: Path to the catalogoVNF.json file
+    :return: Dictionary { 'vnf_name': hardware_int }
     """
     with open(json_path, 'r', encoding='utf-8') as f:
         catalogo = json.load(f)
@@ -25,37 +25,37 @@ def carica_catalogo_vnf(json_path):
 
 def arricchisci_intento_con_hardware(testo_intento, mappa_vnf):
     """
-    Cerca nel testo dell'intento i nomi delle VNF presenti nel catalogo
-    e li sostituisce con la stringa formattata <identificatore, hardware>.
+    Searches the intent text for the VNF names present in the catalog
+    and replaces them with the formatted string <identifier, hardware>.
     
-    :param testo_intento: Stringa contenente il testo dell'intento originale
-    :param mappa_vnf: Dizionario restituito da carica_catalogo_vnf()
-    :return: Stringa con il testo dell'intento modificato
+    :param testo_intento: String containing the original intent text
+    :param mappa_vnf: Dictionary returned by carica_catalogo_vnf()
+    :return: String with the modified intent text
     """
     testo_modificato = testo_intento
     
-    # Ordiniamo i nomi delle VNF per lunghezza decrescente.
-    # Questo previene bug nel caso in cui il nome di una VNF sia una sottostringa di un'altra.
+    # Sort VNF names by length in descending order.
+    # This prevents bugs in case a VNF name is a substring of another.
     vnf_ids = sorted(mappa_vnf.keys(), key=len, reverse=True)
     
     for vnf_id in vnf_ids:
         hardware = mappa_vnf[vnf_id]
-        # Usiamo \b per assicurarci di sostituire solo parole intere e non pezzi di altre parole
+        # Use \b to make sure to replace only whole words and not parts of other words
         pattern = r'\b' + re.escape(vnf_id) + r'\b'
         sostituzione = f"<{vnf_id}, {hardware}>"
         
-        # Effettuiamo la sostituzione nel testo
+        # Perform the replacement in the text
         testo_modificato = re.sub(pattern, sostituzione, testo_modificato)
         
     return testo_modificato
 
 def elabora_singolo_file_intento(percorso_intento, json_path):
     """
-    Legge un singolo file di intento, applica la sostituzione e restituisce il testo modificato.
+    Reads a single intent file, applies the replacement, and returns the modified text.
     
-    :param percorso_intento: Percorso del file di testo dell'intento
-    :param json_path: Percorso del file catalogo JSON
-    :return: Testo dell'intento modificato
+    :param percorso_intento: Path to the intent text file
+    :param json_path: Path to the JSON catalog file
+    :return: Modified intent text
     """
     mappa_vnf = carica_catalogo_vnf(json_path)
     
@@ -66,22 +66,22 @@ def elabora_singolo_file_intento(percorso_intento, json_path):
 
 def elabora_tutti_gli_intenti(cartella_intenti, json_path):
     """
-    Legge tutti i file di testo (.txt) all'interno della cartella specificata,
-    saltando eventuali cataloghi, e restituisce un dizionario con i risultati.
+    Reads all text files (.txt) inside the specified folder,
+    skipping any catalogs, and returns a dictionary with the results.
     
-    :param cartella_intenti: Percorso della cartella contenente gli intenti (es. 'intent')
-    :param json_path: Percorso del file catalogo JSON
-    :return: Dizionario { 'nome_file.txt': 'testo_modificato' }
+    :param cartella_intenti: Path to the folder containing the intents (e.g. 'intent')
+    :param json_path: Path to the JSON catalog file
+    :return: Dictionary { 'filename.txt': 'modified_text' }
     """
     mappa_vnf = carica_catalogo_vnf(json_path)
     risultati = {}
     
-    # Cerca tutti i file .txt nella cartella
+    # Search for all .txt files in the folder
     pattern_ricerca = os.path.join(cartella_intenti, "*.txt")
     for percorso_file in glob.glob(pattern_ricerca):
         nome_file = os.path.basename(percorso_file)
         
-        # Evita di elaborare il file di catalogo originale se si trova nella stessa cartella
+        # Avoid processing the original catalog file if it is in the same folder
         if "catalogo" in nome_file.lower():
             continue
             
@@ -93,23 +93,22 @@ def elabora_tutti_gli_intenti(cartella_intenti, json_path):
     return risultati
 
 # ==========================================
-# ESEMPIO DI UTILIZZO (se eseguito da solo)
+# USAGE EXAMPLE (if executed directly)
 # ==========================================
 if __name__ == "__main__":
-    # Calcola il percorso assoluto in base a dove si trova questo script
+    # Calculate the absolute path based on where this script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
     CATALOGO_JSON = os.path.join(script_dir, "..", "intent", "catalogoVNF.json")
     
-    # Test 1: Elaborazione di una stringa di prova
-    print("--- TEST STRINGA ---")
+    # Test 1: Processing a test string
+    print("--- STRING TEST ---")
     
     try:
         mappa = carica_catalogo_vnf(CATALOGO_JSON)
-        testo_prova = "L'operatore richiede di dispiegare un mailGatewayVF e successivamente un sandboxScannerVF."
+        testo_prova = "The operator requests to deploy a mailGatewayVF and subsequently a sandboxScannerVF."
         risultato_prova = arricchisci_intento_con_hardware(testo_prova, mappa)
-        print("Originale:", testo_prova)
-        print("Modificato:", risultato_prova)
+        print("Original:", testo_prova)
+        print("Modified:", risultato_prova)
     except FileNotFoundError:
-        print(f"Errore: Impossibile trovare il file '{CATALOGO_JSON}'.")
-        print("Assicurati che il file catalogoVNF.json esista nella cartella intent.")
-
+        print(f"Error: Unable to find the file '{CATALOGO_JSON}'.")
+        print("Ensure that the catalogoVNF.json file exists in the intent folder.")
