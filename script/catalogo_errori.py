@@ -609,30 +609,39 @@ def genera_report_singolo(nome_modello, errori_per_file, output_path):
         f.write("SUMMARY OF FILES WITH ERRORS\n")
         f.write("-" * 80 + "\n\n")
 
+        file_solo_low = []
+
         if file_con_errori:
             for nome_file in sorted(file_con_errori.keys()):
                 errs = file_con_errori[nome_file]
+                alta = sum(1 for e in errs if e.gravita == "Alta")
+                bassa = sum(1 for e in errs if e.gravita == "Bassa")
+                
+                if alta == 0 and bassa > 0:
+                    file_solo_low.append(nome_file)
+
                 conteggio = {cat: 0 for cat in CATEGORIE_ORDINATE}
                 for e in errs:
                     conteggio[e.categoria] = conteggio.get(e.categoria, 0) + 1
                 parti_cat = ", ".join(
                     f"{cat}={conteggio.get(cat, 0)}" for cat in CATEGORIE_ORDINATE
                 )
-                f.write(f"  {nome_file:45s} : {len(errs):3d} errors ({parti_cat})\n")
+
+                f.write(f"  {nome_file:45s} : {len(errs):3d} errors (High={alta}, Low={bassa}) ({parti_cat})\n")
         else:
             f.write("  No files with errors!\n")
         f.write("\n")
 
-        # ---- FILES WITHOUT ERRORS ----
+        # ---- FILES WITH ONLY LOW ERRORS ----
         f.write("-" * 80 + "\n")
-        f.write("FILES WITHOUT ERRORS\n")
+        f.write("FILES WITH ONLY LOW ERRORS\n")
         f.write("-" * 80 + "\n\n")
 
-        if file_senza_errori:
-            for nome_file in sorted(file_senza_errori):
+        if file_solo_low:
+            for nome_file in sorted(file_solo_low):
                 f.write(f"  ✓ {nome_file}\n")
         else:
-            f.write("  All files contain errors.\n")
+            f.write("  No files with only low errors.\n")
         f.write("\n")
 
         # ---- AGGREGATED STATISTICS ----
