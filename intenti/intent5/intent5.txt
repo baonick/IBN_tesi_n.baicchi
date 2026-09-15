@@ -1,5 +1,0 @@
-The logistics company logisticsOp launches a service for 800 delivery drones. The required functions in order are a flight 
-receiver at the edge, a route optimizer at the edge, and a shipping archive in the cloud. Regarding the 
-constraints, the data sent to the route optimizer requires prior compression. It is mandatory that the service 
-availability is higher than 99.9%. It is preferred to assign a dedicated edge node to the route optimizer to 
-avoid processing interference.

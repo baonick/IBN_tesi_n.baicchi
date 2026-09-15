@@ -1,5 +1,0 @@
-The supermarket retailOp chain activates the system for 400 stores. The sequence of VNFs includes a cart receiver at the edge,
-an item recognizer at the edge, a payment processor at the edge, a receipt generator in the cloud, and an inventory 
-database in the cloud. Among the operational directives, the transactional data entering the payment processor 
-requires a security function. It is mandatory that the bandwidth from item recognizer to the payment processor 
-exceeds 200 megabits per second. It is preferred that the item recognizer resides on a dedicated node.

@@ -1,5 +1,0 @@
-The agricultural cooperative farmCoopOp collects data from 1500 weather stations. The architectural chain consists solely of 
-a weather collector located at the edge and a prediction engine hosted in the cloud. For the analysis history, the 
-activity of the prediction engine is recorded in the cloud via logging. It is mandatory that the total hardware of 
-the chain does not exceed 50 gigabytes. It is preferred to have a bandwidth from the weather collector to the 
-prediction engine higher than 50 megabits per second.

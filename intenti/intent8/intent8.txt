@@ -1,5 +1,0 @@
-The energy company energyOp needs to monitor 600 offshore wind turbines. The service architecture is composed, in order, 
-of a turbine receiver allocated at the edge, a structural analyzer at the edge, and a maintenance registry in the 
-cloud. Regarding the rules, diagnostic data requires a security function before being evaluated by the structural 
-analyzer. It is mandatory that the overall availability of the chain is higher than 99.99%. It is preferred that
- the guaranteed bandwidth from the gateway to the analyzer exceeds 200 megabits per second.

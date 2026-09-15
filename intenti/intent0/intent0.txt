@@ -1,5 +1,0 @@
-The energy provider energyProviderOp requires a service to manage 20,000 smart meters. The service chain includes, in order: 
-a meter gateway allocated at the edge, a load analyzer allocated at the edge, and a grid database located 
-in the cloud. Regarding requirements, input data to the load analyzer Mandatory undergoes caching. It is a 
-mandatory requirement that the latency from the gateway to the analyzer remains below 20 milliseconds. 
-Furthermore, it is preferred that the gateway and the analyzer operate on the same node.

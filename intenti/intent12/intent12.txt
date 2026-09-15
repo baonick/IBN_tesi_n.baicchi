@@ -1,6 +1,0 @@
-The manufacturing company manufacturingOp requires a vision system for 200 assembly lines. The architectural chain starts with 
-a visual ingress node at the edge, followed by an image pre-processor at the edge, a defect detector at the edge, 
-an alarm manager in the cloud, and finally a quality archive in the cloud. Regarding the rules, the data sent to 
-the defect detector requires a security function. It is mandatory that the latency from the network gateway to 
-the defect detector is less than 5 milliseconds. Furthermore, it is mandatory that the overall availability 
-of the chain is higher than 99.999%

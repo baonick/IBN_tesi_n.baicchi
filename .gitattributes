@@ -1,5 +1,0 @@
-# Gestione automatica generale
-* text=auto
-
-# Forza SEMPRE i file Python a usare LF (Linux/Unix)
-*.py text eol=lf

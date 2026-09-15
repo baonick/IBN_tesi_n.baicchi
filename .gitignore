@@ -1,0 +1,37 @@
+# ==========================================
+# Python & Virtual Environments
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+.venv/
+unsloth_env/
+
+# ==========================================
+# IDEs and OS files
+# ==========================================
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+Thumbs.db
+
+# ==========================================
+# Modelli e Pesi (File Pesanti)
+# ==========================================
+# Evita di caricare i pesi dei modelli, cache o checkpoint di HuggingFace/PyTorch
+*.pth
+*.pt
+*.safetensors
+*.bin
+*.ckpt
+*.h5
+*.onnx
+cache/
+.cache/
+
+

@@ -1,5 +1,0 @@
-The rescue workers emergencyOp coordinate 300 drones in flight. The chain is composed, in order, of a telemetry receiver at the 
-edge, a swarm coordinator at the edge, a mapping engine at the edge, and a mission registry in the cloud. 
-Among the constraints, the data undergoes caching before entering the mapping engine. It is mandatory that the 
-chain availability exceeds 99.99%. It is mandatory that the latency from the network gateway to the swarm 
-coordinator remains under 8 milliseconds.

@@ -1,6 +1,0 @@
-The manufacturing plant manufacturingOp activates a support system for 150 remote technicians. The architectural chain starts 
-with a visual ingress node at the edge, followed by an augmented reality server at the edge, and ends with a 
-maintenance database in the cloud. Regarding performance, the visual ingress node requires encoding functions 
-at its output. It is mandatory that the total bandwidth from the network gateway to the server exceeds 500 megabits 
-per second. It is preferred to maintain a latency from the network gateway to the augmented reality server below 15 
-milliseconds.
