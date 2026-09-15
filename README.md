@@ -85,9 +85,9 @@ IBN github/
 
 ### The proprietary dataset used for this experiment was built to evaluate the models' abstraction capability. It consists of a core of **34 original network contexts**, each expanded into three structural variants (for a total of 102 samples):
 
-- **Schema A:** Standard and direct formulation.
-- **Schema B:** Passive formulation or with inverted syntactic structure.
-- **Schema C:** Fragmented discursive formulation.
+- **Schema A:** Procedural Structure
+- **Schema B:** Fragmented Structure prioritizing VNFs
+- **Schema C:** Fragmented Structure prioritizing Property Expectations
 
 To ensure scientific validity (avoiding *data leakage*), the **5-Fold Cross-Validation** in LoRA training does not separate single sentences but isolates entire semantic contexts. In this way, during the test phase, the model always faces topologies and VNF chains never seen during training.
 
