@@ -8,6 +8,7 @@ The repository implements and compares two adaptation strategies for language mo
 
 ## Repository Structure
 
+```text
 IBN github/
 ├── CloudModel/                                 # Gemini 3.5 flash Model (Cloud)
 │   ├── prompt_fewShot/                         # In-Context Learning evaluation 3-shot and 9-shot
@@ -33,7 +34,7 @@ IBN github/
 │   └── parser_catalogo.py                      # Parsing of test intents
 ├── prompts.txt                                 # Definitions of prompt templates (LoRA and ICL)
 └── README.md
-
+```
 
 
 
