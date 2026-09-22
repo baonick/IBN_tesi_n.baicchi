@@ -3,4 +3,4 @@ cleans malicious flows, and ensures server availability. The deployed service ch
 located in the cloud, a rateLimiterVF located in the cloud, and a webServerVF located in the cloud. For security operations, it is mandatory that security is 
 applied before the scrubbingFilterVF. Furthermore, it is strictly required that the bandwidth between the networkTrafficAnalyzerVF and the scrubbingFilterVF is greater 
 than 500 megabps. Additionally, the provider prefers to enforce logging after the rateLimiterVF. Finally, it is desired that the latency from the rateLimiterVF 
-to the webServerVF remains lower than 10 ms.
+to the webServerVF remains lower than 30 ms.

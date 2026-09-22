@@ -3,4 +3,4 @@ executes decision algorithms, and sends purchase orders seeking the fastest netw
 For this component, caching is applied after it. The chain then connects to a tradingAlgoVF allocated at the edge, ensuring that it is mandatory for the latency 
 from the marketFeedVF to this tradingAlgoVF to remain below 50 ms. The chain proceeds to a riskCheckerVF located in the cloud; it is ideally preferred that the 
 bandwidth from the tradingAlgoVF to this riskCheckerVF remains higher than 5000 Mbps. Finally, the system routes to an orderDispatcherVF allocated at the edge, 
-with a preference that the latency from the riskCheckerVF to this orderDispatcherVF remains below 5 ms, and ensuring that logging is executed before it.
+with a preference that the latency from the riskCheckerVF to this orderDispatcherVF remains below 60 ms, and ensuring that logging is executed before it.

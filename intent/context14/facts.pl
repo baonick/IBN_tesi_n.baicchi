@@ -2,7 +2,7 @@ intent(hftIntent, hftGlobalOp, 500000, highFrequencyTradingService).
 
 propertyExpectation(latReq1, hftIntent, latency, lower, hard, 50, ms, marketFeedVF, tradingAlgoVF).
 propertyExpectation(bwReq, hftIntent, bandwidth, greater, soft, 5000, megabps, tradingAlgoVF, riskCheckerVF).
-propertyExpectation(latReq2, hftIntent, latency, lower, soft, 5, ms, riskCheckerVF, orderDispatcherVF).
+propertyExpectation(latReq2, hftIntent, latency, lower, soft, 60, ms, riskCheckerVF, orderDispatcherVF).
 
 propertyExpectation(cachReq, hftIntent, caching, _, marketFeedVF, _).
 propertyExpectation(logReq, hftIntent, logging, _, _, orderDispatcherVF).

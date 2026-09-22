@@ -2,5 +2,5 @@ The financial provider hftGlobalOp requires a high frequency trading service to 
 executes decision algorithms, and sends purchase orders seeking the fastest network path. The deployed service chain includes, in order: a marketFeedVF allocated at the edge, a tradingAlgoVF allocated at the edge, a riskCheckerVF located in the cloud, and an orderDispatcherVF allocated at the edge. 
 Regarding requirements, caching is applied after the marketFeedVF. Furthermore, it is strictly required that the latency from the marketFeedVF to the 
 tradingAlgoVF remains below 50 ms. The provider prefers that the bandwidth from the tradingAlgoVF to the riskCheckerVF remains higher than 5000 Mbps. 
-Additionally, it is desired that the latency from the riskCheckerVF to the orderDispatcherVF remains below 5 ms. Finally, logging is executed before 
+Additionally, it is desired that the latency from the riskCheckerVF to the orderDispatcherVF remains below 60 ms. Finally, logging is executed before 
 the orderDispatcherVF.
