@@ -2,5 +2,5 @@ The compliance provider gdprComplianceOp requires a GDPR verification service to
 corporate databases to identify unprotected personal data, applies automatic anonymization, and generates reports for regulators. The deployed service 
 chain includes, in order: a dbScannerVF allocated at the edge, an anonymizerVF in the cloud, and a reportGeneratorVF located in the cloud. 
 Regarding requirements, privacy must be applied after the dbScannerVF. Furthermore, it is desired that the latency from the dbScannerVF to the 
-anonymizerVF remains lower than 20 ms. It is strictly required that the bandwidth from the anonymizerVF to the reportGeneratorVF is higher than 50 Mbps. Finally, 
+anonymizerVF remains lower than 50 ms. It is strictly required that the bandwidth from the anonymizerVF to the reportGeneratorVF is higher than 50 Mbps. Finally, 
 security is mandatory before the reportGeneratorVF.

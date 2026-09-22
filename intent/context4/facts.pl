@@ -1,6 +1,6 @@
 intent(gdprComplianceIntent, gdprComplianceOp, 5000, gdprVerificationService).
 
-propertyExpectation(latReq, gdprComplianceIntent, latency, lower, soft, 20, ms, dbScannerVF, anonymizerVF).
+propertyExpectation(latReq, gdprComplianceIntent, latency, lower, soft, 50, ms, dbScannerVF, anonymizerVF).
 propertyExpectation(bwReq, gdprComplianceIntent, bandwidth, greater, hard, 50, megabps, anonymizerVF, reportGeneratorVF).
 
 

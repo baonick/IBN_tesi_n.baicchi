@@ -3,4 +3,4 @@ streaming event, transforms it into text via AI, translates it into three langua
 The service chain begins with an audioExtractorVF allocated at the edge. For this component, caching is applied after it. The chain then 
 connects to a speechToTextVF located in the cloud followed by a multiTranslatorVF located in the cloud. For the entire deployment, 
 it is ideally preferred that the total chain hardware remains lower than 100 GB. Finally, the text is routed to a subtitleInjectorVF allocated 
-at the edge, ensuring that the latency from the speechToTextVF to this subtitleInjectorVF must remain below 20 ms.
+at the edge, ensuring that the latency from the speechToTextVF to this subtitleInjectorVF must remain below 70 ms.

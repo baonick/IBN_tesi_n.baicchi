@@ -2,7 +2,7 @@ The educational provider eduCloudOp requires a virtual student lab platform to s
 environments, manages resource allocation for each student, and monitors the workspaces to prevent improper use. Preferring that the aggregate infrastructure 
 footprint stays below 120 GB. Specifying privacy mechanisms are applied after the initial node, the service begins with a sessionIngesterVF 
 allocated at the edge. Demanding that the network capacity from sessionIngesterVF to the resourceAllocatorVF more than 500 Mbps, the chain connects 
-to a resourceAllocatorVF located in the cloud. Ensuring that the latency from the sessionIngesterVF to the activityMonitorVF is kept under 40 ms, 
+to a resourceAllocatorVF located in the cloud. Ensuring that the latency from the sessionIngesterVF to the activityMonitorVF is kept under 55 ms, 
 and that security are executed before the activityMonitorVF, the pipeline incorporates an activityMonitorVF located in the cloud. The system then flows 
 through a userPrivacyEnforcerVF located in the cloud. Ensuring that logging are executed before the auditLoggerVF, the chain connects to an auditLoggerVF located in the cloud. Finally,  and ensuring compression is applied after the final function, the pipeline completes with anoutputPackagerVF 
 located in the cloud.

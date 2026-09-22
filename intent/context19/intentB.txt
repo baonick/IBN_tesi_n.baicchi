@@ -1,5 +1,5 @@
 The logistics provider aeroDeliveryOp requires a drone fleet control service to manage 5,000 active delivery drones. This system manages digital flight plans, 
 avoids software collisions, and ensures that the command signal is always a priority. The service chain begins with a flightTelemetryIngesterVF ingester allocated at the edge. 
 For this component, caching is applied after it. The chain then connects to a collisionAvoiderVF located in the cloud, ensuring that it is strictly required for the 
-latency from the flightTelemetryIngesterVF ingester to this collisionAvoiderVF to remain below 10 ms. The chain proceeds to a commandPrioritizerVF located in the cloud. 
+latency from the flightTelemetryIngesterVF ingester to this collisionAvoiderVF to remain below 50 ms. The chain proceeds to a commandPrioritizerVF located in the cloud. 
 Finally, the system routes to a routeDispatcherVF allocated at the edge; it is ideally preferred that the bandwidth from the collisionAvoiderVF to this routeDispatcherVF remains higher than 2000 Mbps. For the entire deployment, it is ideally preferred that the total chain hardware remains lower than 200 GB.

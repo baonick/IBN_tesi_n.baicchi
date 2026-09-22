@@ -3,7 +3,7 @@ intent(oeeMonitoringIntent, smartFactoryOp, 300, oeeMonitoringService).
 propertyExpectation(cp1, oeeMonitoringIntent, logging, _, machineIngestVF, _).
 propertyExpectation(cp2, oeeMonitoringIntent, security, _, _, alertDispatcherVF).
 
-propertyExpectation(lat1, oeeMonitoringIntent, latency, lower, hard, 10, ms, machineIngestVF, oeeAggregatorVF).
+propertyExpectation(lat1, oeeMonitoringIntent, latency, lower, hard, 15, ms, machineIngestVF, oeeAggregatorVF).
 propertyExpectation(bw1, oeeMonitoringIntent, bandwidth, greater, soft, 20, megabps, oeeAggregatorVF, alertDispatcherVF).
 propertyExpectation(aff1, oeeMonitoringIntent, affinity, dedicated, hard, _, _, alertDispatcherVF, _).
 

@@ -3,4 +3,4 @@ updates the city map, and processes automatic payments. The service chain begins
 is applied after it. The chain then connects to a mapUpdaterVF in the cloud and a paymentProcessorVF in the cloud; it is mandatory that these two VNF are deployed 
 on dedicated nodes. Encoding is executed before the paymentProcessorVF. The chain then connects to a statusLoggerVF in the cloud, ensuring 
 that logging is executed before it. Finally, the chain includes a securityEnforcerVF in the cloud, with security applied after the paymentProcessorVF. 
-For the entire segment, it is strictly required that the latency from the sensorDataCollectorVF to this securityEnforcerVF remains below 30 ms.
+For the entire segment, it is strictly required that the latency from the sensorDataCollectorVF to this securityEnforcerVF remains below 100 ms.

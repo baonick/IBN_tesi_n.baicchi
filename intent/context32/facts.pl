@@ -3,7 +3,7 @@ intent(thermalTwinIntent, steelIndustryOp, 1500, digitalTwinService).
 propertyExpectation(cp1, thermalTwinIntent, compression, _, sensorIngestVF, _).
 propertyExpectation(cp2, thermalTwinIntent, decoding, _, _, thermalSimVF).
 
-propertyExpectation(lat1, thermalTwinIntent, latency, lower, hard, 20, ms, sensorIngestVF, thermalSimVF).
+propertyExpectation(lat1, thermalTwinIntent, latency, lower, hard, 35, ms, sensorIngestVF, thermalSimVF).
 propertyExpectation(hw1, thermalTwinIntent, totChainHW, lower, soft, 80, gb, _, _).
 
 target(digitalTwinService, [sensorIngestVF, dataFilteringVF, thermalSimVF, model3dVF]).

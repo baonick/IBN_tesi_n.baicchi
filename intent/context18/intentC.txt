@@ -2,5 +2,5 @@ The municipal provider smartParkOp requires a parking management backend to hand
 updates the city map, and processes automatic payments. Specifying that compression is applied after the initial function, the service begins with 
 a sensorDataCollectorVF at the edge. Mandating the next two components are 
 deployed on dedicated nodes, and ensuring encoding is applied before the paymentProcessorVF, the chain connected to a mapUpdaterVF in the cloud and a paymentProcessorVF in the cloud. Ensuring that logging is executed before the statusLoggerVF the chain continues to a statusLoggerVF 
-in the cloud. The system includes a securityEnforcerVF in the cloud. Applying security after the paymentProcessorVF, and strictly requiring that the latency from the sensorDataCollectorVF to the final securityEnforcerVF remains below 30 ms, the system completes 
+in the cloud. The system includes a securityEnforcerVF in the cloud. Applying security after the paymentProcessorVF, and strictly requiring that the latency from the sensorDataCollectorVF to the final securityEnforcerVF remains below 100 ms, the system completes 
 the pipeline.

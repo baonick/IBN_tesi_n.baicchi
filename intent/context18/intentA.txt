@@ -3,4 +3,4 @@ updates the city map, and processes automatic payments. The service chain includ
 a paymentProcessorVF in the cloud, a statusLoggerVF in the cloud, and a securityEnforcerVF in the cloud. Regarding requirements, compression is applied after the 
 sensorDataCollectorVF. Encoding is executed before the paymentProcessorVF. Security is applied after the paymentProcessorVF. Logging is executed before the statusLoggerVF. 
 Furthermore, it is mandatory that the mapUpdaterVF and the paymentProcessorVF are deployed on dedicated nodes. Finally, it is strictly 
-required that the latency from the sensorDataCollectorVF to the securityEnforcerVF remains below 30 ms.
+required that the latency from the sensorDataCollectorVF to the securityEnforcerVF remains below 100 ms.

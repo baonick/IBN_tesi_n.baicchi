@@ -1,6 +1,6 @@
 The industrial provider factoryCloudOp requires an augmented reality back-end service to support 500 active smart glasses on the shop floor. 
 This service sends visual technical instructions to workers' headsets, overlaying maintenance data on the framed machinery in real time. Strictly 
-requiring that the total delivery latency from the initial arStreamReceiverVF to the arStreamDispatcherVF remains below 12 ms, the service begins 
+requiring that the total delivery latency from the initial arStreamReceiverVF to the arStreamDispatcherVF remains below 100 ms, the service begins 
 with an arStreamReceiverVF allocated at the edge. Ensuring that the network bandwidth from this point to the arPoseEstimatorVF remains higher 
 than 200 Mbps, the chain connects to an arPoseEstimatorVF located in the cloud. Mandating that this arPoseEstimatorVF and the subsequent tool 
 are deployed on separate, dedicated infrastructure servers to guarantee isolated performance, the chain incorporates a dataOverlayEngineVF located in the cloud. 

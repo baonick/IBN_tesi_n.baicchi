@@ -1,6 +1,6 @@
 intent(agvRoutingIntent, agvFleetOp, 500, agvLogisticsBackend).
 
-propertyExpectation(latReq, agvRoutingIntent, latency, lower, hard, 15, ms, agvTelemetryCollectorVF, routeOptimizerVF).
+propertyExpectation(latReq, agvRoutingIntent, latency, lower, hard, 30, ms, agvTelemetryCollectorVF, routeOptimizerVF).
 propertyExpectation(bwReq, agvRoutingIntent, bandwidth, greater, soft, 50, megabps, agvTelemetryCollectorVF, taskDispatcherVF).
 propertyExpectation(affReq, agvRoutingIntent, affinity, dedicated, hard, _, _, routeOptimizerVF, _).
 

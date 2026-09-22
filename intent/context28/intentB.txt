@@ -4,4 +4,4 @@ The service chain begins with an arStreamReceiverVF allocated at the edge. The c
 cloud and a dataOverlayEngineVF located in the cloud; for these two intensive blocks, it is mandatory that they are isolated on dedicated hardware nodes, 
 while ensuring that the network bandwidth between the initial arStreamReceiverVF and the arPoseEstimatorVF remains higher than 200 Mbps. Finally, the system 
 routes the processed graphics to an arStreamDispatcherVF located in the cloud, ensuring it is strictly required that the latency from the arStreamReceiverVF 
-to this arStreamDispatcherVF remains below 12 ms. For the overall infrastructure, it is ideally preferred that the total chain hardware remains lower than 90 GB.
+to this arStreamDispatcherVF remains below 100 ms. For the overall infrastructure, it is ideally preferred that the total chain hardware remains lower than 90 GB.

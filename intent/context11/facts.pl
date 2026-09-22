@@ -1,7 +1,7 @@
 intent(liveSubsIntent, liveSubsOp, 10000, liveSubtitlingService).
 
 propertyExpectation(hwReq, liveSubsIntent, totChainHW, lower, soft, 100, gb, _, _).
-propertyExpectation(latReq, liveSubsIntent, latency, lower, hard, 20, ms, speechToTextVF, subtitleInjectorVF).
+propertyExpectation(latReq, liveSubsIntent, latency, lower, hard, 70, ms, speechToTextVF, subtitleInjectorVF).
 
 propertyExpectation(cachReq, liveSubsIntent, caching, _, audioExtractorVF, _).
 
