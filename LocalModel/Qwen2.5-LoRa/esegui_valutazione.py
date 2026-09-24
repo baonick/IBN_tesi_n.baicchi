@@ -359,17 +359,40 @@ def main():
     print("=== SINGLE REPORTS AND FOLDER GLOBAL REPORT GENERATION ===")
     print("=" * 60)
 
-    risultati_cartelle = []
+    # Identify all 5-fold-* subdirectories (each one is a different model)
+    fold_dirs = sorted([
+        d for d in os.listdir(BASE_DIR)
+        if os.path.isdir(os.path.join(BASE_DIR, d)) and d.startswith("5-fold-")
+    ])
 
-    # Scan all folders inside BASE_DIR
-    for root, dirs, files in os.walk(BASE_DIR):
-        risultato = processa_cartella(root, mappa_vnf)
-        if risultato is not None:
-            risultati_cartelle.append(risultato)
+    if not fold_dirs:
+        print("No 5-fold-* directories found. Falling back to full scan.")
+        risultati_cartelle = []
+        for root, dirs, files in os.walk(BASE_DIR):
+            risultato = processa_cartella(root, mappa_vnf)
+            if risultato is not None:
+                risultati_cartelle.append(risultato)
+        if risultati_cartelle:
+            report_path = os.path.join(BASE_DIR, "report_5fold_globale.txt")
+            genera_report_5fold(risultati_cartelle, report_path)
+    else:
+        # Generate a separate 5-fold report for each model directory
+        for fold_dir_name in fold_dirs:
+            fold_dir_path = os.path.join(BASE_DIR, fold_dir_name)
+            print(f"\n{'=' * 60}")
+            print(f"=== Processing model: {fold_dir_name} ===")
+            print(f"{'=' * 60}")
 
-    # Generate the 5-fold global report
-    report_5fold_path = os.path.join(BASE_DIR, "report_5fold_globale.txt")
-    genera_report_5fold(risultati_cartelle, report_5fold_path)
+            risultati_cartelle = []
+
+            for root, dirs, files in os.walk(fold_dir_path):
+                risultato = processa_cartella(root, mappa_vnf)
+                if risultato is not None:
+                    risultati_cartelle.append(risultato)
+
+            # Generate the 5-fold global report inside this model's directory
+            report_5fold_path = os.path.join(fold_dir_path, "report_5fold_globale.txt")
+            genera_report_5fold(risultati_cartelle, report_5fold_path)
 
     print("\nProcessing completed!")
 
