@@ -9,10 +9,10 @@
   // Static configuration
   // ------------------------------------------------------------------
   const TECHNIQUES = [
-    { key: "0shot", label: "Zero-shot" },
-    { key: "3shot", label: "3-shot" },
-    { key: "9shot", label: "9-shot" },
-    { key: "LoRA", label: "LoRA" },
+    { key: "0shot", label: "Zero-shot", cat: "Baseline", color: "hsl(215, 80%, 65%)" },
+    { key: "3shot", label: "3-shot", cat: "ICL", color: "hsl(258, 90%, 74%)" },
+    { key: "9shot", label: "9-shot", cat: "ICL", color: "hsl(280, 85%, 72%)" },
+    { key: "LoRA", label: "LoRA", cat: "PEFT", color: "hsl(156, 75%, 52%)" },
   ];
 
   const MODELS = [
@@ -70,21 +70,40 @@
   // ------------------------------------------------------------------
   // State (persisted in the URL hash so views are shareable / bookmarkable)
   // ------------------------------------------------------------------
-  const state = { view: "run", technique: "0shot", model: "Qwen2.5_7b", ctx: CONTEXTS[0] || 1, schema: "A" };
+  const state = {
+    view: "run",
+    technique: "0shot",
+    model: "Qwen2.5_7b",
+    ctx: CONTEXTS[0] || 1,
+    schema: "A",
+    compareMode: "benchmark", // "benchmark" | "runs"
+    compareSchema: "ALL",     // "ALL" | "A" | "B" | "C"
+  };
 
   function readHash() {
     const p = new URLSearchParams(location.hash.slice(1));
-    if (["run", "agg"].includes(p.get("view"))) state.view = p.get("view");
+    if (["run", "agg", "compare"].includes(p.get("view"))) state.view = p.get("view");
     if (techOf(p.get("t"))) state.technique = p.get("t");
     if (modelOf(p.get("m"))) state.model = p.get("m");
     const c = parseInt(p.get("c"), 10);
     if (CONTEXTS.includes(c)) state.ctx = c;
     if (SCHEMAS.includes(p.get("s"))) state.schema = p.get("s");
-    if (!hasPair(state.model, state.technique)) state.model = "Qwen2.5_7b";
+    if (["benchmark", "runs"].includes(p.get("cmp"))) state.compareMode = p.get("cmp");
+    if (["ALL", ...SCHEMAS].includes(p.get("cs"))) state.compareSchema = p.get("cs");
+    if (!hasPair(state.model, state.technique)) {
+      const validTech = TECHNIQUES.find((t) => hasPair(state.model, t.key));
+      if (validTech) state.technique = validTech.key;
+      else state.model = "Qwen2.5_7b";
+    }
   }
 
   function writeHash() {
-    const p = new URLSearchParams({ view: state.view, t: state.technique, m: state.model, c: state.ctx, s: state.schema });
+    const params = { view: state.view, t: state.technique, m: state.model, c: state.ctx, s: state.schema };
+    if (state.view === "compare") {
+      params.cmp = state.compareMode;
+      if (state.compareSchema !== "ALL") params.cs = state.compareSchema;
+    }
+    const p = new URLSearchParams(params);
     history.replaceState(null, "", "#" + p.toString());
   }
 
@@ -246,6 +265,7 @@
 
     // Tabs
     document.body.dataset.view = state.view;
+    document.body.dataset.compareMode = state.compareMode;
     document.querySelectorAll(".tab").forEach((t) => {
       const on = t.dataset.view === state.view;
       t.classList.toggle("active", on);
@@ -254,6 +274,7 @@
     positionTabIndicator();
     $("#view-run").classList.toggle("active", state.view === "run");
     $("#view-agg").classList.toggle("active", state.view === "agg");
+    $("#view-compare").classList.toggle("active", state.view === "compare");
   }
 
   function positionTabIndicator() {
@@ -296,6 +317,7 @@
           ${dipsBadge(run.dips_outcome)}
           <span class="badge ${exact ? "ok" : "muted"}">${exact ? "Exact match" : "No exact match"}</span>
           <span class="badge ${run.n_errors ? (run.n_high ? "bad" : "warn") : "ok"}">${run.n_errors} error${run.n_errors === 1 ? "" : "s"}</span>
+          <button class="compare-link-btn" id="btn-compare-this-run" data-action="compare-run" title="Compare all techniques for Context #${state.ctx} · Schema ${state.schema}">⚖️ Compare Techniques</button>
         </div>
       </div>
 
@@ -416,6 +438,7 @@
         <div class="badges">
           <span class="badge info">${n} runs</span>
           <span class="badge muted">${nCtx} contexts · ${SCHEMAS.length} schemas</span>
+          <button class="compare-link-btn" id="btn-compare-this-model" data-action="compare-model" title="Compare all techniques for ${esc(m.label)} ${esc(m.tag)}">⚖️ Compare Techniques for ${esc(m.label)}</button>
         </div>
       </div>
 
@@ -540,12 +563,624 @@
   }
 
   // ------------------------------------------------------------------
+  // Compare view (Techniques comparison for selected model)
+  // ------------------------------------------------------------------
+  function renderCompare() {
+    const root = $("#view-compare");
+    const m = modelOf(state.model);
+    const availableTechs = TECHNIQUES.filter((t) => hasPair(state.model, t.key));
+
+    if (!availableTechs.length) {
+      root.innerHTML = emptyState("🔍", "No data", `No technique data found for ${esc(m.label)} ${esc(m.tag)}.`);
+      return;
+    }
+
+    const isRuns = state.compareMode === "runs";
+    const totalModelRuns = RUNS.filter((r) => r.model_key === m.key).length;
+
+    // Top toolbar inside Compare view
+    const toolbarHtml = `
+      <div class="panel compare-toolbar">
+        <div class="compare-title-block">
+          <span class="compare-main-title">
+            <span style="color:${m.color}">●</span> ${esc(m.label)} <span class="tag" style="font-size:0.8rem;padding:2px 8px;border-radius:6px;background:var(--bg-3);color:var(--text-1);font-family:var(--mono);">${esc(m.tag)}</span>
+            <span style="color:var(--text-2);font-weight:400;margin:0 4px;">·</span> Technique Comparison
+          </span>
+          <span class="compare-sub-title">
+            Comparing ${availableTechs.map((t) => `<b style="color:${t.color || 'var(--text-0)'}">${esc(t.label)}</b>`).join(" vs ")}
+            across ${totalModelRuns} runs ${m.key === "Gemini_3.5-flash" ? `<span style="opacity:0.8;">(LoRA is exclusive to open-source Qwen models)</span>` : ""}
+          </span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          ${!isRuns ? `
+            <div class="segmented" style="padding:3px;" role="radiogroup" aria-label="Schema filter">
+              <button class="seg-btn ${state.compareSchema === 'ALL' ? 'active' : ''}" data-cmp-schema="ALL" style="font-size:0.78rem;padding:5px 10px;">All Schemas</button>
+              ${SCHEMAS.map((s) => `<button class="seg-btn ${state.compareSchema === s ? 'active' : ''}" data-cmp-schema="${s}" style="font-size:0.78rem;padding:5px 10px;">Schema ${s}</button>`).join("")}
+            </div>
+          ` : ""}
+          <div class="sub-tabs" role="tablist">
+            <button class="sub-tab-btn ${!isRuns ? 'active' : ''}" data-cmp-mode="benchmark">📊 Benchmark Overview</button>
+            <button class="sub-tab-btn ${isRuns ? 'active' : ''}" data-cmp-mode="runs">🔍 Side-by-Side Inspector</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (isRuns) {
+      renderCompareRuns(root, m, availableTechs, toolbarHtml);
+    } else {
+      renderCompareBenchmark(root, m, availableTechs, toolbarHtml);
+    }
+
+    animateRings(root);
+  }
+
+  function renderCompareBenchmark(root, m, availableTechs, toolbarHtml) {
+    // 1. Compute stats per technique
+    const stats = availableTechs.map((t) => {
+      let runs = RUNS.filter((r) => r.model_key === m.key && r.technique === t.key);
+      if (state.compareSchema !== "ALL") {
+        runs = runs.filter((r) => r.prompt_type === state.compareSchema);
+      }
+      const n = runs.length;
+      const f1Arr = runs.map((r) => r.f1);
+      const recArr = runs.map((r) => r.recall);
+      const precArr = runs.map((r) => r.precision);
+      const jaccArr = runs.map((r) => r.jaccard);
+      const jdRuns = runs.filter((r) => r.jaccard_dips != null);
+
+      const exactCount = runs.filter((r) => r.exact_match === 1).length;
+      const exactRate = n ? exactCount / n : null;
+
+      const dipsCounts = {};
+      runs.forEach((r) => {
+        const k = r.dips_outcome ?? "N/A";
+        dipsCounts[k] = (dipsCounts[k] || 0) + 1;
+      });
+      const solutionCount = dipsCounts["SOLUTION"] || 0;
+      const solutionRate = n ? solutionCount / n : null;
+      const prologErrorCount = (dipsCounts["PROLOG_ERROR"] || 0) + (dipsCounts["SWIPL_ERROR"] || 0);
+      const prologErrorRate = n ? prologErrorCount / n : null;
+
+      const totErrors = runs.reduce((a, r) => a + (r.n_errors || 0), 0);
+      const totHigh = runs.reduce((a, r) => a + (r.n_high || 0), 0);
+      const totLow = runs.reduce((a, r) => a + (r.n_low || 0), 0);
+
+      // Errors by type
+      const errorsByType = { A: 0, B: 0, C: 0, D: 0 };
+      runs.forEach((r) => {
+        (r.errors || []).forEach(([type, sub, sev, cnt]) => {
+          if (errorsByType[type] !== undefined) errorsByType[type] += cnt;
+        });
+      });
+
+      // Per-schema breakdown
+      const schemaPerf = {};
+      SCHEMAS.forEach((s) => {
+        const sRuns = RUNS.filter((r) => r.model_key === m.key && r.technique === t.key && r.prompt_type === s);
+        schemaPerf[s] = {
+          n: sRuns.length,
+          meanF1: mean(sRuns.map((r) => r.f1)),
+          exactRate: sRuns.length ? sRuns.filter((r) => r.exact_match === 1).length / sRuns.length : null,
+          solutionRate: sRuns.length ? sRuns.filter((r) => r.dips_outcome === "SOLUTION").length / sRuns.length : null,
+        };
+      });
+
+      return {
+        tech: t,
+        n,
+        runs,
+        meanF1: mean(f1Arr),
+        meanRecall: mean(recArr),
+        meanPrecision: mean(precArr),
+        meanJaccard: mean(jaccArr),
+        exactCount,
+        exactRate,
+        solutionCount,
+        solutionRate,
+        prologErrorCount,
+        prologErrorRate,
+        meanJaccardDips: mean(jdRuns.map((r) => r.jaccard_dips)),
+        jdCount: jdRuns.length,
+        meanTime: mean(runs.map((r) => r.time_s)),
+        totErrors,
+        errorsPerRun: n ? totErrors / n : null,
+        totHigh,
+        highPerRun: n ? totHigh / n : null,
+        totLow,
+        lowPerRun: n ? totLow / n : null,
+        dipsCounts,
+        errorsByType,
+        schemaPerf,
+      };
+    });
+
+    const baseline = stats.find((s) => s.tech.key === "0shot") || stats[0];
+
+    // Cards HTML
+    const cardsHtml = stats.map((s) => {
+      const t = s.tech;
+      const isBase = t.key === "0shot";
+      let deltaPill = "";
+      if (isBase) {
+        deltaPill = `<span class="delta-pill baseline">Baseline (0-shot)</span>`;
+      } else if (baseline && baseline.exactRate != null && s.exactRate != null) {
+        const diff = s.exactRate - baseline.exactRate;
+        const sign = diff >= 0 ? "+" : "";
+        const cls = diff >= 0 ? "pos" : "neg";
+        const diffPct = (diff * 100).toFixed(1);
+        deltaPill = `<span class="delta-pill ${cls}">${diff >= 0 ? "▲" : "▼"} ${sign}${diffPct}% vs 0-shot</span>`;
+      }
+
+      return `
+        <div class="tech-card" style="--c:${t.color || 'var(--violet)'}">
+          <div class="tech-card-head">
+            <div class="tech-card-title">
+              <span class="dot" style="background:${t.color || 'var(--violet)'}"></span>
+              ${esc(t.label)}
+            </div>
+            <span class="tech-cat-badge">${esc(t.cat || 'Technique')}</span>
+          </div>
+
+          <div class="tech-card-body">
+            ${ring(s.exactRate, scoreColor(s.exactRate))}
+            <div class="tech-f1-col">
+              <span class="tech-f1-label">Exact Match Rate</span>
+              <span class="tech-f1-val">${pct(s.exactRate)} <span style="font-size:0.75rem;font-weight:500;color:var(--text-2);">(${s.exactCount}/${s.n})</span></span>
+              ${deltaPill}
+            </div>
+          </div>
+
+          <div class="tech-kpi-list">
+            <div class="tech-kpi-item">
+              <span class="tech-kpi-lbl">Mean F1-score</span>
+              <span class="tech-kpi-val" style="color:${scoreColor(s.meanF1)}">${fmt(s.meanF1)}</span>
+            </div>
+            <div class="tech-kpi-item">
+              <span class="tech-kpi-lbl">DIPS Solution</span>
+              <span class="tech-kpi-val" style="color:${(s.solutionRate || 0) > 0.9 ? 'var(--ok)' : (s.solutionRate || 0) > 0.7 ? 'var(--warn)' : 'var(--bad)'}">${pct(s.solutionRate)}</span>
+            </div>
+            <div class="tech-kpi-item">
+              <span class="tech-kpi-lbl">Errors / Run</span>
+              <span class="tech-kpi-val">${fmt(s.errorsPerRun, 2)}</span>
+            </div>
+            <div class="tech-kpi-item">
+              <span class="tech-kpi-lbl">Mean Latency</span>
+              <span class="tech-kpi-val">${s.meanTime == null ? "—" : s.meanTime.toFixed(1) + "s"}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    // Metrics table configuration
+    const METRICS_ROWS = [
+      {
+        name: "Exact match rate",
+        desc: "Runs with 100% syntactic & logical parity (primary metric)",
+        getVal: (s) => s.exactRate,
+        fmt: (v, s) => `${pct(s.exactRate)} <span class="cell-sub">(${s.exactCount}/${s.n})</span>`,
+        higherBetter: true,
+        isScore: true,
+      },
+      {
+        name: "F1-score",
+        desc: "Harmonic mean of precision & recall",
+        getVal: (s) => s.meanF1,
+        fmt: (v) => fmt(v, 3),
+        higherBetter: true,
+        isScore: true,
+      },
+      {
+        name: "Recall",
+        desc: "Proportion of expected Prolog facts generated",
+        getVal: (s) => s.meanRecall,
+        fmt: (v) => fmt(v, 3),
+        higherBetter: true,
+        isScore: true,
+      },
+      {
+        name: "Precision",
+        desc: "Proportion of generated facts that are correct",
+        getVal: (s) => s.meanPrecision,
+        fmt: (v) => fmt(v, 3),
+        higherBetter: true,
+        isScore: true,
+      },
+      {
+        name: "Jaccard similarity",
+        desc: "Intersection over union of Prolog facts",
+        getVal: (s) => s.meanJaccard,
+        fmt: (v) => fmt(v, 3),
+        higherBetter: true,
+        isScore: true,
+      },
+      {
+        name: "DIPS Solution rate",
+        desc: "Runs successfully validated by DIPS Prolog engine",
+        getVal: (s) => s.solutionRate,
+        fmt: (v, s) => `${pct(s.solutionRate)} <span class="cell-sub">(${s.solutionCount}/${s.n})</span>`,
+        higherBetter: true,
+        isScore: true,
+      },
+      {
+        name: "DIPS Prolog error rate",
+        desc: "Runs causing syntax or SWI-Prolog errors during DIPS execution",
+        getVal: (s) => s.prologErrorRate,
+        fmt: (v, s) => `${pct(s.prologErrorRate)} <span class="cell-sub">(${s.prologErrorCount}/${s.n})</span>`,
+        higherBetter: false,
+      },
+      {
+        name: "Jaccard DIPS placement",
+        desc: "Similarity score in DIPS physical placement topology",
+        getVal: (s) => s.meanJaccardDips,
+        fmt: (v, s) => s.meanJaccardDips == null ? "—" : `${fmt(s.meanJaccardDips, 3)} <span class="cell-sub">(${s.jdCount} evaluated)</span>`,
+        higherBetter: true,
+        isScore: true,
+      },
+      {
+        name: "Total errors / run",
+        desc: "Mean catalogued errors across test runs",
+        getVal: (s) => s.errorsPerRun,
+        fmt: (v, s) => `${fmt(s.errorsPerRun, 2)} <span class="cell-sub">(${s.totHigh}H · ${s.totLow}L)</span>`,
+        higherBetter: false,
+      },
+      {
+        name: "High-severity errors / run",
+        desc: "Fatal syntax and semantic errors per run",
+        getVal: (s) => s.highPerRun,
+        fmt: (v) => fmt(v, 2),
+        higherBetter: false,
+      },
+      {
+        name: "Inference latency",
+        desc: "Mean LLM generation time per run",
+        getVal: (s) => s.meanTime,
+        fmt: (v) => (v == null ? "—" : `${fmt(v, 1)}s`),
+        higherBetter: false,
+      },
+    ];
+
+    // Compute winners and rows
+    const tableRowsHtml = METRICS_ROWS.map((row) => {
+      const vals = stats.map((s) => row.getVal(s));
+      const validVals = vals.filter((v) => v != null && !Number.isNaN(v));
+
+      let bestVal = null;
+      if (validVals.length) {
+        bestVal = row.higherBetter ? Math.max(...validVals) : Math.min(...validVals);
+      }
+
+      const cellsHtml = stats.map((s, idx) => {
+        const val = vals[idx];
+        if (val == null || Number.isNaN(val)) return `<td>—</td>`;
+
+        const isBest = bestVal != null && Math.abs(val - bestVal) < 0.0001;
+        const color = row.isScore ? scoreColor(val) : "inherit";
+
+        // Delta vs baseline
+        let deltaHtml = "";
+        if (s !== baseline && baseline) {
+          const baseVal = row.getVal(baseline);
+          if (baseVal != null && !Number.isNaN(baseVal)) {
+            const diff = val - baseVal;
+            if (Math.abs(diff) > 0.0005) {
+              const isGood = row.higherBetter ? diff > 0 : diff < 0;
+              const sign = diff > 0 ? "+" : "";
+              const diffFmt = row.isScore ? (diff * 100).toFixed(1) + "%" : diff.toFixed(2);
+              deltaHtml = `<div class="cell-delta ${isGood ? 'pos' : 'neg'}">${sign}${diffFmt}</div>`;
+            }
+          }
+        }
+
+        return `
+          <td class="metric-val-cell">
+            <div class="val-box">
+              <span style="color:${color}">${row.fmt(val, s)}</span>
+              ${isBest ? `<span class="best-badge">★ Best</span>` : ""}
+            </div>
+            ${deltaHtml}
+          </td>
+        `;
+      }).join("");
+
+      return `
+        <tr>
+          <td>
+            <div class="metric-row-title">${esc(row.name)}</div>
+            <div class="cell-sub">${esc(row.desc)}</div>
+          </td>
+          ${cellsHtml}
+        </tr>
+      `;
+    }).join("");
+
+    // DIPS Outcome distribution comparison
+    const dipsListHtml = stats.map((s) => {
+      const t = s.tech;
+      const n = s.n;
+      const entries = Object.entries(s.dipsCounts).sort((a, b) => b[1] - a[1]);
+
+      return `
+        <div class="dips-compare-item">
+          <div class="dips-compare-label">
+            <span class="dot" style="background:${t.color || 'var(--violet)'}"></span>
+            ${esc(t.label)}
+          </div>
+          <div class="stack-bar" style="height:14px;">
+            ${entries.map(([k, c]) => `
+              <div style="width:0;background:${(DIPS_OUTCOMES[k] || {}).color || 'var(--text-2)'}"
+                data-w="${(c / n) * 100}%"
+                title="${esc(t.label)} · ${esc(k)}: ${c} (${pct(c / n)})"></div>
+            `).join("")}
+          </div>
+          <div class="dips-compare-stat">
+            ${pct(s.solutionRate)} <span style="font-size:0.75rem;font-weight:500;color:var(--text-2);">Solution</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    // Error Types Breakdown comparison
+    const maxTypeErr = Math.max(1, ...stats.flatMap((s) => Object.values(s.errorsByType)));
+    const errorTypesHtml = Object.entries(ERROR_TYPES).map(([typeKey, typeLabel]) => {
+      return `
+        <div class="error-comp-card">
+          <div class="error-comp-head">
+            <span style="display:flex;align-items:center;">
+              <span class="type-chip type-${typeKey}">${typeKey}</span>
+              <span class="type-name">${esc(typeLabel)}</span>
+            </span>
+            <span style="font-size:0.75rem;color:var(--text-2);">Error count</span>
+          </div>
+          <div class="hbar" style="gap:8px;">
+            ${stats.map((s) => {
+              const cnt = s.errorsByType[typeKey] || 0;
+              const t = s.tech;
+              return `
+                <div class="hbar-row" style="grid-template-columns: 80px 1fr 45px; font-size:0.8rem;">
+                  <span style="font-weight:600;color:${t.color || 'var(--text-0)'}">${esc(t.label)}</span>
+                  <div class="hbar-track">
+                    <div style="width:0;background:${t.color || 'var(--violet)'}" data-w="${(cnt / maxTypeErr) * 100}%" title="${esc(t.label)}: ${cnt}"></div>
+                  </div>
+                  <span class="n" style="font-size:0.8rem;">${cnt}</span>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    // Schema Sensitivity comparison
+    const schemaMatrixRowsHtml = stats.map((s) => {
+      const t = s.tech;
+      const sp = s.schemaPerf;
+      return `
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:8px;font-weight:700;color:var(--text-0);">
+              <span class="dot" style="background:${t.color || 'var(--violet)'}"></span>
+              ${esc(t.label)}
+            </div>
+          </td>
+          ${SCHEMAS.map((sch) => {
+            const data = sp[sch] || {};
+            return `
+              <td class="metric-val-cell">
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <span style="color:${scoreColor(data.exactRate)};font-weight:700;">EM ${pct(data.exactRate, 0)}</span>
+                  <span class="cell-sub" style="color:var(--text-1);">· F1 ${fmt(data.meanF1)}</span>
+                  <span class="cell-sub" style="color:var(--text-2);">· Sol ${pct(data.solutionRate, 0)}</span>
+                </div>
+              </td>
+            `;
+          }).join("")}
+        </tr>
+      `;
+    }).join("");
+
+    root.innerHTML = `
+      ${toolbarHtml}
+
+      <div class="compare-cards">
+        ${cardsHtml}
+      </div>
+
+      <section class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Benchmark Comparison Matrix · ${state.compareSchema === 'ALL' ? 'All Schemas' : `Schema ${state.compareSchema}`}</span>
+          <span class="metric-sub">Techniques evaluated on ${esc(m.label)} ${esc(m.tag)}</span>
+        </div>
+        <div class="panel-body matrix-table-wrap">
+          <table class="matrix-table" id="compare-matrix-table">
+            <thead>
+              <tr>
+                <th style="min-width:200px;">Metric</th>
+                ${stats.map((s) => `<th style="min-width:140px;color:${s.tech.color || 'var(--text-0)'};">${esc(s.tech.label)}</th>`).join("")}
+              </tr>
+            </thead>
+            <tbody>
+              ${tableRowsHtml}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div class="agg-grid">
+        <section class="panel">
+          <div class="panel-head">
+            <span class="panel-title">DIPS Outcome Distribution</span>
+            <span class="metric-sub">Execution through DIPS SWI-Prolog</span>
+          </div>
+          <div class="panel-body">
+            <div class="dips-compare-list">
+              ${dipsListHtml}
+            </div>
+            <div class="heat-legend" style="margin-top:16px;">
+              ${Object.entries(DIPS_OUTCOMES).map(([k, o]) => `
+                <span class="heat-key"><i style="background:${o.color}"></i>${esc(o.label)}</span>
+              `).join("")}
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <span class="panel-title">Schema Sensitivity (Prompt Robustness)</span>
+            <span class="metric-sub">Performance across canonical (A), sequential (B), &amp; requirement-first (C)</span>
+          </div>
+          <div class="panel-body matrix-table-wrap">
+            <table class="matrix-table" id="compare-schema-matrix">
+              <thead>
+                <tr>
+                  <th>Technique</th>
+                  <th>Schema A</th>
+                  <th>Schema B</th>
+                  <th>Schema C</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${schemaMatrixRowsHtml}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Error Taxonomy Comparison by Type</span>
+          <span class="metric-sub">Comparing counts of Syntax (A), Wrong Values (B), Wrong VNFs (C), and Insertions/Removals (D)</span>
+        </div>
+        <div class="panel-body">
+          <div class="error-comp-grid">
+            ${errorTypesHtml}
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function renderCompareRuns(root, m, availableTechs, toolbarHtml) {
+    // Get the gold reference run for this context and schema
+    const anyRun = RUNS.find((r) => r.context_id === state.ctx && r.prompt_type === state.schema);
+    const intentText = anyRun ? anyRun.intent : "";
+    const goldText = anyRun ? anyRun.gold : "";
+
+    // For each technique, get its run
+    const techRuns = availableTechs.map((t) => {
+      const r = INDEX.get(runKey(m.key, t.key, state.ctx, state.schema)) || null;
+      return { tech: t, run: r };
+    });
+
+    const columnsHtml = techRuns.map(({ tech, run }) => {
+      if (!run) {
+        return `
+          <div class="sbs-col" style="border-top:3px solid ${tech.color || 'var(--text-2)'};">
+            <div class="sbs-col-head">
+              <div class="sbs-col-top">
+                <div class="sbs-col-title">
+                  <span class="dot" style="background:${tech.color || 'var(--text-2)'}"></span>
+                  ${esc(tech.label)}
+                </div>
+              </div>
+            </div>
+            <div class="panel-body empty" style="padding:40px 16px;">
+              <div class="big">🔍</div>
+              <p>No run for context ${state.ctx} · schema ${state.schema}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      const exact = run.exact_match === 1;
+      const errors = run.errors || [];
+
+      return `
+        <div class="sbs-col" style="border-top:3px solid ${tech.color || 'var(--violet)'};">
+          <div class="sbs-col-head">
+            <div class="sbs-col-top">
+              <div class="sbs-col-title">
+                <span class="dot" style="background:${tech.color || 'var(--violet)'}"></span>
+                ${esc(tech.label)}
+              </div>
+              <div class="sbs-actions">
+                <button class="sbs-jump-btn" data-sbs-copy="${esc(run.run_id)}" title="Copy generated code">Copy</button>
+                <button class="sbs-jump-btn" data-sbs-jump="${esc(tech.key)}" title="Open in Run Explorer">Open ↗</button>
+              </div>
+            </div>
+
+            <div class="sbs-col-badges">
+              <span class="badge ${exact ? 'ok' : 'bad'}" style="font-weight:700;">${exact ? '✓ Exact Match' : '✗ No Match'}</span>
+              <span class="badge" style="color:${scoreColor(run.f1)};border-color:currentColor;">F1 ${fmt(run.f1)}</span>
+              ${dipsBadge(run.dips_outcome)}
+              ${run.time_s != null ? `<span class="badge muted">⏱ ${run.time_s.toFixed(1)}s</span>` : ''}
+              <span class="badge ${run.n_errors ? (run.n_high ? 'bad' : 'warn') : 'ok'}">${run.n_errors} err</span>
+            </div>
+          </div>
+
+          <div class="sbs-body">
+            <pre class="code">${highlightProlog(run.generated)}</pre>
+          </div>
+
+          <div class="sbs-errors">
+            ${errors.length ? `
+              <div style="font-weight:700;margin-bottom:6px;font-size:0.75rem;text-transform:uppercase;color:var(--text-2);">
+                Errors (${run.n_errors})
+              </div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;">
+                ${errors.map(([type, sub, sev, cnt]) => `
+                  <span class="sev sev-${esc(sev)}" title="${esc(ERROR_TYPES[type] || type)}: ${esc(sub)}">
+                    ${esc(type)}: ${esc(sub)} ×${cnt}
+                  </span>
+                `).join("")}
+              </div>
+            ` : `
+              <div style="color:var(--ok);font-weight:600;font-size:0.78rem;">✓ No errors catalogued</div>
+            `}
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    root.innerHTML = `
+      ${toolbarHtml}
+
+      <section class="panel sbs-gold-panel">
+        <div class="panel-head">
+          <span class="panel-title">Natural Language Intent · Context #${state.ctx} · Schema ${state.schema}</span>
+          <span class="metric-sub">Use ← → keys or context pills above to navigate</span>
+        </div>
+        <div class="sbs-intent-body">
+          ${highlightIntent(intentText)}
+        </div>
+        <details class="sbs-gold-details">
+          <summary class="sbs-gold-summary">
+            <span>▶ Show Expected Output (Gold Reference Prolog)</span>
+            <button class="copy-btn" data-copy-gold="1" style="margin-left:auto;">Copy Gold</button>
+          </summary>
+          <pre class="code sbs-gold-code">${highlightProlog(goldText)}</pre>
+        </details>
+      </section>
+
+      <div class="sbs-grid">
+        ${columnsHtml}
+      </div>
+    `;
+
+    root._goldText = goldText;
+  }
+
+  // ------------------------------------------------------------------
   // Render + events
   // ------------------------------------------------------------------
   function render() {
     renderControls();
     if (state.view === "run") renderRun();
-    else renderAgg();
+    else if (state.view === "agg") renderAgg();
+    else renderCompare();
     writeHash();
   }
 
@@ -566,6 +1201,62 @@
     if (btn.dataset.ctx) { state.ctx = parseInt(btn.dataset.ctx, 10); render(); return; }
     if (btn.id === "ctx-prev") { stepContext(-1); return; }
     if (btn.id === "ctx-next") { stepContext(1); return; }
+
+    if (btn.dataset.cmpMode) {
+      state.compareMode = btn.dataset.cmpMode;
+      render();
+      return;
+    }
+    if (btn.dataset.cmpSchema) {
+      state.compareSchema = btn.dataset.cmpSchema;
+      render();
+      return;
+    }
+
+    if (btn.dataset.action === "compare-run") {
+      state.view = "compare";
+      state.compareMode = "runs";
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    if (btn.dataset.action === "compare-model") {
+      state.view = "compare";
+      state.compareMode = "benchmark";
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (btn.dataset.sbsJump) {
+      state.technique = btn.dataset.sbsJump;
+      state.view = "run";
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (btn.dataset.sbsCopy) {
+      const run = RUNS.find((r) => r.run_id === btn.dataset.sbsCopy);
+      if (run) {
+        navigator.clipboard?.writeText(run.generated ?? "").then(
+          () => toast("Generated code copied"),
+          () => toast("Clipboard not available")
+        );
+      }
+      return;
+    }
+
+    if (btn.dataset.copyGold) {
+      const gold = $("#view-compare")._goldText;
+      if (gold) {
+        navigator.clipboard?.writeText(gold).then(
+          () => toast("Gold reference copied"),
+          () => toast("Clipboard not available")
+        );
+      }
+      return;
+    }
 
     if (btn.dataset.gotoCtx) {
       state.ctx = parseInt(btn.dataset.gotoCtx, 10);
@@ -588,7 +1279,9 @@
   });
 
   document.addEventListener("keydown", (e) => {
-    if (state.view !== "run" || e.altKey || e.ctrlKey || e.metaKey) return;
+    const isRunView = state.view === "run";
+    const isCompareRuns = state.view === "compare" && state.compareMode === "runs";
+    if ((!isRunView && !isCompareRuns) || e.altKey || e.ctrlKey || e.metaKey) return;
     if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
     if (e.key === "ArrowLeft") { e.preventDefault(); stepContext(-1); }
     if (e.key === "ArrowRight") { e.preventDefault(); stepContext(1); }

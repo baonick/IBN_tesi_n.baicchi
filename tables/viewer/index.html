@@ -26,6 +26,7 @@
     <nav class="tabs" role="tablist" aria-label="Views">
       <button id="tab-run" class="tab active" role="tab" aria-selected="true" data-view="run">Run Explorer</button>
       <button id="tab-agg" class="tab" role="tab" aria-selected="false" data-view="agg">Aggregate</button>
+      <button id="tab-compare" class="tab" role="tab" aria-selected="false" data-view="compare">Compare Techniques</button>
       <span class="tab-indicator" aria-hidden="true"></span>
     </nav>
   </header>
@@ -34,11 +35,11 @@
     <!-- ================= CONTROLS ================= -->
     <section class="panel controls" aria-label="Selection">
       <div class="control-row">
-        <div class="control">
+        <div class="control" id="ctrl-technique">
           <span class="control-label">Technique</span>
           <div class="segmented" id="seg-technique" role="radiogroup" aria-label="Technique"></div>
         </div>
-        <div class="control">
+        <div class="control" id="ctrl-model">
           <span class="control-label">Model</span>
           <div class="segmented" id="seg-model" role="radiogroup" aria-label="Model"></div>
         </div>
@@ -65,6 +66,9 @@
 
     <!-- ================= AGGREGATE VIEW ================= -->
     <section id="view-agg" class="view" aria-live="polite"></section>
+
+    <!-- ================= COMPARE VIEW ================= -->
+    <section id="view-compare" class="view" aria-live="polite"></section>
   </main>
 
   <footer class="app-footer">
